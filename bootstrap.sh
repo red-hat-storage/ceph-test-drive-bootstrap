@@ -1,6 +1,3 @@
-echo "##############################################" >> /var/tmp/instance-bootstrap.log
-echo "### Logs For " `date` "###" >> /var/tmp/instance-bootstrap.log
-echo "##############################################" >> /var/tmp/instance-bootstrap.log
 exec >> /var/tmp/instance-bootstrap.log 2>&1
 set -x
 
