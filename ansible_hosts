@@ -1,0 +1,14 @@
+[mons]
+ceph-mon[1:3]
+
+[osds]
+ceph-osd[1:3]
+
+[rgws]
+ceph-rgw1
+
+[clients]
+client1
+
+[management]
+mgmt
