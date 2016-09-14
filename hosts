@@ -1,0 +1,21 @@
+127.0.0.1 localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1 localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+10.100.0.72 mgmt mgmt
+
+### Ceph OSDs connected to cluster network ###
+10.100.1.11 ceph-osd1 ceph-osd1
+10.100.1.12 ceph-osd2 ceph-osd2
+10.100.1.13 ceph-osd3 ceph-osd3
+10.100.1.14 ceph-osd4 ceph-osd4
+
+### Ceph Monitors connected to public network ###
+10.100.2.11 ceph-mon1 ceph-mon1
+10.100.2.12 ceph-mon2 ceph-mon2
+10.100.2.13 ceph-mon3 ceph-mon3
+
+### Ceph RGW connected to public network ###
+10.100.2.15 ceph-rgw1 ceph-rgw1
+
+### Client connected to public network ###
+10.100.2.21 client1 client1
