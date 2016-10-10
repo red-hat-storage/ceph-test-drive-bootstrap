@@ -1,0 +1,23 @@
+site_name: RHCS Test Drive Instructions
+site_favicon: images/favicon.ico
+markdown_extensions:
+    - smarty
+    - toc:
+        permalink: True
+    - sane_lists
+    - footnotes
+    - smart_strong
+    - codehilite
+    - nl2br
+    
+theme: 'united'
+extra:
+    theme_inverse: true
+pages:
+- Home: index.md
+- Modules:
+    - 'Module 1 - Setting up a Ceph cluster': Module-1.md
+    - 'Module 2 - Ceph Block Storage interface': Module-2.md
+    - 'Module 3 - Ceph Object Storage interface': Module-3.md
+    - 'Module 4 - Scaling up a Ceph cluster': Module-4.md
+
