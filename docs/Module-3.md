@@ -118,7 +118,7 @@ $ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' upl
 ```
 - List ``container-1`` to verify files are getting stored
 ```
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list
+$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list container-1
 ```
 
 Easy right !! So you have just learned how to use Ceph as Object Storage System using swift APIs. Follow the next section to know how S3 can be used with Ceph.
