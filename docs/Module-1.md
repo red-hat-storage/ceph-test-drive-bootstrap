@@ -40,6 +40,10 @@ osd-node1
 osd-node2
 osd-node3
 ```
+- Create ``.ansible.cfg`` file and add ``host_key_checking = False`` to it
+```
+$ echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
+```
 - Ensure that Ansible can reach to Ceph hosts.
 ```
 $ ansible all -m ping
@@ -137,10 +141,6 @@ $ cd /usr/share/ceph-ansible
 - Create a ``site.yml`` file from the ``site.yml.sample`` file 
 ```
 $ sudo cp site.yml.sample site.yml
-```
-- (optional) Add ``host_key_checking = False`` in ``ansible.cfg`` 
-```
-$ sudo vi ansible.cfg
 ```
 - Run the Ansible playbook
 ```
