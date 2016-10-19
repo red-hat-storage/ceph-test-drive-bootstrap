@@ -40,7 +40,7 @@ osd-node1
 osd-node2
 osd-node3
 ```
-- Create ``.ansible.cfg`` file and add ``host_key_checking = False`` to it
+- Create ``.ansible.cfg`` file and add ``host_key_checking = False`` using the below command
 ```
 $ echo "[defaults]" >> /home/ceph/.ansible.cfg
 $ echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
