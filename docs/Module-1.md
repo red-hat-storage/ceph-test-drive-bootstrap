@@ -42,6 +42,7 @@ osd-node3
 ```
 - Create ``.ansible.cfg`` file and add ``host_key_checking = False`` to it
 ```
+$ echo "[defaults]" >> /home/ceph/.ansible.cfg
 $ echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
 ```
 - Ensure that Ansible can reach to Ceph hosts.
