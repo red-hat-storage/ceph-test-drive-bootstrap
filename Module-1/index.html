@@ -184,6 +184,12 @@ osd-node3</code></pre>
 
 
 <ul>
+<li>Create <code>.ansible.cfg</code> file and add <code>host_key_checking = False</code> to it</li>
+</ul>
+<pre class="codehilite"><code>$ echo &quot;host_key_checking = False&quot; &gt;&gt; /home/ceph/.ansible.cfg</code></pre>
+
+
+<ul>
 <li>Ensure that Ansible can reach to Ceph hosts.</li>
 </ul>
 <pre class="codehilite"><code>$ ansible all -m ping</code></pre>
@@ -315,12 +321,6 @@ osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }}
 <li>Create a <code>site.yml</code> file from the <code>site.yml.sample</code> file </li>
 </ul>
 <pre class="codehilite"><code>$ sudo cp site.yml.sample site.yml</code></pre>
-
-
-<ul>
-<li>(optional) Add <code>host_key_checking = False</code> in <code>ansible.cfg</code> </li>
-</ul>
-<pre class="codehilite"><code>$ sudo vi ansible.cfg</code></pre>
 
 
 <ul>
