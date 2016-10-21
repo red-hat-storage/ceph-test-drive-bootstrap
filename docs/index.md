@@ -9,16 +9,17 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 
 ## Prerequisites
 - **For Windows user :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client [here](http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe)
-- **For Mac and Linux users:**  you will use a Terminal application to SSH into LAB machine (this should already be installed on your host). 
+- **For Mac and Linux users:**  you will need a Terminal application to SSH into LAB machine (this should already be installed on your host). 
 
 ## Know your Lab Environment
 
 ### Starting LAB
 - To launch your LAB Environment, click **Start Lab** button from the Lab panel. Hang tight , it will take **12-15 minutes** to launch LAB resources.
-- Once LAB is launched, grab the **Management Node IP** from **Addl. Info Tab** on Right Side
+- Once LAB is launched, grab the **Management Node IP** from **Addl. Info** tab on Right Side
 
 !!! note
-    If the **Addl. Info Tab** is unavailable, make sure you clicked **Start Lab** button on the top bar of interface.
+    - If the **Addl. Info** Tab is unavailable, make sure you clicked **Start Lab** button on the top bar of interface.
+    - After clicking **Start Lab** , Lab creation will take some **12-15 minutes**. This is expected,  so Hang Tight.
 
 - On the **Lab Details** tab, notice the lab properties:
     - **Setup Time -** The estimated time for the lab to start your instance so you can access the lab environment.
@@ -27,14 +28,15 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 
 ### Accessing LAB
 - Open SSH client software on our workstation.
-- As **``ceph``** user, SSH into Ceph Management node by using **Management node IP address** which you can get from **connect** tab.
+- As **ceph** user, SSH into Ceph Management node by using **Management node IP address** which you can get from **Addl. Info** tab.
 - SSH into the node using the following command and provided credentials
   - ``$ ssh ceph@<Mangement Node IP Address>``
-  - Login Credentials  ⇒ **User Name:** ``ceph`` and **Password:** ``Redhat16``
+  - **Login Credentials** ⇒ **User Name:** **ceph** and **Password:** **Redhat16**
 
 !!! note
     - Make sure you are logging in to **your LAB environment** Management node IP address as **ceph** user
-    - Type **yes** when ssh prompts for confirmation before establishing connection 
+    - Type **yes** when ssh prompts for confirmation before establishing connection
+    - **Login Credentials** ⇒ **User Name:** **ceph** and **Password:** **Redhat16**
 
 **Example Snippet:** 
 ```

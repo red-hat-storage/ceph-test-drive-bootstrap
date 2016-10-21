@@ -23,14 +23,14 @@ markdown_extensions:
 
 
 theme: 'material'
-#extra:
-#  logo: 'images/favicon.ico'
+extra:
+  logo: 'images/RedHat.svg'
 site_name: Red Hat Ceph Storage Test Drive
 
 pages:
 - Home: index.md
 - Modules:
-    - 'Module-1 Cluster Setup': Module-1.md
+    - 'Module-1 Ceph Cluster Setup': Module-1.md
     - 'Module-2 Ceph Block Storage': Module-2.md
     - 'Module-3 Ceph Object Storage': Module-3.md
  #   - 'Module 4 - Scaling up a Ceph cluster': Module-4.md

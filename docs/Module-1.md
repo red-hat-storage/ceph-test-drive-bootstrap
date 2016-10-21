@@ -2,13 +2,12 @@
 
 RHCS 2.0 has introduced a new and more efficient way to deploy Ceph cluster. Instead of ``ceph-deploy``  RHCS 2.0 ships with ``ceph-ansible`` tool which is based on configuration management tool ``Ansible`` .
 
-In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. As mentioned above we will use ``ceph-ansible`` to do this.  
+In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. We will use ``ceph-ansible`` to deploy this cluster.
 
-```
-## Note: ##
 
-You must run all the commands using ceph user and from management node, Unless otherwise specified. 
-```
+!!! note
+    You must run all the commands using **ceph** user and from **management node**, Unless otherwise specified. 
+
 - From your workstation login to Ceph management node as **``ceph``** user
 ```
 $ ssh ceph@<IP address of Ceph Management node>
@@ -57,11 +56,11 @@ $ ansible all -m ping
 $ cd ~
 $ mkdir ceph-ansible-keys
 ```
-- Navigate to the Ceph Ansible group_vars directory
+- Navigate to the Ceph Ansible ``group_vars` directory
 ```
 $ cd /usr/share/ceph-ansible/group_vars/
 ```
-- Create an ``all``  file from the ``all.sample``  file and open it for editing
+- Create an ``all`` file from the ``all.sample``  file and open it for editing
 ```
 $ sudo cp all.sample all
 $ sudo vi all
@@ -161,13 +160,10 @@ osd-node3                  : ok=164  changed=16   unreachable=0    failed=0
 ```
 $ ssh mon-node1 ceph -s
 ```
-```
-## Note: ##
+!!! note
+     At this point ignore any cluster health warnings, We will take care of them later in this module.
 
-At this point ignore any cluster health warnings. We will take care of them in later modules.
-```
-
-Upto this point you should have a running Ceph cluster with 3 OSD node ( 9 OSDs total ) and 3 Monitors. Follow 
+> **Upto this point you should have a running Ceph cluster with 3 Ceph OSD nodes ( 9 OSDs total ) and 3 Ceph Monitor nodes.** 
 
 ## Configuring Ceph client
 By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure ``mgmt`` node as our Ceph client node.
@@ -217,22 +213,23 @@ $ ssh mon-node1
 ```
 $ ceph -s
 ```
-- Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. Lets now try to fix this warning.
-	- Verify ``pg_num`` for default pool ``rbd`` 
-	```
-	$ ceph osd dump | grep -i pool
-	```
-	- Increase ``pg_num``  for ``rbd`` pool to 128 and check cluster status 
-	```
-	$ ceph osd pool set rbd pg_num 128
-	$ ceph -s
-    ```
-  - Once cluster is not creating new PGs , increase ``pgp_num`` for ``rbd`` pool to 128 and check cluster status. Your cluster health should now report ``HEALTH_OK``
-  ```
-  $ ceph osd pool set rbd pgp_num 128
-  $ ceph -s
-  ```
+Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. 
+Lets now try to fix this warning.
 
+- Verify ``pg_num`` for default pool ``rbd`` 
+```
+$ ceph osd dump | grep -i pool
+```
+- Increase ``pg_num``  for ``rbd`` pool to 128 and check cluster status 
+```
+$ ceph osd pool set rbd pg_num 128
+$ ceph -s
+```
+- Once cluster is not creating new PGs , increase ``pgp_num`` for ``rbd`` pool to 128 and check cluster status. Your cluster health should now report ``HEALTH_OK``
+```
+$ ceph osd pool set rbd pgp_num 128
+$ ceph -s
+```
 
 - Check Ceph OSD stats and tree view of OSDs in cluster
 ```
@@ -250,3 +247,6 @@ $ ceph osd lspools
 $ ceph df
 $ ceph osd dump | grep -i pool
 ```
+
+> **We have reached to end of Module-1. At this point you have learnt to deploy, configure and interact with Ceph cluster.
+Follow the next module to learn accessing Ceph cluster as a Block Storage.**

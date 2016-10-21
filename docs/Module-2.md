@@ -2,11 +2,9 @@
 
 In this module we will learn how to provision block storage using Ceph. We will create thin-provisioned, resizable RADOS Block Device (RBD) volume, which will be mapped to ``client-node1`` and will be taken into use.
 
-```
-## Note: ##
+!!! note
+    Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.
 
-Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster
-```
 
 - From ``mgmt`` node  configure ``client-node1``  as Ceph client by installing ``ceph-common`` package and changing ownership of ``/etc/ceph`` directory. 
 ```
@@ -49,14 +47,19 @@ $ sudo rbd map block-disk1 --id rbd
 ```
 $ rbd showmapped --id rbd
 ```
-- Make a note of mapped device name , in most of the cases it should be ``/dev/rbd0`` and create ``xfs`` filesystem on it 
+- Make a note of mapped device name from the above command output , in most of the cases it is ``/dev/rbd0``. Create ``xfs`` filesystem on this Ceph block device.
 ```
 $ sudo mkfs.xfs /dev/rbd0
 $ sudo mount /dev/rbd0 /mnt
 $ df -h /mnt
 ```
-- Lets run a quick ``dd`` write test on this block device. Meanwhile this test is going on, you can watch cluster status from a separate ssh connection to ``mgmt``node using `` watch ceph -s`` command
+- Lets run a quick ``dd`` write test on this block device to verify its accessiblity. 
 ```
-$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500
+$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500 &
 ```
-> This is it, we are done. Application can now consume block device coming from Ceph.
+- Meanwhile the ``dd`` test is going on, you can watch cluster status using which should report IO operations on Ceph cluster.
+```
+$ watch ceph -s --id rbd
+```
+
+> **This is it, we have reached to end of Module-2. In this module you have learned how to provision and consume Ceph block device. Follow the next module to learn how to use Ceph as Object Storage**
