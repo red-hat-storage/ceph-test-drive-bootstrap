@@ -5,7 +5,7 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 - **Module 1 :** Setting up a Ceph cluster
 - **Module 2 :** Accessing Ceph cluster via Block Storage interface
 - **Module 3 :** Accessing Ceph cluster via Object Storage interface
-- **Module 4 :** Scaling up a Ceph cluster
+<!-- - **Module 4 :** Scaling up a Ceph cluster -->
 
 ## Prerequisites
 - **For Windows user :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client here: http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe
