@@ -8,16 +8,17 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 <!-- - **Module 4 :** Scaling up a Ceph cluster -->
 
 ## Prerequisites
-- **For Windows user :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client here: http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe
+- **For Windows user :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client [here](http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe)
 - **For Mac and Linux users:**  you will use a Terminal application to SSH into LAB machine (this should already be installed on your host). 
 
-## Getting to know your Lab Environment
+## Know your Lab Environment
 
 ### Starting LAB
-- To launch your LAB Environment, click  ![](http://us-west-2-aws-training.s3.amazonaws.com/awsu-spl/spl02-working-ebs/media/image005.png) button from the Lab panel. Hang tight , it will take a few minutes to launch LAB resources.
-- Once LAB is launched, **Connect** tab will appear on Right side of the screen. Use the **Management Node IP** to connect to LAB instances.
+- To launch your LAB Environment, click **Start Lab** button from the Lab panel. Hang tight , it will take **12-15 minutes** to launch LAB resources.
+- Once LAB is launched, grab the **Management Node IP** from **Addl. Info Tab** on Right Side
 
-  **NOTE** If the **Connect** tab is unavailable, make sure you click **Start Lab** at the top of your screen.
+!!! note
+    If the **Addl. Info Tab** is unavailable, make sure you clicked **Start Lab** button on the top bar of interface.
 
 - On the **Lab Details** tab, notice the lab properties:
     - **Setup Time -** The estimated time for the lab to start your instance so you can access the lab environment.
@@ -31,10 +32,9 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
   - ``$ ssh ceph@<Mangement Node IP Address>``
   - Login Credentials  ⇒ **User Name:** ``ceph`` and **Password:** ``Redhat16``
 
-**Note:**
-- Make sure you are logging in as **``ceph``** user 
-- Make sure you are logging in as **your LAB environment** Management node IP address
-- Type **``yes``** when ssh prompts for confirmation before establishing connection 
+!!! note
+    - Make sure you are logging in to **your LAB environment** Management node IP address as **ceph** user
+    - Type **yes** when ssh prompts for confirmation before establishing connection 
 
 **Example Snippet:** 
 ```
@@ -59,7 +59,7 @@ Follow these steps to end your lab environment and share your experience.
 
 
 
-## Getting to know Red Hat Ceph Storage
+## Know Red Hat Ceph Storage
 
 Red Hat Ceph Storage is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. 
 
@@ -83,9 +83,8 @@ Setting up a Ceph cluster requires the following configuration on the cluster no
 - **NTP configuration:** For time synchronization across nodes.
 - **Local user account:** User with passwordless sudo ssh access to all nodes, for Ceph deployment using Ansible.
 
-```
-## Note: ##
+!!! note
+    The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.
 
-The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.
-```
+
 So without further delays, please go ahead and follow these modules to gain experience on Ceph.

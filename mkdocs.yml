@@ -1,4 +1,4 @@
-site_name: RHCS Test Drive Instructions
+#site_name: RHCS Test Drive Instructions
 site_favicon: images/favicon.ico
 markdown_extensions:
     - smarty
@@ -10,14 +10,36 @@ markdown_extensions:
     - codehilite
     - nl2br
     
-theme: 'united'
-extra:
-    theme_inverse: true
+#theme: 'united'
+#extra:
+#    theme_inverse: true
+#pages:
+#- Home: index.md
+#- Modules:
+#    - 'Module 1 - Setting up a Ceph cluster': Module-1.md
+#    - 'Module 2 - Ceph Block Storage interface': Module-2.md
+#    - 'Module 3 - Ceph Object Storage interface': Module-3.md
+#    - 'Module 4 - Scaling up a Ceph cluster': Module-4.md
+
+
+theme: 'material'
+#extra:
+#  logo: 'images/favicon.ico'
+site_name: Red Hat Ceph Storage Test Drive
+
 pages:
 - Home: index.md
 - Modules:
-    - 'Module 1 - Setting up a Ceph cluster': Module-1.md
-    - 'Module 2 - Ceph Block Storage interface': Module-2.md
-    - 'Module 3 - Ceph Object Storage interface': Module-3.md
+    - 'Module-1 Cluster Setup': Module-1.md
+    - 'Module-2 Ceph Block Storage': Module-2.md
+    - 'Module-3 Ceph Object Storage': Module-3.md
  #   - 'Module 4 - Scaling up a Ceph cluster': Module-4.md
 
+# Extensions
+markdown_extensions:
+  - codehilite(css_class=code)
+  - admonition
+  - toc:
+      permalink: '#'
+
+copyright: Copyright ©2016 Red Hat, Inc.
