@@ -1,140 +1,249 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        
-        <link rel="shortcut icon" href="../images/favicon.ico">
-        
-
-	<title>Module 1 - Setting up a Ceph cluster - RHCS Test Drive Instructions</title>
-
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
-        <link href="../css/base.css" rel="stylesheet">
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-        
-    </head>
-
-    <body>
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Main title -->
-            <a class="navbar-brand" href="..">RHCS Test Drive Instructions</a>
-        </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-            <!-- Main navigation -->
-            <ul class="nav navbar-nav">
-            
-            
-                <li >
-                    <a href="..">Home</a>
-                </li>
-            
-            
-            
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li class="active">
-    <a href="./">Module 1 - Setting up a Ceph cluster</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../Module-2/">Module 2 - Ceph Block Storage interface</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../Module-3/">Module 3 - Ceph Object Storage interface</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            </ul>
-
-            <!-- Search, Navigation and Repo links -->
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                <li >
-                    <a rel="next" href="..">
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </li>
-                <li >
-                    <a rel="prev" href="../Module-2/">
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Module-1 Cluster Setup - Red Hat Ceph Storage Test Drive</title>
+      
+      
+      
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
+    <meta property="og:image" content="None/../">
+    <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../assets/fonts/icon.eot?52m981');
+      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class=" ">
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
     </div>
-</div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Modules <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Module-1 Cluster Setup
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="/" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>
+          Red Hat Ceph Storage Test Drive
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="..">
+      Home
+    </a>
+    
+  </li>
 
-        <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
+          
+            
+  <li>
+    <span class="section">Modules</span>
+    <ul>
+      
+        
+  <li>
+    <a class="current" title="Module-1 Cluster Setup" href="./">
+      Module-1 Cluster Setup
+    </a>
     
-        <li class="main active"><a href="#module-1-setting-up-a-ceph-cluster">Module - 1 : Setting up a Ceph cluster</a></li>
+      
         
-            <li><a href="#installing-and-setting-up-ceph-ansible">Installing and setting up ceph-ansible</a></li>
-        
-            <li><a href="#configuring-ceph-global-settings">Configuring Ceph Global Settings</a></li>
-        
-            <li><a href="#configuring-ceph-osd-settings">Configuring Ceph OSD Settings</a></li>
-        
-            <li><a href="#deploying-ceph-cluster">Deploying Ceph Cluster</a></li>
-        
-            <li><a href="#configuring-ceph-client">Configuring Ceph client</a></li>
-        
-            <li><a href="#interacting-with-ceph-cluster">Interacting with Ceph cluster</a></li>
-        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Installing and setting up ceph-ansible" href="#installing-and-setting-up-ceph-ansible">
+                Installing and setting up ceph-ansible
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring Ceph Global Settings" href="#configuring-ceph-global-settings">
+                Configuring Ceph Global Settings
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring Ceph OSD Settings" href="#configuring-ceph-osd-settings">
+                Configuring Ceph OSD Settings
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Deploying Ceph Cluster" href="#deploying-ceph-cluster">
+                Deploying Ceph Cluster
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring Ceph client" href="#configuring-ceph-client">
+                Configuring Ceph client
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Interacting with Ceph cluster" href="#interacting-with-ceph-cluster">
+                Interacting with Ceph cluster
+              </a>
+            </li>
+          
+        </ul>
+      
     
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-2 Ceph Block Storage" href="../Module-2/">
+      Module-2 Ceph Block Storage
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-3 Ceph Object Storage" href="../Module-3/">
+      Module-3 Ceph Object Storage
+    </a>
+    
+  </li>
+
+      
     </ul>
-</div></div>
-            <div class="col-md-9" role="main">
+  </li>
 
-<h1 id="module-1-setting-up-a-ceph-cluster">Module - 1 : Setting up a Ceph cluster<a class="headerlink" href="#module-1-setting-up-a-ceph-cluster" title="Permanent link">&para;</a></h1>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <h1 id="module-1-setting-up-a-ceph-cluster">Module - 1 : Setting up a Ceph cluster<a class="headerlink" href="#module-1-setting-up-a-ceph-cluster" title="Permanent link">#</a></h1>
 <p>RHCS 2.0 has introduced a new and more efficient way to deploy Ceph cluster. Instead of <code>ceph-deploy</code>  RHCS 2.0 ships with <code>ceph-ansible</code> tool which is based on configuration management tool <code>Ansible</code> .</p>
 <p>In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. As mentioned above we will use <code>ceph-ansible</code> to do this.  </p>
-<pre class="codehilite"><code>## Note: ##
+<pre class="code"><code>## Note: ##
 
 You must run all the commands using ceph user and from management node, Unless otherwise specified. </code></pre>
 
@@ -142,32 +251,32 @@ You must run all the commands using ceph user and from management node, Unless o
 <ul>
 <li>From your workstation login to Ceph management node as <strong><code>ceph</code></strong> user</li>
 </ul>
-<pre class="codehilite"><code>$ ssh ceph@&lt;IP address of Ceph Management node&gt;</code></pre>
+<pre class="code"><code>$ ssh ceph@&lt;IP address of Ceph Management node&gt;</code></pre>
 
 
-<h2 id="installing-and-setting-up-ceph-ansible">Installing and setting up ceph-ansible<a class="headerlink" href="#installing-and-setting-up-ceph-ansible" title="Permanent link">&para;</a></h2>
+<h2 id="installing-and-setting-up-ceph-ansible">Installing and setting up ceph-ansible<a class="headerlink" href="#installing-and-setting-up-ceph-ansible" title="Permanent link">#</a></h2>
 <ul>
 <li>Install ceph-ansible package</li>
 </ul>
-<pre class="codehilite"><code>$ sudo yum install -y ceph-ansible</code></pre>
+<pre class="code"><code>$ sudo yum install -y ceph-ansible</code></pre>
 
 
 <ul>
 <li>Rename default ansible host file, its of no much use.</li>
 </ul>
-<pre class="codehilite"><code>$ sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp</code></pre>
+<pre class="code"><code>$ sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp</code></pre>
 
 
 <ul>
 <li>Create a new ansible hosts file, with the following content.</li>
 </ul>
-<pre class="codehilite"><code>$ sudo vi /etc/ansible/hosts</code></pre>
+<pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
 <li>Under <code>/etc/ansible/hosts</code> file add Ceph monitor host names under <code>[mons]</code>  section and Ceph OSDs host name under <code>[osds]</code>  section . This allows ansible to know which role to be applied on which host.</li>
 </ul>
-<pre class="codehilite"><code>[mons]
+<pre class="code"><code>[mons]
 mon-node1
 mon-node2
 mon-node3
@@ -180,120 +289,120 @@ osd-node3</code></pre>
 <ul>
 <li>Create <code>.ansible.cfg</code> file and add <code>host_key_checking = False</code> using the below command</li>
 </ul>
-<pre class="codehilite"><code>$ echo &quot;[defaults]&quot; &gt;&gt; /home/ceph/.ansible.cfg
+<pre class="code"><code>$ echo &quot;[defaults]&quot; &gt;&gt; /home/ceph/.ansible.cfg
 $ echo &quot;host_key_checking = False&quot; &gt;&gt; /home/ceph/.ansible.cfg</code></pre>
 
 
 <ul>
 <li>Ensure that Ansible can reach to Ceph hosts.</li>
 </ul>
-<pre class="codehilite"><code>$ ansible all -m ping</code></pre>
+<pre class="code"><code>$ ansible all -m ping</code></pre>
 
 
-<h2 id="configuring-ceph-global-settings">Configuring Ceph Global Settings<a class="headerlink" href="#configuring-ceph-global-settings" title="Permanent link">&para;</a></h2>
+<h2 id="configuring-ceph-global-settings">Configuring Ceph Global Settings<a class="headerlink" href="#configuring-ceph-global-settings" title="Permanent link">#</a></h2>
 <ul>
 <li>Create a directory under the home directory so Ansible can write the keys</li>
 </ul>
-<pre class="codehilite"><code>$ cd ~
+<pre class="code"><code>$ cd ~
 $ mkdir ceph-ansible-keys</code></pre>
 
 
 <ul>
 <li>Navigate to the Ceph Ansible group_vars directory</li>
 </ul>
-<pre class="codehilite"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
 
 
 <ul>
 <li>Create an <code>all</code>  file from the <code>all.sample</code>  file and open it for editing</li>
 </ul>
-<pre class="codehilite"><code>$ sudo cp all.sample all
+<pre class="code"><code>$ sudo cp all.sample all
 $ sudo vi all</code></pre>
 
 
 <ul>
 <li>Uncomment <code>fetch_directory</code> setting under the <code>GENERAL</code> section and point it to directory we created previously for ceph-ansible-keys</li>
 </ul>
-<pre class="codehilite"><code>fetch_directory: ~/ceph-ansible-keys</code></pre>
+<pre class="code"><code>fetch_directory: ~/ceph-ansible-keys</code></pre>
 
 
 <ul>
 <li>Under <code>Stable Releases</code> section and <code>ENTERPRISE VERSION RED HAT STORAGE</code> subsection, uncomment <code>ceph_stable_rh_storage</code> setting and set it to <strong><code>true</code></strong></li>
 </ul>
-<pre class="codehilite"><code>ceph_stable_rh_storage: true</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage: true</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>ceph_stable_rh_storage_iso_install</code> setting and set it to <strong><code>true</code></strong> </li>
 </ul>
-<pre class="codehilite"><code>ceph_stable_rh_storage_iso_install: true</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage_iso_install: true</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>ceph_stable_rh_storage_iso_path</code> setting and specify the path to RHCS 2.0 ISO image</li>
 </ul>
-<pre class="codehilite"><code>ceph_stable_rh_storage_iso_path: /home/ceph/rhceph-2.0-rhel-7-x86_64.iso</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage_iso_path: /home/ceph/rhceph-2.0-rhel-7-x86_64.iso</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>cephx</code> setting under <code>CEPH CONFIGURATION</code> section</li>
 </ul>
-<pre class="codehilite"><code>cephx: true</code></pre>
+<pre class="code"><code>cephx: true</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>monitor_interface</code> setting under <code>Monitor options</code> section and specify monitor node interface name.</li>
 </ul>
-<pre class="codehilite"><code>monitor_interface: eth0</code></pre>
+<pre class="code"><code>monitor_interface: eth0</code></pre>
 
 
 <ul>
 <li>Set the <code>journal_size</code>  setting</li>
 </ul>
-<pre class="codehilite"><code>journal_size: 4096</code></pre>
+<pre class="code"><code>journal_size: 4096</code></pre>
 
 
 <ul>
 <li>Set the <code>public_network</code> and <code>cluster_network</code> settings</li>
 </ul>
-<pre class="codehilite"><code>public_network: 10.100.2.0/24
+<pre class="code"><code>public_network: 10.100.2.0/24
 cluster_network: 10.100.1.0/24</code></pre>
 
 
 <ul>
 <li>Save the file and exit from editor</li>
 </ul>
-<h2 id="configuring-ceph-osd-settings">Configuring Ceph OSD Settings<a class="headerlink" href="#configuring-ceph-osd-settings" title="Permanent link">&para;</a></h2>
+<h2 id="configuring-ceph-osd-settings">Configuring Ceph OSD Settings<a class="headerlink" href="#configuring-ceph-osd-settings" title="Permanent link">#</a></h2>
 <ul>
 <li>To disk devices as Ceph OSD, verify disks logical names. In most cases disk name should be <code>xvdb</code> <code>xvdc</code> and <code>xvdd</code> </li>
 </ul>
-<pre class="codehilite"><code>$ ssh osd-node1 lsblk</code></pre>
+<pre class="code"><code>$ ssh osd-node1 lsblk</code></pre>
 
 
 <ul>
 <li>To define Ceph OSDs , navigate to the <code>/usr/share/ceph-ansible/group_vars/</code>  directory</li>
 </ul>
-<pre class="codehilite"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
 
 
 <ul>
 <li>Create an <code>osds</code> file from <code>osds.sample</code> file and open it for editing</li>
 </ul>
-<pre class="codehilite"><code>$ sudo cp osds.sample osds
+<pre class="code"><code>$ sudo cp osds.sample osds
 $ sudo vi osds</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>crush_location</code> setting and the <code>osd_crush_location</code> setting</li>
 </ul>
-<pre class="codehilite"><code>crush_location: false
+<pre class="code"><code>crush_location: false
 osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }} host={{ ansible_hostname }}'&quot;</code></pre>
 
 
 <ul>
 <li>To add OSD devices, uncomment the <code>devices:</code> section and add the OSD devices logical name <code>/dev/xvdb</code> and <code>/dev/xvdc</code> and <code>/dev/xvdd</code> to the list of devices</li>
 </ul>
-<pre class="codehilite"><code>devices:
+<pre class="code"><code>devices:
   - /dev/xvdb
   - /dev/xvdc
   - /dev/xvdd</code></pre>
@@ -302,32 +411,32 @@ osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }}
 <ul>
 <li>Uncomment the <code>journal_collocation</code> setting and specify <strong><code>true</code></strong> so that OSDs can use co-located journals</li>
 </ul>
-<pre class="codehilite"><code>journal_collocation: true</code></pre>
+<pre class="code"><code>journal_collocation: true</code></pre>
 
 
-<h2 id="deploying-ceph-cluster">Deploying Ceph Cluster<a class="headerlink" href="#deploying-ceph-cluster" title="Permanent link">&para;</a></h2>
+<h2 id="deploying-ceph-cluster">Deploying Ceph Cluster<a class="headerlink" href="#deploying-ceph-cluster" title="Permanent link">#</a></h2>
 <ul>
 <li>Navigate to the <code>ceph-ansible</code> configuration directory</li>
 </ul>
-<pre class="codehilite"><code>$ cd /usr/share/ceph-ansible</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible</code></pre>
 
 
 <ul>
 <li>Create a <code>site.yml</code> file from the <code>site.yml.sample</code> file </li>
 </ul>
-<pre class="codehilite"><code>$ sudo cp site.yml.sample site.yml</code></pre>
+<pre class="code"><code>$ sudo cp site.yml.sample site.yml</code></pre>
 
 
 <ul>
 <li>Run the Ansible playbook</li>
 </ul>
-<pre class="codehilite"><code>$ ansible-playbook site.yml -u ceph</code></pre>
+<pre class="code"><code>$ ansible-playbook site.yml -u ceph</code></pre>
 
 
 <ul>
 <li>Ansible will take a few minutes to complete Ceph deployment. Once its completed Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.</li>
 </ul>
-<pre class="codehilite"><code>PLAY RECAP ********************************************************************
+<pre class="code"><code>PLAY RECAP ********************************************************************
 mon-node1                  : ok=91   changed=19   unreachable=0    failed=0
 mon-node2                  : ok=91   changed=18   unreachable=0    failed=0
 mon-node3                  : ok=91   changed=18   unreachable=0    failed=0
@@ -339,46 +448,46 @@ osd-node3                  : ok=164  changed=16   unreachable=0    failed=0</cod
 <ul>
 <li>Finally check status of your cluster. </li>
 </ul>
-<pre class="codehilite"><code>$ ssh mon-node1 ceph -s</code></pre>
+<pre class="code"><code>$ ssh mon-node1 ceph -s</code></pre>
 
 
-<pre class="codehilite"><code>## Note: ##
+<pre class="code"><code>## Note: ##
 
 At this point ignore any cluster health warnings. We will take care of them in later modules.</code></pre>
 
 
 <p>Upto this point you should have a running Ceph cluster with 3 OSD node ( 9 OSDs total ) and 3 Monitors. Follow </p>
-<h2 id="configuring-ceph-client">Configuring Ceph client<a class="headerlink" href="#configuring-ceph-client" title="Permanent link">&para;</a></h2>
+<h2 id="configuring-ceph-client">Configuring Ceph client<a class="headerlink" href="#configuring-ceph-client" title="Permanent link">#</a></h2>
 <p>By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure <code>mgmt</code> node as our Ceph client node.</p>
 <ul>
 <li>On <code>mgmt</code>node install <code>ceph-common</code> package which provides <code>Ceph CLI</code>  and other tools</li>
 </ul>
-<pre class="codehilite"><code>$ sudo yum install -y ceph-common</code></pre>
+<pre class="code"><code>$ sudo yum install -y ceph-common</code></pre>
 
 
 <ul>
 <li>Change ownership of <code>/etc/ceph</code> directory</li>
 </ul>
-<pre class="codehilite"><code>$ sudo chown -R ceph:ceph /etc/ceph</code></pre>
+<pre class="code"><code>$ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 
 
 <ul>
 <li>From <code>mon-node1</code> copy Ceph configuration file (<code>ceph.conf</code>) and Ceph administration keyring (<code>ceph.client.admin.keyring</code>) to <code>mgmt</code> node</li>
 </ul>
-<pre class="codehilite"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.conf | tee /etc/ceph/ceph.conf</code></pre>
+<pre class="code"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.conf | tee /etc/ceph/ceph.conf</code></pre>
 
 
-<pre class="codehilite"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.client.admin.keyring | tee /etc/ceph/ceph.client.admin.keyring</code></pre>
+<pre class="code"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.client.admin.keyring | tee /etc/ceph/ceph.client.admin.keyring</code></pre>
 
 
-<pre class="codehilite"><code>$ chmod 400 /etc/ceph/ceph.client.admin.keyring
+<pre class="code"><code>$ chmod 400 /etc/ceph/ceph.client.admin.keyring
 $ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 
 
 <ul>
 <li>Verify <code>mgmt</code> node which is our Ceph client , can run Ceph commands</li>
 </ul>
-<pre class="codehilite"><code>[ceph@mgmt ~]$ ceph -s
+<pre class="code"><code>[ceph@mgmt ~]$ ceph -s
     cluster 32ab020c-e510-4884-ab0a-63944c2c6b35
      health HEALTH_WARN
             too few PGs per OSD (21 &lt; min 30)
@@ -392,92 +501,129 @@ $ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 [ceph@mgmt ~]$</code></pre>
 
 
-<h2 id="interacting-with-ceph-cluster">Interacting with Ceph cluster<a class="headerlink" href="#interacting-with-ceph-cluster" title="Permanent link">&para;</a></h2>
+<h2 id="interacting-with-ceph-cluster">Interacting with Ceph cluster<a class="headerlink" href="#interacting-with-ceph-cluster" title="Permanent link">#</a></h2>
 <p>In this section we will learn a few commands to interact with Ceph cluster. These commands should be executed from <code>mon-node1</code> node.</p>
 <ul>
 <li>ssh to <code>mon-node1</code> </li>
 </ul>
-<pre class="codehilite"><code>$ ssh mon-node1</code></pre>
+<pre class="code"><code>$ ssh mon-node1</code></pre>
 
 
 <ul>
 <li>Check cluster status</li>
 </ul>
-<pre class="codehilite"><code>$ ceph -s</code></pre>
+<pre class="code"><code>$ ceph -s</code></pre>
 
 
 <ul>
 <li>Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. Lets now try to fix this warning.<ul>
-<li>Verify <code>pg_num</code> for default pool <code>rbd</code> <br />
+<li>Verify <code>pg_num</code> for default pool <code>rbd</code> 
 <code>$ ceph osd dump | grep -i pool</code></li>
-<li>Increase <code>pg_num</code>  for <code>rbd</code> pool to 128 and check cluster status <br />
+<li>Increase <code>pg_num</code>  for <code>rbd</code> pool to 128 and check cluster status 
 <code>$ ceph osd pool set rbd pg_num 128
 $ ceph -s</code></li>
 </ul>
 </li>
 <li>
-<p>Once cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code><br />
-<code>$ ceph osd pool set rbd pgp_num 128
+<p>Once cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code>
+  <code>$ ceph osd pool set rbd pgp_num 128
   $ ceph -s</code></p>
 </li>
 <li>
 <p>Check Ceph OSD stats and tree view of OSDs in cluster</p>
 </li>
 </ul>
-<pre class="codehilite"><code>$ ceph osd stat
+<pre class="code"><code>$ ceph osd stat
 $ ceph osd tree</code></pre>
 
 
 <ul>
 <li>Check Ceph monitor status</li>
 </ul>
-<pre class="codehilite"><code>$ ceph mon stat</code></pre>
+<pre class="code"><code>$ ceph mon stat</code></pre>
 
 
 <ul>
 <li>List and check Ceph pool status</li>
 </ul>
-<pre class="codehilite"><code>$ ceph osd lspools
+<pre class="code"><code>$ ceph osd lspools
 $ ceph df
-$ ceph osd dump | grep -i pool</code></pre></div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
+$ ceph osd dump | grep -i pool</code></pre>
+          <aside class="copyright" role="note">
             
-            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
-        </footer>
-
-        <script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script>
-        <script>var base_url = '..';</script>
-        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
-        <script src="../js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
+              Copyright ©2016 Red Hat, Inc. &ndash;
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href=".." title="Home">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
             </div>
+            <div class="stretch">
+              <div class="title">
+                Home
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../Module-2/" title="Module-2 Ceph Block Storage">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Module-2 Ceph Block Storage
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
         </div>
-    </body>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '..';
+      var repo_id  = '';
+    </script>
+    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    
+    
+  </body>
 </html>

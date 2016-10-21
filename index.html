@@ -1,152 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        
-        <link rel="shortcut icon" href="images/favicon.ico">
-        
-
-	<title>RHCS Test Drive Instructions</title>
-
-        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="./css/highlight.css">
-        <link href="./css/base.css" rel="stylesheet">
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-        
-    </head>
-
-    <body>
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Main title -->
-            <a class="navbar-brand" href=".">RHCS Test Drive Instructions</a>
-        </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-            <!-- Main navigation -->
-            <ul class="nav navbar-nav">
-            
-            
-                <li class="active">
-                    <a href=".">Home</a>
-                </li>
-            
-            
-            
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="Module-1/">Module 1 - Setting up a Ceph cluster</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="Module-2/">Module 2 - Ceph Block Storage interface</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="Module-3/">Module 3 - Ceph Object Storage interface</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            </ul>
-
-            <!-- Search, Navigation and Repo links -->
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a rel="next" >
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </li>
-                <li >
-                    <a rel="prev" href="Module-1/">
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Red Hat Ceph Storage Test Drive</title>
+      
+      
+      
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
+    <meta property="og:image" content="None/./">
+    <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('./assets/fonts/icon.eot?52m981');
+      	src: url('./assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('./assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('./assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('./assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="./assets/stylesheets/application-a422ff04cc.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+    <script src="./assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class=" ">
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
     </div>
-</div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+          </span>
+        
+        Red Hat Ceph Storage Test Drive
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="/" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>
+          Red Hat Ceph Storage Test Drive
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="current" title="Home" href=".">
+      Home
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Prerequisites" href="#prerequisites">
+                Prerequisites
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Know your Lab Environment" href="#know-your-lab-environment">
+                Know your Lab Environment
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Know Red Hat Ceph Storage" href="#know-red-hat-ceph-storage">
+                Know Red Hat Ceph Storage
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Prerequisites" href="#prerequisites_1">
+                Prerequisites
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
 
-        <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
+          
+            
+  <li>
+    <span class="section">Modules</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Module-1 Cluster Setup" href="Module-1/">
+      Module-1 Cluster Setup
+    </a>
     
-        <li class="main active"><a href="#introduction">Introduction</a></li>
+  </li>
+
+      
         
-            <li><a href="#prerequisites">Prerequisites</a></li>
-        
-            <li><a href="#getting-to-know-your-lab-environment">Getting to know your Lab Environment</a></li>
-        
-            <li><a href="#getting-to-know-red-hat-ceph-storage">Getting to know Red Hat Ceph Storage</a></li>
-        
-            <li><a href="#prerequisites_1">Prerequisites</a></li>
-        
+  <li>
+    <a class="" title="Module-2 Ceph Block Storage" href="Module-2/">
+      Module-2 Ceph Block Storage
+    </a>
     
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-3 Ceph Object Storage" href="Module-3/">
+      Module-3 Ceph Object Storage
+    </a>
+    
+  </li>
+
+      
     </ul>
-</div></div>
-            <div class="col-md-9" role="main">
+  </li>
 
-<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
 <p>Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience awesome , the contents of this test drive have been divided into following modules.</p>
 <ul>
 <li><strong>Module 1 :</strong> Setting up a Ceph cluster</li>
 <li><strong>Module 2 :</strong> Accessing Ceph cluster via Block Storage interface</li>
-<li><strong>Module 3 :</strong> Accessing Ceph cluster via Object Storage interface<br />
+<li><strong>Module 3 :</strong> Accessing Ceph cluster via Object Storage interface
 <!-- - **Module 4 :** Scaling up a Ceph cluster --></li>
 </ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>For Windows user :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client here: http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe</li>
+<li><strong>For Windows user :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client <a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">here</a></li>
 <li><strong>For Mac and Linux users:</strong>  you will use a Terminal application to SSH into LAB machine (this should already be installed on your host). </li>
 </ul>
-<h2 id="getting-to-know-your-lab-environment">Getting to know your Lab Environment<a class="headerlink" href="#getting-to-know-your-lab-environment" title="Permanent link">&para;</a></h2>
-<h3 id="starting-lab">Starting LAB<a class="headerlink" href="#starting-lab" title="Permanent link">&para;</a></h3>
+<h2 id="know-your-lab-environment">Know your Lab Environment<a class="headerlink" href="#know-your-lab-environment" title="Permanent link">#</a></h2>
+<h3 id="starting-lab">Starting LAB<a class="headerlink" href="#starting-lab" title="Permanent link">#</a></h3>
 <ul>
-<li>To launch your LAB Environment, click  <img alt="" src="http://us-west-2-aws-training.s3.amazonaws.com/awsu-spl/spl02-working-ebs/media/image005.png" /> button from the Lab panel. Hang tight , it will take a few minutes to launch LAB resources.</li>
-<li>Once LAB is launched, <strong>Connect</strong> tab will appear on Right side of the screen. Use the <strong>Management Node IP</strong> to connect to LAB instances.</li>
+<li>To launch your LAB Environment, click <strong>Start Lab</strong> button from the Lab panel. Hang tight , it will take <strong>12-15 minutes</strong> to launch LAB resources.</li>
+<li>Once LAB is launched, grab the <strong>Management Node IP</strong> from <strong>Addl. Info Tab</strong> on Right Side</li>
 </ul>
-<p><strong>NOTE</strong> If the <strong>Connect</strong> tab is unavailable, make sure you click <strong>Start Lab</strong> at the top of your screen.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the <strong>Addl. Info Tab</strong> is unavailable, make sure you clicked <strong>Start Lab</strong> button on the top bar of interface.</p>
+</div>
 <ul>
 <li>On the <strong>Lab Details</strong> tab, notice the lab properties:<ul>
 <li><strong>Setup Time -</strong> The estimated time for the lab to start your instance so you can access the lab environment.</li>
@@ -155,7 +255,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="accessing-lab">Accessing LAB<a class="headerlink" href="#accessing-lab" title="Permanent link">&para;</a></h3>
+<h3 id="accessing-lab">Accessing LAB<a class="headerlink" href="#accessing-lab" title="Permanent link">#</a></h3>
 <ul>
 <li>Open SSH client software on our workstation.</li>
 <li>As <strong><code>ceph</code></strong> user, SSH into Ceph Management node by using <strong>Management node IP address</strong> which you can get from <strong>connect</strong> tab.</li>
@@ -163,12 +263,15 @@
 <li><code>$ ssh ceph@&lt;Mangement Node IP Address&gt;</code></li>
 <li>Login Credentials  ⇒ <strong>User Name:</strong> <code>ceph</code> and <strong>Password:</strong> <code>Redhat16</code></li>
 </ul>
-<p><strong>Note:</strong><br />
-- Make sure you are logging in as <strong><code>ceph</code></strong> user <br />
-- Make sure you are logging in as <strong>your LAB environment</strong> Management node IP address<br />
-- Type <strong><code>yes</code></strong> when ssh prompts for confirmation before establishing connection </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Make sure you are logging in to <strong>your LAB environment</strong> Management node IP address as <strong>ceph</strong> user</li>
+<li>Type <strong>yes</strong> when ssh prompts for confirmation before establishing connection </li>
+</ul>
+</div>
 <p><strong>Example Snippet:</strong> </p>
-<pre class="codehilite"><code>$ ssh ceph@52.55.48.166
+<pre class="code"><code>$ ssh ceph@52.55.48.166
 The authenticity of host '52.55.48.166 (52.55.48.166)' can't be established.
 ECDSA key fingerprint is 23:36:98:4f:18:cc:60:98:35:34:58:8e:85:46:67:66.
 Are you sure you want to continue connecting (yes/no)? yes
@@ -178,7 +281,7 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 [ceph@mgmt ~]$</code></pre>
 
 
-<h3 id="terminating-lab">Terminating LAB<a class="headerlink" href="#terminating-lab" title="Permanent link">&para;</a></h3>
+<h3 id="terminating-lab">Terminating LAB<a class="headerlink" href="#terminating-lab" title="Permanent link">#</a></h3>
 <p>Follow these steps to end your lab environment and share your experience.</p>
 <ul>
 <li>Close your remote session.</li>
@@ -186,7 +289,7 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li>In the confirmation message, click <strong>OK</strong>.</li>
 <li>Tell us about your lab experience on Ceph and suggestions to improve this environment</li>
 </ul>
-<h2 id="getting-to-know-red-hat-ceph-storage">Getting to know Red Hat Ceph Storage<a class="headerlink" href="#getting-to-know-red-hat-ceph-storage" title="Permanent link">&para;</a></h2>
+<h2 id="know-red-hat-ceph-storage">Know Red Hat Ceph Storage<a class="headerlink" href="#know-red-hat-ceph-storage" title="Permanent link">#</a></h2>
 <p>Red Hat Ceph Storage is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. </p>
 <p>Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object storage. Red Hat Ceph Storage clusters consist of the following types of nodes:</p>
 <ul>
@@ -196,7 +299,7 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li>Object Gateway nodes</li>
 <li>MDS nodes</li>
 </ul>
-<h2 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">&para;</a></h2>
+<h2 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">#</a></h2>
 <p>Setting up a Ceph cluster requires the following configuration on the cluster nodes.</p>
 <ul>
 <li><strong>Operating System :</strong>  Heterogeneous and supported version of OS.</li>
@@ -208,50 +311,70 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li><strong>NTP configuration:</strong> For time synchronization across nodes.</li>
 <li><strong>Local user account:</strong> User with passwordless sudo ssh access to all nodes, for Ceph deployment using Ansible.</li>
 </ul>
-<pre class="codehilite"><code>## Note: ##
-
-The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.</code></pre>
-
-
-<p>So without further delays, please go ahead and follow these modules to gain experience on Ceph.</p></div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.</p>
+</div>
+<p>So without further delays, please go ahead and follow these modules to gain experience on Ceph.</p>
+          <aside class="copyright" role="note">
             
-            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
-        </footer>
-
-        <script src="./js/jquery-1.10.2.min.js"></script>
-        <script src="./js/bootstrap-3.0.3.min.js"></script>
-        <script src="./js/highlight.pack.js"></script>
-        <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
-        <script src="./js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
+              Copyright ©2016 Red Hat, Inc. &ndash;
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+    </div>
+    <div class="next">
+      
+        <a href="Module-1/" title="Module-1 Cluster Setup">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Module-1 Cluster Setup
+              </div>
             </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
         </div>
-    </body>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '.';
+      var repo_id  = '';
+    </script>
+    <script src="./assets/javascripts/application-997097ee0c.js"></script>
+    
+    
+  </body>
 </html>

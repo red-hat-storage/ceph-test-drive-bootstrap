@@ -1,193 +1,290 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        
-        <link rel="shortcut icon" href="../images/favicon.ico">
-        
-
-	<title>Module 3 - Ceph Object Storage interface - RHCS Test Drive Instructions</title>
-
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
-        <link href="../css/base.css" rel="stylesheet">
-
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
-
-        
-    </head>
-
-    <body>
-
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-
-            <!-- Main title -->
-            <a class="navbar-brand" href="..">RHCS Test Drive Instructions</a>
-        </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-            <!-- Main navigation -->
-            <ul class="nav navbar-nav">
-            
-            
-                <li >
-                    <a href="..">Home</a>
-                </li>
-            
-            
-            
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Modules <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../Module-1/">Module 1 - Setting up a Ceph cluster</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../Module-2/">Module 2 - Ceph Block Storage interface</a>
-</li>
-
-                    
-                        
-<li class="active">
-    <a href="./">Module 3 - Ceph Object Storage interface</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            </ul>
-
-            <!-- Search, Navigation and Repo links -->
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                <li >
-                    <a rel="next" href="../Module-2/">
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </li>
-                <li class="disabled">
-                    <a rel="prev" >
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>Module-3 Ceph Object Storage - Red Hat Ceph Storage Test Drive</title>
+      
+      
+      
+      
+    
+    <meta property="og:url" content="None">
+    <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
+    <meta property="og:image" content="None/../">
+    <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../assets/fonts/icon.eot?52m981');
+      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class=" ">
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
     </div>
-</div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Modules <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        Module-3 Ceph Object Storage
+      </div>
+    </div>
+    
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="/" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>
+          Red Hat Ceph Storage Test Drive
+          <span class="version">
+            
+          </span>
+        </strong>
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="..">
+      Home
+    </a>
+    
+  </li>
 
-        <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
+          
+            
+  <li>
+    <span class="section">Modules</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Module-1 Cluster Setup" href="../Module-1/">
+      Module-1 Cluster Setup
+    </a>
     
-        <li class="main active"><a href="#module-3-ceph-object-storage-interface">Module 3 - Ceph Object Storage interface</a></li>
+  </li>
+
+      
         
-            <li><a href="#installing-and-configuring-ceph-rgw">Installing and configuring Ceph RGW</a></li>
-        
-            <li><a href="#access-ceph-object-storage-using-swift-api">Access Ceph object storage using swift API</a></li>
-        
-            <li><a href="#access-ceph-object-storage-using-s3-api">Access Ceph object storage using S3 API</a></li>
-        
+  <li>
+    <a class="" title="Module-2 Ceph Block Storage" href="../Module-2/">
+      Module-2 Ceph Block Storage
+    </a>
     
+  </li>
+
+      
+        
+  <li>
+    <a class="current" title="Module-3 Ceph Object Storage" href="./">
+      Module-3 Ceph Object Storage
+    </a>
+    
+      
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Installing and configuring Ceph RGW" href="#installing-and-configuring-ceph-rgw">
+                Installing and configuring Ceph RGW
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Access Ceph object storage using swift API" href="#access-ceph-object-storage-using-swift-api">
+                Access Ceph object storage using swift API
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Access Ceph object storage using S3 API" href="#access-ceph-object-storage-using-s3-api">
+                Access Ceph object storage using S3 API
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
     </ul>
-</div></div>
-            <div class="col-md-9" role="main">
+  </li>
 
-<h1 id="module-3-ceph-object-storage-interface">Module 3 - Ceph Object Storage interface<a class="headerlink" href="#module-3-ceph-object-storage-interface" title="Permanent link">&para;</a></h1>
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+          <h1 id="module-3-ceph-object-storage-interface">Module 3 - Ceph Object Storage interface<a class="headerlink" href="#module-3-ceph-object-storage-interface" title="Permanent link">#</a></h1>
 <p>The Ceph object gateway, also know as the RADOS gateway, is an object storage interface built on top of the librados API to provide applications with a RESTful gateway to Ceph storage clusters. </p>
 <p>To access Ceph over object storage interfaces i.e. via <code>swift</code> or <code>s3</code> we need to configure Ceph Rados Gateway component. In this module we will configure <code>rgw-node1</code>  as Ceph Rados Gateway and then test <code>s3</code> and <code>swift</code> from <code>client-node1</code> </p>
-<pre class="codehilite"><code>## Note: ##
+<pre class="code"><code>## Note: ##
 
 Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</code></pre>
 
 
-<h2 id="installing-and-configuring-ceph-rgw">Installing and configuring Ceph RGW<a class="headerlink" href="#installing-and-configuring-ceph-rgw" title="Permanent link">&para;</a></h2>
+<h2 id="installing-and-configuring-ceph-rgw">Installing and configuring Ceph RGW<a class="headerlink" href="#installing-and-configuring-ceph-rgw" title="Permanent link">#</a></h2>
 <ul>
 <li>On <code>mgmt</code> node as <code>ceph</code> navigate to <code>/usr/share/ceph-ansible/group_vars</code> directory</li>
 </ul>
-<pre class="codehilite"><code>$ cd /usr/share/ceph-ansible/group_vars</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars</code></pre>
 
 
 <ul>
 <li>Edit  <code>all</code> file </li>
 </ul>
-<pre class="codehilite"><code>$ sudo vi all</code></pre>
+<pre class="code"><code>$ sudo vi all</code></pre>
 
 
 <ul>
 <li>Uncomment <code>radosgw_dns_name</code> and set it to <code>rgw-node1</code> </li>
 </ul>
-<pre class="codehilite"><code>radosgw_dns_name: rgw-node1</code></pre>
+<pre class="code"><code>radosgw_dns_name: rgw-node1</code></pre>
 
 
 <ul>
 <li>Uncomment <code>radosgw_frontend</code> setting, save and exit file editor</li>
 </ul>
-<pre class="codehilite"><code>radosgw_frontend: civetweb</code></pre>
+<pre class="code"><code>radosgw_frontend: civetweb</code></pre>
 
 
 <ul>
 <li>Create an <code>rgws</code> file from <code>rgws.sample</code> file and open it for editing</li>
 </ul>
-<pre class="codehilite"><code>$ sudo cp rgws.sample rgws
+<pre class="code"><code>$ sudo cp rgws.sample rgws
 $ sudo vi rgws</code></pre>
 
 
 <ul>
 <li>Uncomment the <code>copy_admin_key</code> setting and set it to <code>true</code> </li>
 </ul>
-<pre class="codehilite"><code>copy_admin_key: true</code></pre>
+<pre class="code"><code>copy_admin_key: true</code></pre>
 
 
 <ul>
 <li>Add Ceph RGW host to Ansible inventory file. Edit <code>/etc/ansible/hosts</code>  file</li>
 </ul>
-<pre class="codehilite"><code>$ sudo vi /etc/ansible/hosts</code></pre>
+<pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
 <li>Add the following section to <code>/etc/ansible/hosts</code>  file, save and exit file editor</li>
 </ul>
-<pre class="codehilite"><code>[rgws]
+<pre class="code"><code>[rgws]
 rgw-node1</code></pre>
 
 
 <ul>
 <li>Your Ansible inventory file should look like this</li>
 </ul>
-<pre class="codehilite"><code>[mons]
+<pre class="code"><code>[mons]
 mon-node1
 mon-node2
 mon-node3
@@ -202,16 +299,16 @@ rgw-node1</code></pre>
 <ul>
 <li>Navigate to the Ansible configuration directory <code>/usr/share/ceph-ansible/</code></li>
 </ul>
-<pre class="codehilite"><code>$ cd /usr/share/ceph-ansible/</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/</code></pre>
 
 
 <ul>
 <li>Run the Ansible playbook</li>
 </ul>
-<pre class="codehilite"><code>$ ansible-playbook site.yml -u ceph</code></pre>
+<pre class="code"><code>$ ansible-playbook site.yml -u ceph</code></pre>
 
 
-<pre class="codehilite"><code>## Note: ##
+<pre class="code"><code>## Note: ##
 
 Ansible is idempotent in nature , so there is no harm in running it again. Configuration change will not take place after its initial application.</code></pre>
 
@@ -220,87 +317,87 @@ Ansible is idempotent in nature , so there is no harm in running it again. Confi
 <li>Once Ansible run is completed, make sure there is no failed item under <code>PLAY RECAP</code> </li>
 <li>Verify <code>ceph-radosgw</code> service is running on <code>rgw-node1</code> , also make a note of port number its running on. It must be 8080</li>
 </ul>
-<pre class="codehilite"><code>$ ssh rgw-node1 systemctl status ceph-radosgw@rgw.rgw-node1.service
+<pre class="code"><code>$ ssh rgw-node1 systemctl status ceph-radosgw@rgw.rgw-node1.service
 $ ssh rgw-node1 -t sudo netstat -plunt | grep -i rados</code></pre>
 
 
 <ul>
-<li>Login to <code>rgw-node</code> to create Radow Gateway user account which will be used by <code>S3</code> and <code>swift</code> API&rsquo;s to access Ceph storage via object storage interface</li>
+<li>Login to <code>rgw-node</code> to create Radow Gateway user account which will be used by <code>S3</code> and <code>swift</code> API's to access Ceph storage via object storage interface</li>
 </ul>
-<pre class="codehilite"><code>$ ssh rgw-node1</code></pre>
+<pre class="code"><code>$ ssh rgw-node1</code></pre>
 
 
 <ul>
 <li>Create RGW user for <code>S3</code> access </li>
 </ul>
-<pre class="codehilite"><code>$ radosgw-admin user create --uid='user1' --display-name='First User' --access-key='S3user1' --secret-key='S3user1key'</code></pre>
+<pre class="code"><code>$ radosgw-admin user create --uid='user1' --display-name='First User' --access-key='S3user1' --secret-key='S3user1key'</code></pre>
 
 
 <ul>
 <li>Create RGW subuser for <code>swift</code> access</li>
 </ul>
-<pre class="codehilite"><code>$ radosgw-admin subuser create --uid='user1' --subuser='user1:swift' --secret-key='Swiftuser1key' --access=full</code></pre>
+<pre class="code"><code>$ radosgw-admin subuser create --uid='user1' --subuser='user1:swift' --secret-key='Swiftuser1key' --access=full</code></pre>
 
 
 <p>At this point you have a running and configured Ceph RGW instance. In the next section we will learn about accessing Ceph via object storage interfaces.</p>
-<h2 id="access-ceph-object-storage-using-swift-api">Access Ceph object storage using swift API<a class="headerlink" href="#access-ceph-object-storage-using-swift-api" title="Permanent link">&para;</a></h2>
+<h2 id="access-ceph-object-storage-using-swift-api">Access Ceph object storage using swift API<a class="headerlink" href="#access-ceph-object-storage-using-swift-api" title="Permanent link">#</a></h2>
 <ul>
 <li>Login to <code>client-node</code></li>
 </ul>
-<pre class="codehilite"><code>$ ssh client-node1</code></pre>
+<pre class="code"><code>$ ssh client-node1</code></pre>
 
 
 <ul>
 <li>Install <code>python-swiftclient</code> </li>
 </ul>
-<pre class="codehilite"><code>$ sudo pip install python-swiftclient</code></pre>
+<pre class="code"><code>$ sudo pip install python-swiftclient</code></pre>
 
 
 <ul>
 <li>Using swift cli , lets try to list swift containers. Although it will not list anything as there are no containers.</li>
 </ul>
-<pre class="codehilite"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list</code></pre>
+<pre class="code"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list</code></pre>
 
 
 <ul>
 <li>Create a swift container named <code>container-1</code> and then list it</li>
 </ul>
-<pre class="codehilite"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' post container-1
+<pre class="code"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' post container-1
 $ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list</code></pre>
 
 
 <ul>
 <li>Create a dummy file and then upload this file to <code>container-1</code> using swift</li>
 </ul>
-<pre class="codehilite"><code>$ base64 /dev/urandom | head -c 10000000 &gt; dummy_file1.txt
+<pre class="code"><code>$ base64 /dev/urandom | head -c 10000000 &gt; dummy_file1.txt
 $ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' upload container-1 dummy_file1.txt</code></pre>
 
 
 <ul>
 <li>List <code>container-1</code> to verify files are getting stored</li>
 </ul>
-<pre class="codehilite"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list container-1</code></pre>
+<pre class="code"><code>$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list container-1</code></pre>
 
 
 <p>Easy right !! So you have just learned how to use Ceph as Object Storage System using swift APIs. Follow the next section to know how S3 can be used with Ceph.</p>
-<h2 id="access-ceph-object-storage-using-s3-api">Access Ceph object storage using S3 API<a class="headerlink" href="#access-ceph-object-storage-using-s3-api" title="Permanent link">&para;</a></h2>
+<h2 id="access-ceph-object-storage-using-s3-api">Access Ceph object storage using S3 API<a class="headerlink" href="#access-ceph-object-storage-using-s3-api" title="Permanent link">#</a></h2>
 <p>Ceph object storage cluster can be accessed by any client which talks <code>S3</code> API.  In this section we will use <code>s3cmd</code> which has already been installed on <code>client-node1</code> machine.</p>
 <ul>
 <li>Login to <code>client-node1</code></li>
 </ul>
-<pre class="codehilite"><code>$ ssh client-node1</code></pre>
+<pre class="code"><code>$ ssh client-node1</code></pre>
 
 
 <ul>
 <li>To use Ceph with S3-style subdomains (e.g., bucket-name.domain-name.com), you need to add a wildcard to the DNS record of the DNS server you use with the ceph-radosgw daemon. We will install <code>dnsmasq</code> which is a lightweight DNS server.</li>
 </ul>
-<pre class="codehilite"><code>$ sudo yum install -y dnsmasq</code></pre>
+<pre class="code"><code>$ sudo yum install -y dnsmasq</code></pre>
 
 
 <ul>
 <li>Configure dnsmasq to resolve subdomains to Ceph RGW address and start dnsmasq service</li>
 </ul>
-<pre class="codehilite"><code>$ echo &quot;address=/.rgw-node1/10.100.2.15&quot; | sudo tee -a /etc/dnsmasq.conf
+<pre class="code"><code>$ echo &quot;address=/.rgw-node1/10.100.2.15&quot; | sudo tee -a /etc/dnsmasq.conf
 $ sudo systemctl start dnsmasq
 $ sudo systemctl enable dnsmasq</code></pre>
 
@@ -308,7 +405,7 @@ $ sudo systemctl enable dnsmasq</code></pre>
 <ul>
 <li>Edit <code>/etc/resolv.conf</code>  and add <code>nameserver 127.0.0.1</code> <strong>just after</strong> <code>search ec2.internal</code> line</li>
 </ul>
-<pre class="codehilite"><code># Generated by NetworkManager
+<pre class="code"><code># Generated by NetworkManager
 search ec2.internal
 nameserver 127.0.0.1
 nameserver 10.100.0.2</code></pre>
@@ -317,7 +414,7 @@ nameserver 10.100.0.2</code></pre>
 <ul>
 <li>Make sure for any RGW subdomain <code>client-node1</code> is resolving <code>rgw-node1</code> address</li>
 </ul>
-<pre class="codehilite"><code>$ ping -c 1 anything.rgw-node1
+<pre class="code"><code>$ ping -c 1 anything.rgw-node1
 $ ping -c 1 mybucket.rgw-node1
 $ ping -c 1 mars.rgw-node1</code></pre>
 
@@ -325,13 +422,13 @@ $ ping -c 1 mars.rgw-node1</code></pre>
 <ul>
 <li>Next we will configure <code>s3cmd</code> </li>
 </ul>
-<pre class="codehilite"><code>$ s3cmd --configure</code></pre>
+<pre class="code"><code>$ s3cmd --configure</code></pre>
 
 
 <ul>
 <li><code>s3cmd</code> configuration will prompt to enter details, use the following  values for configuration.  Enter default values for most of the prompts , however we <strong>do not want</strong> to use <strong>HTTPS</strong> and <strong>test configuration</strong> right away and <strong>we do want</strong> to save settings.</li>
 </ul>
-<pre class="codehilite"><code>Access Key: S3user1
+<pre class="code"><code>Access Key: S3user1
 Secret Key: S3user1key
 
 Default Region [US]: &lt; Just hit Enter &gt;
@@ -348,7 +445,7 @@ Save settings? [y/N] y</code></pre>
 <ul>
 <li>Sample <code>s3cmd --configuration</code> wizard </li>
 </ul>
-<pre class="codehilite"><code>[ceph@client-node1 ~]$ s3cmd --configure
+<pre class="code"><code>[ceph@client-node1 ~]$ s3cmd --configure
 
 Enter new values or accept defaults in brackets with Enter.
 Refer to user manual for detailed description of all options.
@@ -392,72 +489,93 @@ Configuration saved to '/home/ceph/.s3cfg'
 <ul>
 <li>Next edit <code>/home/ceph/.s3cfg</code> file, update <code>host_base</code> and <code>host_bucket</code> as shown below. Save and exit editor</li>
 </ul>
-<pre class="codehilite"><code>host_base = rgw-node1:8080
+<pre class="code"><code>host_base = rgw-node1:8080
 host_bucket = %(bucket)s.rgw-node1:8080</code></pre>
 
 
 <ul>
 <li>Test Ceph object storage via S3 protocol by listing buckets using <code>s3cmd</code>. It should list buckets that you have created using <code>swift</code> in the last section </li>
 </ul>
-<pre class="codehilite"><code>$ s3cmd ls</code></pre>
+<pre class="code"><code>$ s3cmd ls</code></pre>
 
 
 <ul>
 <li>Create a new bucket</li>
 </ul>
-<pre class="codehilite"><code>$ s3cmd mb s3://s3-bucket
+<pre class="code"><code>$ s3cmd mb s3://s3-bucket
 $ s3cmd ls</code></pre>
 
 
 <ul>
 <li>Create a dummy file and then upload this file to <code>s3-bucket</code> via S3 API</li>
 </ul>
-<pre class="codehilite"><code>$ base64 /dev/urandom | head -c 10000000 &gt; dummy_file2.txt
+<pre class="code"><code>$ base64 /dev/urandom | head -c 10000000 &gt; dummy_file2.txt
 $ s3cmd put dummy_file2.txt s3://s3-bucket
 $ s3cmd ls s3://s3-bucket</code></pre>
 
 
 <blockquote>
 <p>All done !! Great !!  In this module you have learned to use Ceph cluster as object storage using S3 and Swift APIs. You application will use the same procedure to storage objects to Ceph cluster.</p>
-</blockquote></div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
+</blockquote>
+          <aside class="copyright" role="note">
             
-            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
-        </footer>
-
-        <script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script>
-        <script>var base_url = '..';</script>
-        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
-        <script src="../js/base.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            From here you can search these documents. Enter
-                            your search terms below.
-                        </p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
-                            </div>
-                        </form>
-                        <div id="mkdocs-search-results"></div>
-                    </div>
-                    <div class="modal-footer">
-                    </div>
-                </div>
+              Copyright ©2016 Red Hat, Inc. &ndash;
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../Module-2/" title="Module-2 Ceph Block Storage">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
             </div>
+            <div class="stretch">
+              <div class="title">
+                Module-2 Ceph Block Storage
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+    </div>
+  </nav>
+
+            </footer>
+          
         </div>
-    </body>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '..';
+      var repo_id  = '';
+    </script>
+    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    
+    
+  </body>
 </html>
