@@ -26,6 +26,7 @@ theme: 'material'
 extra:
   logo: 'images/RedHat.svg'
 site_name: Red Hat Ceph Storage Test Drive
+site_url: https://red-hat-storage.github.io/ceph-test-drive-bootstrap
 
 pages:
 - Home: index.md
