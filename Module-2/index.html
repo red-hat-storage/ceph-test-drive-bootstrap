@@ -17,10 +17,12 @@
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
-    <meta property="og:image" content="None/../">
+    <meta property="og:image" content="None/../images/RedHat.svg">
     <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../images/RedHat.svg">
     
     
     <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
@@ -123,6 +125,10 @@
   <a href="/" class="project">
     <div class="banner">
       
+        <div class="logo">
+          <img src="../images/RedHat.svg">
+        </div>
+      
       <div class="name">
         <strong>
           Red Hat Ceph Storage Test Drive
@@ -156,8 +162,8 @@
       
         
   <li>
-    <a class="" title="Module-1 Cluster Setup" href="../Module-1/">
-      Module-1 Cluster Setup
+    <a class="" title="Module-1 Ceph Cluster Setup" href="../Module-1/">
+      Module-1 Ceph Cluster Setup
     </a>
     
   </li>
@@ -202,11 +208,10 @@
           
           <h1 id="module-2-ceph-block-storage-interface">Module 2 - Ceph Block Storage interface<a class="headerlink" href="#module-2-ceph-block-storage-interface" title="Permanent link">#</a></h1>
 <p>In this module we will learn how to provision block storage using Ceph. We will create thin-provisioned, resizable RADOS Block Device (RBD) volume, which will be mapped to <code>client-node1</code> and will be taken into use.</p>
-<pre class="code"><code>## Note: ##
-
-Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster</code></pre>
-
-
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</p>
+</div>
 <ul>
 <li>From <code>mgmt</code> node  configure <code>client-node1</code>  as Ceph client by installing <code>ceph-common</code> package and changing ownership of <code>/etc/ceph</code> directory. </li>
 </ul>
@@ -267,7 +272,7 @@ $ lsmod | grep -i rbd</code></pre>
 
 
 <ul>
-<li>Make a note of mapped device name , in most of the cases it should be <code>/dev/rbd0</code> and create <code>xfs</code> filesystem on it </li>
+<li>Make a note of mapped device name from the above command output , in most of the cases it is <code>/dev/rbd0</code>. Create <code>xfs</code> filesystem on this Ceph block device.</li>
 </ul>
 <pre class="code"><code>$ sudo mkfs.xfs /dev/rbd0
 $ sudo mount /dev/rbd0 /mnt
@@ -275,13 +280,19 @@ $ df -h /mnt</code></pre>
 
 
 <ul>
-<li>Lets run a quick <code>dd</code> write test on this block device. Meanwhile this test is going on, you can watch cluster status from a separate ssh connection to <code>mgmt</code>node using <code>watch ceph -s</code> command</li>
+<li>Lets run a quick <code>dd</code> write test on this block device to verify its accessiblity. </li>
 </ul>
-<pre class="code"><code>$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500</code></pre>
+<pre class="code"><code>$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500 &amp;</code></pre>
+
+
+<ul>
+<li>Meanwhile the <code>dd</code> test is going on, you can watch cluster status using which should report IO operations on Ceph cluster.</li>
+</ul>
+<pre class="code"><code>$ watch ceph -s --id rbd</code></pre>
 
 
 <blockquote>
-<p>This is it, we are done. Application can now consume block device coming from Ceph.</p>
+<p><strong>This is it, we have reached to end of Module-2. In this module you have learned how to provision and consume Ceph block device. Follow the next module to learn how to use Ceph as Object Storage</strong></p>
 </blockquote>
           <aside class="copyright" role="note">
             
@@ -301,7 +312,7 @@ $ df -h /mnt</code></pre>
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../Module-1/" title="Module-1 Cluster Setup">
+        <a href="../Module-1/" title="Module-1 Ceph Cluster Setup">
           <span class="direction">
             Previous
           </span>
@@ -311,7 +322,7 @@ $ df -h /mnt</code></pre>
             </div>
             <div class="stretch">
               <div class="title">
-                Module-1 Cluster Setup
+                Module-1 Ceph Cluster Setup
               </div>
             </div>
           </div>

@@ -17,10 +17,12 @@
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
-    <meta property="og:image" content="None/./">
+    <meta property="og:image" content="None/./images/RedHat.svg">
     <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="./images/RedHat.svg">
     
     
     <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico">
@@ -119,6 +121,10 @@
   <a href="/" class="project">
     <div class="banner">
       
+        <div class="logo">
+          <img src="./images/RedHat.svg">
+        </div>
+      
       <div class="name">
         <strong>
           Red Hat Ceph Storage Test Drive
@@ -185,8 +191,8 @@
       
         
   <li>
-    <a class="" title="Module-1 Cluster Setup" href="Module-1/">
-      Module-1 Cluster Setup
+    <a class="" title="Module-1 Ceph Cluster Setup" href="Module-1/">
+      Module-1 Ceph Cluster Setup
     </a>
     
   </li>
@@ -235,17 +241,20 @@
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
 <ul>
 <li><strong>For Windows user :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client <a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">here</a></li>
-<li><strong>For Mac and Linux users:</strong>  you will use a Terminal application to SSH into LAB machine (this should already be installed on your host). </li>
+<li><strong>For Mac and Linux users:</strong>  you will need a Terminal application to SSH into LAB machine (this should already be installed on your host). </li>
 </ul>
 <h2 id="know-your-lab-environment">Know your Lab Environment<a class="headerlink" href="#know-your-lab-environment" title="Permanent link">#</a></h2>
 <h3 id="starting-lab">Starting LAB<a class="headerlink" href="#starting-lab" title="Permanent link">#</a></h3>
 <ul>
 <li>To launch your LAB Environment, click <strong>Start Lab</strong> button from the Lab panel. Hang tight , it will take <strong>12-15 minutes</strong> to launch LAB resources.</li>
-<li>Once LAB is launched, grab the <strong>Management Node IP</strong> from <strong>Addl. Info Tab</strong> on Right Side</li>
+<li>Once LAB is launched, grab the <strong>Management Node IP</strong> from <strong>Addl. Info</strong> tab on Right Side</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If the <strong>Addl. Info Tab</strong> is unavailable, make sure you clicked <strong>Start Lab</strong> button on the top bar of interface.</p>
+<ul>
+<li>If the <strong>Addl. Info</strong> Tab is unavailable, make sure you clicked <strong>Start Lab</strong> button on the top bar of interface.</li>
+<li>After clicking <strong>Start Lab</strong> , Lab creation will take some <strong>12-15 minutes</strong>. This is expected,  so Hang Tight.</li>
+</ul>
 </div>
 <ul>
 <li>On the <strong>Lab Details</strong> tab, notice the lab properties:<ul>
@@ -258,16 +267,17 @@
 <h3 id="accessing-lab">Accessing LAB<a class="headerlink" href="#accessing-lab" title="Permanent link">#</a></h3>
 <ul>
 <li>Open SSH client software on our workstation.</li>
-<li>As <strong><code>ceph</code></strong> user, SSH into Ceph Management node by using <strong>Management node IP address</strong> which you can get from <strong>connect</strong> tab.</li>
+<li>As <strong>ceph</strong> user, SSH into Ceph Management node by using <strong>Management node IP address</strong> which you can get from <strong>Addl. Info</strong> tab.</li>
 <li>SSH into the node using the following command and provided credentials</li>
 <li><code>$ ssh ceph@&lt;Mangement Node IP Address&gt;</code></li>
-<li>Login Credentials  ⇒ <strong>User Name:</strong> <code>ceph</code> and <strong>Password:</strong> <code>Redhat16</code></li>
+<li><strong>Login Credentials</strong> ⇒ <strong>User Name:</strong> <strong>ceph</strong> and <strong>Password:</strong> <strong>Redhat16</strong></li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
 <li>Make sure you are logging in to <strong>your LAB environment</strong> Management node IP address as <strong>ceph</strong> user</li>
-<li>Type <strong>yes</strong> when ssh prompts for confirmation before establishing connection </li>
+<li>Type <strong>yes</strong> when ssh prompts for confirmation before establishing connection</li>
+<li><strong>Login Credentials</strong> ⇒ <strong>User Name:</strong> <strong>ceph</strong> and <strong>Password:</strong> <strong>Redhat16</strong></li>
 </ul>
 </div>
 <p><strong>Example Snippet:</strong> </p>
@@ -337,14 +347,14 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
     </div>
     <div class="next">
       
-        <a href="Module-1/" title="Module-1 Cluster Setup">
+        <a href="Module-1/" title="Module-1 Ceph Cluster Setup">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Module-1 Cluster Setup
+                Module-1 Ceph Cluster Setup
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">

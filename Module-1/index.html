@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Module-1 Cluster Setup - Red Hat Ceph Storage Test Drive</title>
+        <title>Module-1 Ceph Cluster Setup - Red Hat Ceph Storage Test Drive</title>
       
       
       
@@ -17,10 +17,12 @@
     
     <meta property="og:url" content="None">
     <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
-    <meta property="og:image" content="None/../">
+    <meta property="og:image" content="None/../images/RedHat.svg">
     <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+      <link rel="apple-touch-icon" href="../images/RedHat.svg">
     
     
     <link rel="shortcut icon" type="image/x-icon" href="../../images/favicon.ico">
@@ -91,7 +93,7 @@
             
           </span>
         
-        Module-1 Cluster Setup
+        Module-1 Ceph Cluster Setup
       </div>
     </div>
     
@@ -122,6 +124,10 @@
   
   <a href="/" class="project">
     <div class="banner">
+      
+        <div class="logo">
+          <img src="../images/RedHat.svg">
+        </div>
       
       <div class="name">
         <strong>
@@ -156,8 +162,8 @@
       
         
   <li>
-    <a class="current" title="Module-1 Cluster Setup" href="./">
-      Module-1 Cluster Setup
+    <a class="current" title="Module-1 Ceph Cluster Setup" href="./">
+      Module-1 Ceph Cluster Setup
     </a>
     
       
@@ -242,12 +248,11 @@
           
           <h1 id="module-1-setting-up-a-ceph-cluster">Module - 1 : Setting up a Ceph cluster<a class="headerlink" href="#module-1-setting-up-a-ceph-cluster" title="Permanent link">#</a></h1>
 <p>RHCS 2.0 has introduced a new and more efficient way to deploy Ceph cluster. Instead of <code>ceph-deploy</code>  RHCS 2.0 ships with <code>ceph-ansible</code> tool which is based on configuration management tool <code>Ansible</code> .</p>
-<p>In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. As mentioned above we will use <code>ceph-ansible</code> to do this.  </p>
-<pre class="code"><code>## Note: ##
-
-You must run all the commands using ceph user and from management node, Unless otherwise specified. </code></pre>
-
-
+<p>In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. We will use <code>ceph-ansible</code> to deploy this cluster.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You must run all the commands using <strong>ceph</strong> user and from <strong>management node</strong>, Unless otherwise specified. </p>
+</div>
 <ul>
 <li>From your workstation login to Ceph management node as <strong><code>ceph</code></strong> user</li>
 </ul>
@@ -308,13 +313,13 @@ $ mkdir ceph-ansible-keys</code></pre>
 
 
 <ul>
-<li>Navigate to the Ceph Ansible group_vars directory</li>
+<li>Navigate to the Ceph Ansible <code>`group_vars</code> directory</li>
 </ul>
 <pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
 
 
 <ul>
-<li>Create an <code>all</code>  file from the <code>all.sample</code>  file and open it for editing</li>
+<li>Create an <code>all</code> file from the <code>all.sample</code>  file and open it for editing</li>
 </ul>
 <pre class="code"><code>$ sudo cp all.sample all
 $ sudo vi all</code></pre>
@@ -451,12 +456,13 @@ osd-node3                  : ok=164  changed=16   unreachable=0    failed=0</cod
 <pre class="code"><code>$ ssh mon-node1 ceph -s</code></pre>
 
 
-<pre class="code"><code>## Note: ##
-
-At this point ignore any cluster health warnings. We will take care of them in later modules.</code></pre>
-
-
-<p>Upto this point you should have a running Ceph cluster with 3 OSD node ( 9 OSDs total ) and 3 Monitors. Follow </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>At this point ignore any cluster health warnings, We will take care of them later in this module.</p>
+</div>
+<blockquote>
+<p><strong>Upto this point you should have a running Ceph cluster with 3 Ceph OSD nodes ( 9 OSDs total ) and 3 Ceph Monitor nodes.</strong> </p>
+</blockquote>
 <h2 id="configuring-ceph-client">Configuring Ceph client<a class="headerlink" href="#configuring-ceph-client" title="Permanent link">#</a></h2>
 <p>By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure <code>mgmt</code> node as our Ceph client node.</p>
 <ul>
@@ -515,23 +521,30 @@ $ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 <pre class="code"><code>$ ceph -s</code></pre>
 
 
+<p>Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. 
+Lets now try to fix this warning.</p>
 <ul>
-<li>Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. Lets now try to fix this warning.<ul>
-<li>Verify <code>pg_num</code> for default pool <code>rbd</code> 
-<code>$ ceph osd dump | grep -i pool</code></li>
-<li>Increase <code>pg_num</code>  for <code>rbd</code> pool to 128 and check cluster status 
-<code>$ ceph osd pool set rbd pg_num 128
-$ ceph -s</code></li>
+<li>Verify <code>pg_num</code> for default pool <code>rbd</code> </li>
 </ul>
-</li>
-<li>
-<p>Once cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code>
-  <code>$ ceph osd pool set rbd pgp_num 128
-  $ ceph -s</code></p>
-</li>
-<li>
-<p>Check Ceph OSD stats and tree view of OSDs in cluster</p>
-</li>
+<pre class="code"><code>$ ceph osd dump | grep -i pool</code></pre>
+
+
+<ul>
+<li>Increase <code>pg_num</code>  for <code>rbd</code> pool to 128 and check cluster status </li>
+</ul>
+<pre class="code"><code>$ ceph osd pool set rbd pg_num 128
+$ ceph -s</code></pre>
+
+
+<ul>
+<li>Once cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code></li>
+</ul>
+<pre class="code"><code>$ ceph osd pool set rbd pgp_num 128
+$ ceph -s</code></pre>
+
+
+<ul>
+<li>Check Ceph OSD stats and tree view of OSDs in cluster</li>
 </ul>
 <pre class="code"><code>$ ceph osd stat
 $ ceph osd tree</code></pre>
@@ -549,6 +562,12 @@ $ ceph osd tree</code></pre>
 <pre class="code"><code>$ ceph osd lspools
 $ ceph df
 $ ceph osd dump | grep -i pool</code></pre>
+
+
+<blockquote>
+<p><strong>We have reached to end of Module-1. At this point you have learnt to deploy, configure and interact with Ceph cluster.
+Follow the next module to learn accessing Ceph cluster as a Block Storage.</strong></p>
+</blockquote>
           <aside class="copyright" role="note">
             
               Copyright ©2016 Red Hat, Inc. &ndash;
