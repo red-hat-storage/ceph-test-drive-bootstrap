@@ -193,20 +193,20 @@
             </li>
           
             <li class="anchor">
-              <a title="Deploying Ceph Cluster" href="#deploying-ceph-cluster">
-                Deploying Ceph Cluster
+              <a title="Deploying the Ceph Cluster" href="#deploying-the-ceph-cluster">
+                Deploying the Ceph Cluster
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Configuring Ceph client" href="#configuring-ceph-client">
-                Configuring Ceph client
+              <a title="Configuring a Ceph client" href="#configuring-a-ceph-client">
+                Configuring a Ceph client
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Interacting with Ceph cluster" href="#interacting-with-ceph-cluster">
-                Interacting with Ceph cluster
+              <a title="Interacting with the Ceph cluster" href="#interacting-with-the-ceph-cluster">
+                Interacting with the Ceph cluster
               </a>
             </li>
           
@@ -253,35 +253,35 @@
 <p>In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. We will use <code>ceph-ansible</code> to deploy this cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You must run all the commands using <strong>ceph</strong> user and from <strong>management node</strong>, Unless otherwise specified. </p>
+<p>You must run all the commands using <strong>ceph</strong> user and from <strong>management node</strong>, unless otherwise specified. </p>
 </div>
 <ul>
-<li>From your workstation login to Ceph management node as <strong><code>ceph</code></strong> user</li>
+<li>From your workstation login to the Ceph management node as <strong><code>ceph</code></strong> user</li>
 </ul>
 <pre class="code"><code>$ ssh ceph@&lt;IP address of Ceph Management node&gt;</code></pre>
 
 
 <h2 id="installing-and-setting-up-ceph-ansible">Installing and setting up ceph-ansible<a class="headerlink" href="#installing-and-setting-up-ceph-ansible" title="Permanent link">#</a></h2>
 <ul>
-<li>Install ceph-ansible package</li>
+<li>Install the ceph-ansible package</li>
 </ul>
 <pre class="code"><code>$ sudo yum install -y ceph-ansible</code></pre>
 
 
 <ul>
-<li>Rename default ansible host file, its of no much use.</li>
+<li>To keep ansible hosts file short, rename the default ansible host file</li>
 </ul>
 <pre class="code"><code>$ sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp</code></pre>
 
 
 <ul>
-<li>Create a new ansible hosts file, with the following content.</li>
+<li>Create a new ansible hosts file, with the following edits </li>
 </ul>
 <pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
-<li>Under <code>/etc/ansible/hosts</code> file add Ceph monitor host names under <code>[mons]</code>  section and Ceph OSDs host name under <code>[osds]</code>  section . This allows ansible to know which role to be applied on which host.</li>
+<li>In the <code>/etc/ansible/hosts</code> file add Ceph monitor host names under <code>[mons]</code>  section and Ceph OSDs host name under <code>[osds]</code>  section . This allows ansible to know which role is to be applied</li>
 </ul>
 <pre class="code"><code>[mons]
 mon-node1
@@ -294,14 +294,14 @@ osd-node3</code></pre>
 
 
 <ul>
-<li>Create <code>.ansible.cfg</code> file and add <code>host_key_checking = False</code> using the below command</li>
+<li>Create the <code>.ansible.cfg</code> file and add <code>host_key_checking = False</code> using the commands below </li>
 </ul>
 <pre class="code"><code>$ echo &quot;[defaults]&quot; &gt;&gt; /home/ceph/.ansible.cfg
 $ echo &quot;host_key_checking = False&quot; &gt;&gt; /home/ceph/.ansible.cfg</code></pre>
 
 
 <ul>
-<li>Ensure that Ansible can reach to Ceph hosts.</li>
+<li>Ensure that Ansible can reach the Ceph hosts.</li>
 </ul>
 <pre class="code"><code>$ ansible all -m ping</code></pre>
 
@@ -377,7 +377,7 @@ cluster_network: 10.100.1.0/24</code></pre>
 
 
 <ul>
-<li>Save the file and exit from editor</li>
+<li>Save the file and exit from the editor</li>
 </ul>
 <h2 id="configuring-ceph-osd-settings">Configuring Ceph OSD Settings<a class="headerlink" href="#configuring-ceph-osd-settings" title="Permanent link">#</a></h2>
 <ul>
@@ -421,7 +421,7 @@ osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }}
 <pre class="code"><code>journal_collocation: true</code></pre>
 
 
-<h2 id="deploying-ceph-cluster">Deploying Ceph Cluster<a class="headerlink" href="#deploying-ceph-cluster" title="Permanent link">#</a></h2>
+<h2 id="deploying-the-ceph-cluster">Deploying the Ceph Cluster<a class="headerlink" href="#deploying-the-ceph-cluster" title="Permanent link">#</a></h2>
 <ul>
 <li>Navigate to the <code>ceph-ansible</code> configuration directory</li>
 </ul>
@@ -441,7 +441,7 @@ osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }}
 
 
 <ul>
-<li>Ansible will take a few minutes to complete Ceph deployment. Once its completed Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.</li>
+<li>Ansible will take a few minutes to complete Ceph deployment. Once its completed, Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.</li>
 </ul>
 <pre class="code"><code>PLAY RECAP ********************************************************************
 mon-node1                  : ok=91   changed=19   unreachable=0    failed=0
@@ -453,34 +453,34 @@ osd-node3                  : ok=164  changed=16   unreachable=0    failed=0</cod
 
 
 <ul>
-<li>Finally check status of your cluster. </li>
+<li>Finally check status of your cluster. You should have an installed and configured Ceph cluster at this point. </li>
 </ul>
 <pre class="code"><code>$ ssh mon-node1 ceph -s</code></pre>
 
 
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>At this point ignore any cluster health warnings, We will take care of them later in this module.</p>
+<p>You can ignore any cluster health warnings at this point, We will take care of them later in this module.</p>
 </div>
 <blockquote>
 <p><strong>Upto this point you should have a running Ceph cluster with 3 Ceph OSD nodes ( 9 OSDs total ) and 3 Ceph Monitor nodes.</strong> </p>
 </blockquote>
-<h2 id="configuring-ceph-client">Configuring Ceph client<a class="headerlink" href="#configuring-ceph-client" title="Permanent link">#</a></h2>
-<p>By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure <code>mgmt</code> node as our Ceph client node.</p>
+<h2 id="configuring-a-ceph-client">Configuring a Ceph client<a class="headerlink" href="#configuring-a-ceph-client" title="Permanent link">#</a></h2>
+<p>By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure a <code>mgmt</code> node as our Ceph client node.</p>
 <ul>
-<li>On <code>mgmt</code>node install <code>ceph-common</code> package which provides <code>Ceph CLI</code>  and other tools</li>
+<li>On the <code>mgmt</code>node install <code>ceph-common</code> package which provides the <code>Ceph CLI</code> and other tools</li>
 </ul>
 <pre class="code"><code>$ sudo yum install -y ceph-common</code></pre>
 
 
 <ul>
-<li>Change ownership of <code>/etc/ceph</code> directory</li>
+<li>Change ownership of the <code>/etc/ceph</code> directory</li>
 </ul>
 <pre class="code"><code>$ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 
 
 <ul>
-<li>From <code>mon-node1</code> copy Ceph configuration file (<code>ceph.conf</code>) and Ceph administration keyring (<code>ceph.client.admin.keyring</code>) to <code>mgmt</code> node</li>
+<li>From <code>mon-node1</code> copy the Ceph configuration file (<code>ceph.conf</code>) and the Ceph administration keyring (<code>ceph.client.admin.keyring</code>) to the <code>mgmt</code> node</li>
 </ul>
 <pre class="code"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.conf | tee /etc/ceph/ceph.conf</code></pre>
 
@@ -509,8 +509,8 @@ $ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 [ceph@mgmt ~]$</code></pre>
 
 
-<h2 id="interacting-with-ceph-cluster">Interacting with Ceph cluster<a class="headerlink" href="#interacting-with-ceph-cluster" title="Permanent link">#</a></h2>
-<p>In this section we will learn a few commands to interact with Ceph cluster. These commands should be executed from <code>mon-node1</code> node.</p>
+<h2 id="interacting-with-the-ceph-cluster">Interacting with the Ceph cluster<a class="headerlink" href="#interacting-with-the-ceph-cluster" title="Permanent link">#</a></h2>
+<p>In this section we will learn a few commands to interact with our Ceph cluster. These commands should be executed from <code>mon-node1</code> node.</p>
 <ul>
 <li>ssh to <code>mon-node1</code> </li>
 </ul>
@@ -523,8 +523,8 @@ $ sudo chown -R ceph:ceph /etc/ceph</code></pre>
 <pre class="code"><code>$ ceph -s</code></pre>
 
 
-<p>Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. 
-Lets now try to fix this warning.</p>
+<p>The Above cluster status command shows that the cluster health is not OK and the cluster is complaining about low PG numbers. 
+Let's now try to fix this warning.</p>
 <ul>
 <li>Verify <code>pg_num</code> for default pool <code>rbd</code> </li>
 </ul>
@@ -539,7 +539,7 @@ $ ceph -s</code></pre>
 
 
 <ul>
-<li>Once cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code></li>
+<li>Once the cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code></li>
 </ul>
 <pre class="code"><code>$ ceph osd pool set rbd pgp_num 128
 $ ceph -s</code></pre>
@@ -567,8 +567,8 @@ $ ceph osd dump | grep -i pool</code></pre>
 
 
 <blockquote>
-<p><strong>We have reached to end of Module-1. At this point you have learnt to deploy, configure and interact with Ceph cluster.
-Follow the next module to learn accessing Ceph cluster as a Block Storage.</strong></p>
+<p><strong>We have reached the end of Module-1. At this point you have learned to deploy, configure and interact with your Ceph cluster.
+Follow the next module to learn how to access your Ceph cluster as a Block Storage.</strong></p>
 </blockquote>
           <aside class="copyright" role="note">
             

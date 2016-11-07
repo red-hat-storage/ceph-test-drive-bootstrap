@@ -199,14 +199,14 @@
             </li>
           
             <li class="anchor">
-              <a title="Access Ceph object storage using swift API" href="#access-ceph-object-storage-using-swift-api">
-                Access Ceph object storage using swift API
+              <a title="Access the Ceph object storage using swift API" href="#access-the-ceph-object-storage-using-swift-api">
+                Access the Ceph object storage using swift API
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Access Ceph object storage using S3 API" href="#access-ceph-object-storage-using-s3-api">
-                Access Ceph object storage using S3 API
+              <a title="Access the Ceph object storage using S3 API" href="#access-the-ceph-object-storage-using-s3-api">
+                Access the Ceph object storage using S3 API
               </a>
             </li>
           
@@ -232,32 +232,32 @@
           
           <h1 id="module-3-ceph-object-storage-interface">Module 3 - Ceph Object Storage interface<a class="headerlink" href="#module-3-ceph-object-storage-interface" title="Permanent link">#</a></h1>
 <p>The Ceph object gateway, also know as the RADOS gateway, is an object storage interface built on top of the librados API to provide applications with a RESTful gateway to Ceph storage clusters. </p>
-<p>To access Ceph over object storage interfaces i.e. via <code>swift</code> or <code>s3</code> we need to configure Ceph Rados Gateway component. In this module we will configure <code>rgw-node1</code>  as Ceph Rados Gateway and then test <code>s3</code> and <code>swift</code> from <code>client-node1</code> </p>
+<p>To access Ceph over object storage interfaces i.e. via <code>swift</code> or <code>s3</code> we need to configure Ceph Rados Gateway component. In this module we will configure <code>rgw-node1</code> as Ceph Rados Gateway and then test <code>s3</code> and <code>swift</code> from <code>client-node1</code> </p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</p>
 </div>
 <h2 id="installing-and-configuring-ceph-rgw">Installing and configuring Ceph RGW<a class="headerlink" href="#installing-and-configuring-ceph-rgw" title="Permanent link">#</a></h2>
 <ul>
-<li>On <code>mgmt</code> node as <code>ceph</code> user, navigate to <code>/usr/share/ceph-ansible/group_vars</code> directory</li>
+<li>On the <code>mgmt</code> node as <code>ceph</code> user, navigate to the <code>/usr/share/ceph-ansible/group_vars</code> directory</li>
 </ul>
 <pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars</code></pre>
 
 
 <ul>
-<li>Edit  <code>all</code> file </li>
+<li>Edit <code>all</code> file </li>
 </ul>
 <pre class="code"><code>$ sudo vi all</code></pre>
 
 
 <ul>
-<li>Uncomment <code>radosgw_dns_name</code> and set it to <code>rgw-node1</code> </li>
+<li>Uncomment the <code>radosgw_dns_name</code>settting,  and set it to <code>rgw-node1</code> </li>
 </ul>
 <pre class="code"><code>radosgw_dns_name: rgw-node1</code></pre>
 
 
 <ul>
-<li>Uncomment <code>radosgw_frontend</code> setting, save and exit file editor</li>
+<li>Uncomment the <code>radosgw_frontend</code> setting, save and exit from the editor</li>
 </ul>
 <pre class="code"><code>radosgw_frontend: civetweb</code></pre>
 
@@ -276,13 +276,13 @@ $ sudo vi rgws</code></pre>
 
 
 <ul>
-<li>Add Ceph RGW host to Ansible inventory file. Edit <code>/etc/ansible/hosts</code>  file</li>
+<li>Add Ceph RGW host to Ansible inventory file. Edit the <code>/etc/ansible/hosts</code> file</li>
 </ul>
 <pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
-<li>Add the following section to <code>/etc/ansible/hosts</code>  file, save and exit file editor</li>
+<li>Add the following section to <code>/etc/ansible/hosts</code> file, save and exit from file editor</li>
 </ul>
 <pre class="code"><code>[rgws]
 rgw-node1</code></pre>
@@ -321,14 +321,14 @@ rgw-node1</code></pre>
 </div>
 <ul>
 <li>Once Ansible run is completed, make sure there is no failed item under <code>PLAY RECAP</code> </li>
-<li>Verify <code>ceph-radosgw</code> service is running on <code>rgw-node1</code> , also make a note of port number its running on. It must be 8080</li>
+<li>Verify <code>ceph-radosgw</code> service is running on <code>rgw-node1</code> , also make a note of the port number its running on. It must be 8080</li>
 </ul>
 <pre class="code"><code>$ ssh rgw-node1 systemctl status ceph-radosgw@rgw.rgw-node1.service
 $ ssh rgw-node1 -t sudo netstat -plunt | grep -i rados</code></pre>
 
 
 <ul>
-<li>Login to <code>rgw-node</code> to create Radow Gateway user account which will be used by <code>S3</code> and <code>swift</code> API's to access Ceph storage via object storage interface</li>
+<li>Login to the <code>rgw-node</code> to create Radow Gateway user account which will be used by <code>S3</code> and <code>swift</code> API's to access the Ceph storage via object storage interface</li>
 </ul>
 <pre class="code"><code>$ ssh rgw-node1</code></pre>
 
@@ -346,9 +346,9 @@ $ ssh rgw-node1 -t sudo netstat -plunt | grep -i rados</code></pre>
 
 
 <blockquote>
-<p>At this point you have a running and configured Ceph RGW instance. In the next section we will learn about accessing Ceph via object storage interfaces.</p>
+<p>At this point you have a running and configured Ceph RGW instance. In the next section we will learned about accessing the Ceph cluster via object storage interfaces.</p>
 </blockquote>
-<h2 id="access-ceph-object-storage-using-swift-api">Access Ceph object storage using swift API<a class="headerlink" href="#access-ceph-object-storage-using-swift-api" title="Permanent link">#</a></h2>
+<h2 id="access-the-ceph-object-storage-using-swift-api">Access the Ceph object storage using swift API<a class="headerlink" href="#access-the-ceph-object-storage-using-swift-api" title="Permanent link">#</a></h2>
 <ul>
 <li>Login to <code>client-node</code></li>
 </ul>
@@ -388,12 +388,12 @@ $ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' upl
 
 
 <blockquote>
-<p>Easy right !! So you have just learned how to use Ceph as Object Storage System using swift APIs. Follow the next section to know how S3 can be used with Ceph.</p>
+<p>Easy right !! So you have just learned how to use Ceph as Object Storage System using swift APIs. Follow the next section to learn how S3 can be used with Ceph.</p>
 </blockquote>
-<h2 id="access-ceph-object-storage-using-s3-api">Access Ceph object storage using S3 API<a class="headerlink" href="#access-ceph-object-storage-using-s3-api" title="Permanent link">#</a></h2>
+<h2 id="access-the-ceph-object-storage-using-s3-api">Access the Ceph object storage using S3 API<a class="headerlink" href="#access-the-ceph-object-storage-using-s3-api" title="Permanent link">#</a></h2>
 <p>Ceph object storage cluster can be accessed by any client which talks <code>S3</code> API.  In this section we will use <code>s3cmd</code> which has already been installed on <code>client-node1</code> machine.</p>
 <ul>
-<li>Login to <code>client-node1</code></li>
+<li>Login to the <code>client-node1</code></li>
 </ul>
 <pre class="code"><code>$ ssh client-node1</code></pre>
 
@@ -436,7 +436,7 @@ $ ping -c 1 mars.rgw-node1</code></pre>
 
 
 <ul>
-<li><code>s3cmd</code> configuration will prompt to enter details, use the following  values for configuration.  Enter default values for most of the prompts , however we <strong>do not want</strong> to use <strong>HTTPS</strong> and <strong>test configuration</strong> right away and <strong>we do want</strong> to save settings.</li>
+<li><code>s3cmd</code> configuration will prompt to enter details, use the following  values for configuration.  Enter the default values for most of the prompts. At this point we <strong>do not want</strong> to use <strong>HTTPS</strong> and <strong>test configuration</strong> settings so do not set them <strong>yes</strong>. But <strong>we do want</strong> to save settings.</li>
 </ul>
 <pre class="code"><code>Access Key: S3user1
 Secret Key: S3user1key
@@ -526,7 +526,7 @@ $ s3cmd ls s3://s3-bucket</code></pre>
 
 <blockquote>
 <p><strong>All done !! Great !!<br />
-We have reached to end of Module-3. In this module you have learned to use Ceph cluster as object storage using S3 and Swift APIs. You application will use the same procedure to storage objects to Ceph cluster.</strong></p>
+We have reached the end of Module-3. In this module you have learned to use the Ceph cluster as object storage using S3 and Swift APIs. You application will use the same procedure to storage objects to Ceph cluster.</strong></p>
 </blockquote>
           <aside class="copyright" role="note">
             

@@ -157,8 +157,8 @@
         <ul>
           
             <li class="anchor">
-              <a title="Prerequisites" href="#prerequisites">
-                Prerequisites
+              <a title="Test Drive Prerequisites" href="#test-drive-prerequisites">
+                Test Drive Prerequisites
               </a>
             </li>
           
@@ -169,14 +169,14 @@
             </li>
           
             <li class="anchor">
-              <a title="Know Red Hat Ceph Storage" href="#know-red-hat-ceph-storage">
-                Know Red Hat Ceph Storage
+              <a title="Red Hat Ceph Storage" href="#red-hat-ceph-storage">
+                Red Hat Ceph Storage
               </a>
             </li>
           
             <li class="anchor">
-              <a title="Prerequisites" href="#prerequisites_1">
-                Prerequisites
+              <a title="RHCS Prerequisites" href="#rhcs-prerequisites">
+                RHCS Prerequisites
               </a>
             </li>
           
@@ -240,13 +240,13 @@
 <li><strong>Module 3 :</strong> Accessing Ceph cluster via Object Storage interface
 <!-- - **Module 4 :** Scaling up a Ceph cluster --></li>
 </ul>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">#</a></h2>
+<h2 id="test-drive-prerequisites">Test Drive Prerequisites<a class="headerlink" href="#test-drive-prerequisites" title="Permanent link">#</a></h2>
 <ul>
-<li><strong>For Windows user :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client <a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">here</a></li>
+<li><strong>For Windows users :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client <a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">here</a></li>
 <li><strong>For Mac and Linux users:</strong>  you will need a Terminal application to SSH into LAB machine (this should already be installed on your host). </li>
 </ul>
 <h2 id="know-your-lab-environment">Know your Lab Environment<a class="headerlink" href="#know-your-lab-environment" title="Permanent link">#</a></h2>
-<h3 id="starting-lab">Starting LAB<a class="headerlink" href="#starting-lab" title="Permanent link">#</a></h3>
+<h3 id="starting-the-lab">Starting the LAB<a class="headerlink" href="#starting-the-lab" title="Permanent link">#</a></h3>
 <ul>
 <li>To launch your LAB Environment, click <strong>Start Lab</strong> button from the Lab panel. Hang tight , it will take <strong>12-15 minutes</strong> to launch LAB resources.</li>
 <li>Once LAB is launched, grab the <strong>Management Node IP</strong> from <strong>Addl. Info</strong> tab on Right Side</li>
@@ -266,23 +266,15 @@
 </ul>
 </li>
 </ul>
-<h3 id="accessing-lab">Accessing LAB<a class="headerlink" href="#accessing-lab" title="Permanent link">#</a></h3>
+<h3 id="accessing-the-lab">Accessing the LAB<a class="headerlink" href="#accessing-the-lab" title="Permanent link">#</a></h3>
 <ul>
-<li>Open SSH client software on our workstation.</li>
-<li>As <strong>ceph</strong> user, SSH into Ceph Management node by using <strong>Management node IP address</strong> which you can get from <strong>Addl. Info</strong> tab.</li>
+<li>Open SSH client software on your workstation.</li>
+<li>As <strong>ceph</strong> user, SSH into Ceph Management node by using the <strong>Management node IP address</strong> which you can get from the <strong>Addl. Info</strong> tab.</li>
 <li>SSH into the node using the following command and provided credentials</li>
 <li><code>$ ssh ceph@&lt;Mangement Node IP Address&gt;</code></li>
 <li><strong>Login Credentials</strong> ⇒ <strong>User Name:</strong> <strong>ceph</strong> and <strong>Password:</strong> <strong>Redhat16</strong></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<ul>
-<li>Make sure you are logging in to <strong>your LAB environment</strong> Management node IP address as <strong>ceph</strong> user</li>
-<li>Type <strong>yes</strong> when ssh prompts for confirmation before establishing connection</li>
-<li><strong>Login Credentials</strong> ⇒ <strong>User Name:</strong> <strong>ceph</strong> and <strong>Password:</strong> <strong>Redhat16</strong></li>
-</ul>
-</div>
-<p><strong>Example Snippet:</strong> </p>
+<p><strong>Example Snippet:</strong></p>
 <pre class="code"><code>$ ssh ceph@52.55.48.166
 The authenticity of host '52.55.48.166 (52.55.48.166)' can't be established.
 ECDSA key fingerprint is 23:36:98:4f:18:cc:60:98:35:34:58:8e:85:46:67:66.
@@ -293,7 +285,17 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 [ceph@mgmt ~]$</code></pre>
 
 
-<h3 id="terminating-lab">Terminating LAB<a class="headerlink" href="#terminating-lab" title="Permanent link">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li><strong> If your SSH connection fails , do the following : </strong> </li>
+<li>Select the CONNECTION tab from the main lab page </li>
+<li>Select the Download PEM/PPK button</li>
+<li>Select Download PEM , note the download location of the PEM file and execute the following</li>
+<li>ssh -i absolute-path-of-pem-file ceph@Management-node-ip-address </li>
+</ul>
+</div>
+<h3 id="terminating-the-lab">Terminating the LAB<a class="headerlink" href="#terminating-the-lab" title="Permanent link">#</a></h3>
 <p>Follow these steps to end your lab environment and share your experience.</p>
 <ul>
 <li>Close your remote session.</li>
@@ -301,8 +303,8 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li>In the confirmation message, click <strong>OK</strong>.</li>
 <li>Tell us about your lab experience on Ceph and suggestions to improve this environment</li>
 </ul>
-<h2 id="know-red-hat-ceph-storage">Know Red Hat Ceph Storage<a class="headerlink" href="#know-red-hat-ceph-storage" title="Permanent link">#</a></h2>
-<p>Red Hat Ceph Storage is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. </p>
+<h2 id="red-hat-ceph-storage">Red Hat Ceph Storage<a class="headerlink" href="#red-hat-ceph-storage" title="Permanent link">#</a></h2>
+<p>Red Hat Ceph Storage ( RHCS ) is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. </p>
 <p>Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object storage. Red Hat Ceph Storage clusters consist of the following types of nodes:</p>
 <ul>
 <li>Red Hat Storage Management node</li>
@@ -311,11 +313,11 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li>Object Gateway nodes</li>
 <li>MDS nodes</li>
 </ul>
-<h2 id="prerequisites_1">Prerequisites<a class="headerlink" href="#prerequisites_1" title="Permanent link">#</a></h2>
-<p>Setting up a Ceph cluster requires the following configuration on the cluster nodes.</p>
+<h2 id="rhcs-prerequisites">RHCS Prerequisites<a class="headerlink" href="#rhcs-prerequisites" title="Permanent link">#</a></h2>
+<p>Setting up a RHCS requires the following configuration on the cluster nodes.</p>
 <ul>
 <li><strong>Operating System :</strong>  Heterogeneous and supported version of OS.</li>
-<li><strong>Registration to CDN :</strong> To get necessary packages required for installation either from RHN (Red Hat Network) or other trusted sources.</li>
+<li><strong>Registration to RHN :</strong> To get necessary packages required for installation either from RHN (Red Hat Network) or other trusted sources.</li>
 <li><strong>Enabling Ceph Repositories :</strong> To get Ceph packages from CDN or from Local repositories.</li>
 <li><strong>Separate networks :</strong> For Public and Cluster traffic.</li>
 <li><strong>Setting hostname resolutions :</strong> Either local or DNS name resolution </li>
@@ -325,9 +327,9 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.</p>
+<p>The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above have been taken care for rest of this course.</p>
 </div>
-<p>So without further delays, please go ahead and follow these modules to gain experience on Ceph.</p>
+<p>So without further delay, please go ahead and follow these modules to gain experience on Ceph.</p>
           <aside class="copyright" role="note">
             
               Copyright ©2016 Red Hat, Inc. &ndash;
