@@ -4,30 +4,29 @@ RHCS 2.0 has introduced a new and more efficient way to deploy Ceph cluster. Ins
 
 In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. We will use ``ceph-ansible`` to deploy this cluster.
 
-
 !!! note
-    You must run all the commands using **ceph** user and from **management node**, Unless otherwise specified. 
+    You must run all the commands using **ceph** user and from **management node**, unless otherwise specified. 
 
-- From your workstation login to Ceph management node as **``ceph``** user
+- From your workstation login to the Ceph management node as **``ceph``** user
 ```
 $ ssh ceph@<IP address of Ceph Management node>
 ```  
 
 ## Installing and setting up ceph-ansible  
 
-- Install ceph-ansible package
+- Install the ceph-ansible package
 ```
 $ sudo yum install -y ceph-ansible
 ```
-- Rename default ansible host file, its of no much use.
+- To keep ansible hosts file short, rename the default ansible host file
 ```
 $ sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp
 ```
-- Create a new ansible hosts file, with the following content.
+- Create a new ansible hosts file, with the following edits 
 ```
 $ sudo vi /etc/ansible/hosts
 ```
-- Under ``/etc/ansible/hosts`` file add Ceph monitor host names under ``[mons]``  section and Ceph OSDs host name under ``[osds]``  section . This allows ansible to know which role to be applied on which host.
+- In the ``/etc/ansible/hosts`` file add Ceph monitor host names under ``[mons]``  section and Ceph OSDs host name under ``[osds]``  section . This allows ansible to know which role is to be applied
 
 ```
 [mons]
@@ -39,12 +38,12 @@ osd-node1
 osd-node2
 osd-node3
 ```
-- Create ``.ansible.cfg`` file and add ``host_key_checking = False`` using the below command
+- Create the ``.ansible.cfg`` file and add ``host_key_checking = False`` using the commands below 
 ```
 $ echo "[defaults]" >> /home/ceph/.ansible.cfg
 $ echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
 ```
-- Ensure that Ansible can reach to Ceph hosts.
+- Ensure that Ansible can reach the Ceph hosts.
 ```
 $ ansible all -m ping
 ```
@@ -98,7 +97,7 @@ journal_size: 4096
 public_network: 10.100.2.0/24
 cluster_network: 10.100.1.0/24
 ```
-- Save the file and exit from editor
+- Save the file and exit from the editor
 
 ## Configuring Ceph OSD Settings
 - To disk devices as Ceph OSD, verify disks logical names. In most cases disk name should be ``xvdb`` ``xvdc`` and ``xvdd`` 
@@ -132,7 +131,7 @@ devices:
 journal_collocation: true
 ```
 
-## Deploying Ceph Cluster
+## Deploying the Ceph Cluster
 
 - Navigate to the ``ceph-ansible`` configuration directory
 ```
@@ -146,7 +145,7 @@ $ sudo cp site.yml.sample site.yml
 ```
 $ ansible-playbook site.yml -u ceph
 ```
-- Ansible will take a few minutes to complete Ceph deployment. Once its completed Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.
+- Ansible will take a few minutes to complete Ceph deployment. Once its completed, Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.
 ```
 PLAY RECAP ********************************************************************
 mon-node1                  : ok=91   changed=19   unreachable=0    failed=0
@@ -156,27 +155,27 @@ osd-node1                  : ok=164  changed=16   unreachable=0    failed=0
 osd-node2                  : ok=164  changed=16   unreachable=0    failed=0
 osd-node3                  : ok=164  changed=16   unreachable=0    failed=0
 ```
-- Finally check status of your cluster. 
+- Finally check status of your cluster. You should have an installed and configured Ceph cluster at this point. 
 ```
 $ ssh mon-node1 ceph -s
 ```
 !!! note
-     At this point ignore any cluster health warnings, We will take care of them later in this module.
+     You can ignore any cluster health warnings at this point, We will take care of them later in this module.
 
 > **Upto this point you should have a running Ceph cluster with 3 Ceph OSD nodes ( 9 OSDs total ) and 3 Ceph Monitor nodes.** 
 
-## Configuring Ceph client
-By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure ``mgmt`` node as our Ceph client node.
+## Configuring a Ceph client
+By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure a ``mgmt`` node as our Ceph client node.
 
-- On ``mgmt``node install ``ceph-common`` package which provides ``Ceph CLI``  and other tools
+- On the ``mgmt``node install ``ceph-common`` package which provides the ``Ceph CLI`` and other tools
 ```
 $ sudo yum install -y ceph-common
 ```
-- Change ownership of ``/etc/ceph`` directory
+- Change ownership of the ``/etc/ceph`` directory
 ```
 $ sudo chown -R ceph:ceph /etc/ceph
 ```
--  From ``mon-node1`` copy Ceph configuration file (``ceph.conf``) and Ceph administration keyring (``ceph.client.admin.keyring``) to ``mgmt`` node
+-  From ``mon-node1`` copy the Ceph configuration file (``ceph.conf``) and the Ceph administration keyring (``ceph.client.admin.keyring``) to the ``mgmt`` node
 ```
 $ ssh mon-node1 -t cat /etc/ceph/ceph.conf | tee /etc/ceph/ceph.conf
 ```
@@ -202,8 +201,8 @@ $ sudo chown -R ceph:ceph /etc/ceph
                   64 active+clean
 [ceph@mgmt ~]$
 ```
-## Interacting with Ceph cluster
-In this section we will learn a few commands to interact with Ceph cluster. These commands should be executed from ``mon-node1`` node.
+## Interacting with the Ceph cluster
+In this section we will learn a few commands to interact with our Ceph cluster. These commands should be executed from ``mon-node1`` node.
 
 - ssh to ``mon-node1`` 
 ```
@@ -213,8 +212,8 @@ $ ssh mon-node1
 ```
 $ ceph -s
 ```
-Above cluster status command shows that cluster health is not OK and cluster is complaining about low PG numbers. 
-Lets now try to fix this warning.
+The Above cluster status command shows that the cluster health is not OK and the cluster is complaining about low PG numbers. 
+Let's now try to fix this warning.
 
 - Verify ``pg_num`` for default pool ``rbd`` 
 ```
@@ -225,7 +224,7 @@ $ ceph osd dump | grep -i pool
 $ ceph osd pool set rbd pg_num 128
 $ ceph -s
 ```
-- Once cluster is not creating new PGs , increase ``pgp_num`` for ``rbd`` pool to 128 and check cluster status. Your cluster health should now report ``HEALTH_OK``
+- Once the cluster is not creating new PGs , increase ``pgp_num`` for ``rbd`` pool to 128 and check cluster status. Your cluster health should now report ``HEALTH_OK``
 ```
 $ ceph osd pool set rbd pgp_num 128
 $ ceph -s
@@ -248,5 +247,5 @@ $ ceph df
 $ ceph osd dump | grep -i pool
 ```
 
-> **We have reached to end of Module-1. At this point you have learnt to deploy, configure and interact with Ceph cluster.
-Follow the next module to learn accessing Ceph cluster as a Block Storage.**
+> **We have reached the end of Module-1. At this point you have learned to deploy, configure and interact with your Ceph cluster.
+Follow the next module to learn how to access your Ceph cluster as a Block Storage.**

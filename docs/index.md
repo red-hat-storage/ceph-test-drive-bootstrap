@@ -7,13 +7,13 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 - **Module 3 :** Accessing Ceph cluster via Object Storage interface
 <!-- - **Module 4 :** Scaling up a Ceph cluster -->
 
-## Prerequisites
-- **For Windows user :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client [here](http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe)
+## Test Drive Prerequisites
+- **For Windows users :** you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client [here](http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe)
 - **For Mac and Linux users:**  you will need a Terminal application to SSH into LAB machine (this should already be installed on your host). 
 
 ## Know your Lab Environment
 
-### Starting LAB
+### Starting the LAB
 - To launch your LAB Environment, click **Start Lab** button from the Lab panel. Hang tight , it will take **12-15 minutes** to launch LAB resources.
 - Once LAB is launched, grab the **Management Node IP** from **Addl. Info** tab on Right Side
 
@@ -26,19 +26,14 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
     - **Duration -** The estimated time the lab should take to complete.
     - **Access -** The time lab will run before automatically shutting down.
 
-### Accessing LAB
-- Open SSH client software on our workstation.
-- As **ceph** user, SSH into Ceph Management node by using **Management node IP address** which you can get from **Addl. Info** tab.
+### Accessing the LAB
+- Open SSH client software on your workstation.
+- As **ceph** user, SSH into Ceph Management node by using the **Management node IP address** which you can get from the **Addl. Info** tab.
 - SSH into the node using the following command and provided credentials
   - ``$ ssh ceph@<Mangement Node IP Address>``
   - **Login Credentials** ⇒ **User Name:** **ceph** and **Password:** **Redhat16**
 
-!!! note
-    - Make sure you are logging in to **your LAB environment** Management node IP address as **ceph** user
-    - Type **yes** when ssh prompts for confirmation before establishing connection
-    - **Login Credentials** ⇒ **User Name:** **ceph** and **Password:** **Redhat16**
-
-**Example Snippet:** 
+**Example Snippet:**
 ```
 $ ssh ceph@52.55.48.166
 The authenticity of host '52.55.48.166 (52.55.48.166)' can't be established.
@@ -50,7 +45,14 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 [ceph@mgmt ~]$
 ```
 
-### Terminating LAB
+!!! note
+    - ** If your SSH connection fails , do the following : ** 
+    - Select the CONNECTION tab from the main lab page 
+    - Select the Download PEM/PPK button
+    - Select Download PEM , note the download location of the PEM file and execute the following
+    - ssh -i absolute-path-of-pem-file ceph@Management-node-ip-address 
+
+### Terminating the LAB
 
 Follow these steps to end your lab environment and share your experience.
 
@@ -59,11 +61,9 @@ Follow these steps to end your lab environment and share your experience.
 - In the confirmation message, click **OK**.
 - Tell us about your lab experience on Ceph and suggestions to improve this environment
 
+## Red Hat Ceph Storage
 
-
-## Know Red Hat Ceph Storage
-
-Red Hat Ceph Storage is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. 
+Red Hat Ceph Storage ( RHCS ) is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. 
 
 Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object storage. Red Hat Ceph Storage clusters consist of the following types of nodes:
 
@@ -73,11 +73,11 @@ Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object s
 - Object Gateway nodes
 - MDS nodes
 
-## Prerequisites
-Setting up a Ceph cluster requires the following configuration on the cluster nodes.
+## RHCS Prerequisites
+Setting up a RHCS requires the following configuration on the cluster nodes.
 
 - **Operating System :**  Heterogeneous and supported version of OS.
-- **Registration to CDN :** To get necessary packages required for installation either from RHN (Red Hat Network) or other trusted sources.
+- **Registration to RHN :** To get necessary packages required for installation either from RHN (Red Hat Network) or other trusted sources.
 - **Enabling Ceph Repositories :** To get Ceph packages from CDN or from Local repositories.
 - **Separate networks :** For Public and Cluster traffic.
 - **Setting hostname resolutions :** Either local or DNS name resolution 
@@ -86,7 +86,7 @@ Setting up a Ceph cluster requires the following configuration on the cluster no
 - **Local user account:** User with passwordless sudo ssh access to all nodes, for Ceph deployment using Ansible.
 
 !!! note
-    The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above has been taken care for rest of this course.
+    The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above have been taken care for rest of this course.
 
 
-So without further delays, please go ahead and follow these modules to gain experience on Ceph.
+So without further delay, please go ahead and follow these modules to gain experience on Ceph.
