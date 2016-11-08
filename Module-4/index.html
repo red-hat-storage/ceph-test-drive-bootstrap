@@ -9,17 +9,17 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Module-2 Ceph Block Storage - Red Hat Ceph Storage Test Drive</title>
+        <title>Module 4 - Scaling up a Ceph cluster - Red Hat Ceph Storage Test Drive</title>
       
       
       
-        <link rel="canonical" href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-2/">
+        <link rel="canonical" href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4/">
       
       
     
-    <meta property="og:url" content="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-2/">
+    <meta property="og:url" content="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4/">
     <meta property="og:title" content="Red Hat Ceph Storage Test Drive">
-    <meta property="og:image" content="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-2//../images/RedHat.svg">
+    <meta property="og:image" content="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4//../images/RedHat.svg">
     <meta name="apple-mobile-web-app-title" content="Red Hat Ceph Storage Test Drive">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -95,7 +95,7 @@
             
           </span>
         
-        Module-2 Ceph Block Storage
+        Module 4 - Scaling up a Ceph cluster
       </div>
     </div>
     
@@ -173,14 +173,9 @@
       
         
   <li>
-    <a class="current" title="Module-2 Ceph Block Storage" href="./">
+    <a class="" title="Module-2 Ceph Block Storage" href="../Module-2/">
       Module-2 Ceph Block Storage
     </a>
-    
-      
-        
-      
-      
     
   </li>
 
@@ -196,9 +191,14 @@
       
         
   <li>
-    <a class="" title="Module 4 - Scaling up a Ceph cluster" href="../Module-4/">
+    <a class="current" title="Module 4 - Scaling up a Ceph cluster" href="./">
       Module 4 - Scaling up a Ceph cluster
     </a>
+    
+      
+        
+      
+      
     
   </li>
 
@@ -217,93 +217,71 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="module-2-ceph-block-storage-interface">Module 2 - Ceph Block Storage interface<a class="headerlink" href="#module-2-ceph-block-storage-interface" title="Permanent link">#</a></h1>
-<p>In this module we will learn how to provision block storage using Ceph. We will create thin-provisioned, resizable RADOS Block Device (RBD) volume, which will be mapped to <code>client-node1</code> and will be taken into use.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</p>
-</div>
+          <h1 id="module-4-scaling-up-a-ceph-cluster">Module 4 - Scaling up a Ceph cluster<a class="headerlink" href="#module-4-scaling-up-a-ceph-cluster" title="Permanent link">#</a></h1>
+<pre class="code"><code>## Note: ##
+
+Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</code></pre>
+
+
+<p>Ceph is designed to scale to exabyte level. Scaling a Ceph cluster is a matter of just adding nodes and Ceph will take care of the rest. In this module we will add a new OSD node <code>osd-node4</code> with 3 drives to our existing Ceph cluster of 3 OSD nodes. </p>
 <ul>
-<li>From <code>mgmt</code> node  configure <code>client-node1</code>  as Ceph client by installing <code>ceph-common</code> package and changing ownership of <code>/etc/ceph</code> directory. </li>
+<li>We currently have 3 OSD Ceph cluster with total 9 OSDs, lets verify it again</li>
 </ul>
-<pre class="code"><code>$ ssh client-node1 -t sudo yum install -y ceph-common
-$ ssh client-node1 -t sudo chown -R ceph:ceph /etc/ceph</code></pre>
+<pre class="code"><code>$ ceph osd stat
+$ ceph osd tree</code></pre>
 
 
+<p>Once new node <code>osd-node4</code> is added we will then have 4 Node Ceph cluster with 12 disks altogether.</p>
 <ul>
-<li>From <code>mgmt</code> node create a block device user named <code>client.rbd</code> with necessary permissions on Ceph Monitor and OSDs</li>
+<li>
+<p>To scale up Ceph cluster, login to <code>mgmt</code> node which is our ceph-ansible node</p>
+</li>
+<li>
+<p>Edit <code>/etc/ansible/hosts</code> file</p>
+</li>
 </ul>
-<pre class="code"><code>$ ceph auth get-or-create client.rbd mon 'allow r' osd 'allow rwx pool=rbd' -o /etc/ceph/ceph.client.rbd.keyring</code></pre>
-
-
-<ul>
-<li>From <code>mgmt</code> node copy <code>ceph.conf</code> and <code>rbd.keyring</code> file to <code>client-node1</code> </li>
-</ul>
-<pre class="code"><code>$ scp /etc/ceph/ceph.conf client-node1:/etc/ceph
-$ scp /etc/ceph/ceph.client.rbd.keyring client-node1:/etc/ceph</code></pre>
-
-
-<ul>
-<li>From <code>client-node1</code> verify Ceph cluster is accessible by <code>rbd</code> user</li>
-</ul>
-<pre class="code"><code>$ ssh client-node1
-$ ceph -s --id rbd</code></pre>
+<pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
-<li>From <code>client-node1</code> create RBD block device with name <code>block-disk1</code> of size <code>10G</code></li>
+<li>Add <code>osd-node4</code> under <code>[osds]</code> section. Save and exit editor</li>
 </ul>
-<pre class="code"><code>$ rbd create block-disk1 --size 10240 --image-feature layering --id rbd</code></pre>
+<pre class="code"><code>[mons]
+mon-node1
+mon-node2
+mon-node3
+[osds]
+osd-node1
+osd-node2
+osd-node3
+osd-node4
+[rgws]
+rgw-node1</code></pre>
 
 
 <ul>
-<li>Verify block device that we have just created</li>
+<li>Navigate to the Ansible configuration directory <code>/usr/share/ceph-ansible/</code></li>
 </ul>
-<pre class="code"><code>$ rbd ls --id rbd
-$ rbd info block-disk1 --id rbd</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/</code></pre>
 
 
 <ul>
-<li>Load and verify RBD kernel module</li>
+<li>Now run Ansible playbook, which will make sure <code>osd-node4</code> is added to existing Ceph cluster</li>
 </ul>
-<pre class="code"><code>$ sudo modprobe rbd
-$ lsmod | grep -i rbd</code></pre>
+<pre class="code"><code>$ ansible-playbook site.yml -u ceph</code></pre>
 
 
 <ul>
-<li>Map <code>block-disk1</code> on <code>client-node1</code> </li>
+<li>Once Ansible run is completed, make sure there is no failed item under <code>PLAY RECAP</code> </li>
+<li>So ceph-ansible has scaled up our Ceph cluster, lets verify it</li>
 </ul>
-<pre class="code"><code>$ sudo rbd map block-disk1 --id rbd</code></pre>
-
-
-<ul>
-<li>Verify mapped RBD block device</li>
-</ul>
-<pre class="code"><code>$ rbd showmapped --id rbd</code></pre>
-
-
-<ul>
-<li>Make a note of mapped device name from the above command output , in most of the cases it is <code>/dev/rbd0</code>. Create <code>xfs</code> filesystem on this Ceph block device.</li>
-</ul>
-<pre class="code"><code>$ sudo mkfs.xfs /dev/rbd0
-$ sudo mount /dev/rbd0 /mnt
-$ df -h /mnt</code></pre>
-
-
-<ul>
-<li>Lets run a quick <code>dd</code> write test on this block device to verify its accessiblity. </li>
-</ul>
-<pre class="code"><code>$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500 &amp;</code></pre>
-
-
-<ul>
-<li>Meanwhile the <code>dd</code> test is going on, you can watch cluster status using which should report IO operations on Ceph cluster.</li>
-</ul>
-<pre class="code"><code>$ watch ceph -s --id rbd</code></pre>
+<pre class="code"><code>$ ceph osd stat
+$ ceph osd tree
+$ ceph -s</code></pre>
 
 
 <blockquote>
-<p><strong>This is it, we have reached to end of Module-2. In this module you have learned how to provision and consume Ceph block device. Follow the next module to learn how to use Ceph as Object Storage</strong></p>
+<p>At this point we have scaled up our Ceph cluster to 4 OSD node, without any downtime or service breaks. This shows, how seamless is Ceph scale up operation</p>
 </blockquote>
           <aside class="copyright" role="note">
             
@@ -323,7 +301,7 @@ $ df -h /mnt</code></pre>
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../Module-1/" title="Module-1 Ceph Cluster Setup">
+        <a href="../Module-3/" title="Module-3 Ceph Object Storage">
           <span class="direction">
             Previous
           </span>
@@ -333,7 +311,7 @@ $ df -h /mnt</code></pre>
             </div>
             <div class="stretch">
               <div class="title">
-                Module-1 Ceph Cluster Setup
+                Module-3 Ceph Object Storage
               </div>
             </div>
           </div>
@@ -341,22 +319,6 @@ $ df -h /mnt</code></pre>
       
     </div>
     <div class="next">
-      
-        <a href="../Module-3/" title="Module-3 Ceph Object Storage">
-          <span class="direction">
-            Next
-          </span>
-          <div class="page">
-            <div class="stretch">
-              <div class="title">
-                Module-3 Ceph Object Storage
-              </div>
-            </div>
-            <div class="button button-next" role="button" aria-label="Next">
-              <i class="icon icon-forward"></i>
-            </div>
-          </div>
-        </a>
       
     </div>
   </nav>
