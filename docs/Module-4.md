@@ -1,10 +1,9 @@
 # Module 4 - Scaling up a Ceph cluster
 
-```
-## Note: ##
 
-Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.
-```
+!!! note
+
+    - Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.
 
 Ceph is designed to scale to exabyte level. Scaling a Ceph cluster is a matter of just adding nodes and Ceph will take care of the rest. In this module we will add a new OSD node ``osd-node4`` with 3 drives to our existing Ceph cluster of 3 OSD nodes. 
 
@@ -13,15 +12,15 @@ Ceph is designed to scale to exabyte level. Scaling a Ceph cluster is a matter o
 $ ceph osd stat
 $ ceph osd tree
 ```
-Once new node ``osd-node4`` is added we will then have 4 Node Ceph cluster with 12 disks altogether.
+Once the new node ``osd-node4`` is added we will then have 4 Node Ceph cluster with 12 disks altogether.
 
-- To scale up Ceph cluster, login to ``mgmt`` node which is our ceph-ansible node
+- To scale up Ceph cluster, login to the ``mgmt`` node which is our ceph-ansible node
 
 - Edit ``/etc/ansible/hosts`` file
 ```
 $ sudo vi /etc/ansible/hosts
 ```
-- Add ``osd-node4`` under ``[osds]`` section. Save and exit editor
+- Add ``osd-node4`` under ``[osds]`` section. Save and exit from editor
 ```
 [mons]
 mon-node1
@@ -39,7 +38,7 @@ rgw-node1
 ```
 $ cd /usr/share/ceph-ansible/
 ```
-- Now run Ansible playbook, which will make sure ``osd-node4`` is added to existing Ceph cluster
+- Now run Ansible playbook, which will make sure the ``osd-node4`` is added to existing Ceph cluster
 ```
 $ ansible-playbook site.yml -u ceph
 ```
