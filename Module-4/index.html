@@ -218,11 +218,12 @@
         <div class="wrapper">
           
           <h1 id="module-4-scaling-up-a-ceph-cluster">Module 4 - Scaling up a Ceph cluster<a class="headerlink" href="#module-4-scaling-up-a-ceph-cluster" title="Permanent link">#</a></h1>
-<pre class="code"><code>## Note: ##
-
-Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</code></pre>
-
-
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul>
+<li>Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</li>
+</ul>
+</div>
 <p>Ceph is designed to scale to exabyte level. Scaling a Ceph cluster is a matter of just adding nodes and Ceph will take care of the rest. In this module we will add a new OSD node <code>osd-node4</code> with 3 drives to our existing Ceph cluster of 3 OSD nodes. </p>
 <ul>
 <li>We currently have 3 OSD Ceph cluster with total 9 OSDs, lets verify it again</li>
@@ -231,10 +232,10 @@ Before proceeding with this module make sure you have completed Module-1 and hav
 $ ceph osd tree</code></pre>
 
 
-<p>Once new node <code>osd-node4</code> is added we will then have 4 Node Ceph cluster with 12 disks altogether.</p>
+<p>Once the new node <code>osd-node4</code> is added we will then have 4 Node Ceph cluster with 12 disks altogether.</p>
 <ul>
 <li>
-<p>To scale up Ceph cluster, login to <code>mgmt</code> node which is our ceph-ansible node</p>
+<p>To scale up Ceph cluster, login to the <code>mgmt</code> node which is our ceph-ansible node</p>
 </li>
 <li>
 <p>Edit <code>/etc/ansible/hosts</code> file</p>
@@ -244,7 +245,7 @@ $ ceph osd tree</code></pre>
 
 
 <ul>
-<li>Add <code>osd-node4</code> under <code>[osds]</code> section. Save and exit editor</li>
+<li>Add <code>osd-node4</code> under <code>[osds]</code> section. Save and exit from editor</li>
 </ul>
 <pre class="code"><code>[mons]
 mon-node1
@@ -266,7 +267,7 @@ rgw-node1</code></pre>
 
 
 <ul>
-<li>Now run Ansible playbook, which will make sure <code>osd-node4</code> is added to existing Ceph cluster</li>
+<li>Now run Ansible playbook, which will make sure the <code>osd-node4</code> is added to existing Ceph cluster</li>
 </ul>
 <pre class="code"><code>$ ansible-playbook site.yml -u ceph</code></pre>
 
