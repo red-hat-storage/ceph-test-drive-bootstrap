@@ -4,7 +4,7 @@
     
     <url>
      <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/</loc>
-     <lastmod>2016-11-09</lastmod>
+     <lastmod>2016-11-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,25 +13,37 @@
         
     <url>
      <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-1/</loc>
-     <lastmod>2016-11-09</lastmod>
+     <lastmod>2016-11-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-2/</loc>
-     <lastmod>2016-11-09</lastmod>
+     <lastmod>2016-11-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-3/</loc>
-     <lastmod>2016-11-09</lastmod>
+     <lastmod>2016-11-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4/</loc>
-     <lastmod>2016-11-09</lastmod>
+     <lastmod>2016-11-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-5/</loc>
+     <lastmod>2016-11-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-6/</loc>
+     <lastmod>2016-11-23</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

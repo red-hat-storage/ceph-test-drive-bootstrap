@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Module-2 Ceph Block Storage - Red Hat Ceph Storage Test Drive</title>
+        <title>Module-2 Ceph Cluster Setup - Red Hat Ceph Storage Test Drive</title>
       
       
       
@@ -95,7 +95,7 @@
             
           </span>
         
-        Module-2 Ceph Block Storage
+        Module-2 Ceph Cluster Setup
       </div>
     </div>
     
@@ -164,8 +164,8 @@
       
         
   <li>
-    <a class="" title="Module-1 Ceph Cluster Setup" href="../Module-1/">
-      Module-1 Ceph Cluster Setup
+    <a class="" title="Module-1 Introduction to Ceph" href="../Module-1/">
+      Module-1 Introduction to Ceph
     </a>
     
   </li>
@@ -173,13 +173,53 @@
       
         
   <li>
-    <a class="current" title="Module-2 Ceph Block Storage" href="./">
-      Module-2 Ceph Block Storage
+    <a class="current" title="Module-2 Ceph Cluster Setup" href="./">
+      Module-2 Ceph Cluster Setup
     </a>
     
       
         
       
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Installing and setting up ceph-ansible" href="#installing-and-setting-up-ceph-ansible">
+                Installing and setting up ceph-ansible
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring Ceph Global Settings" href="#configuring-ceph-global-settings">
+                Configuring Ceph Global Settings
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring Ceph OSD Settings" href="#configuring-ceph-osd-settings">
+                Configuring Ceph OSD Settings
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Deploying the Ceph Cluster" href="#deploying-the-ceph-cluster">
+                Deploying the Ceph Cluster
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Configuring a Ceph client" href="#configuring-a-ceph-client">
+                Configuring a Ceph client
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Interacting with the Ceph cluster" href="#interacting-with-the-ceph-cluster">
+                Interacting with the Ceph cluster
+              </a>
+            </li>
+          
+        </ul>
       
     
   </li>
@@ -187,8 +227,8 @@
       
         
   <li>
-    <a class="" title="Module-3 Ceph Object Storage" href="../Module-3/">
-      Module-3 Ceph Object Storage
+    <a class="" title="Module-3 Ceph Block Storage" href="../Module-3/">
+      Module-3 Ceph Block Storage
     </a>
     
   </li>
@@ -196,8 +236,26 @@
       
         
   <li>
-    <a class="" title="Module 4 - Scaling up a Ceph cluster" href="../Module-4/">
-      Module 4 - Scaling up a Ceph cluster
+    <a class="" title="Module-4 Ceph Object Storage" href="../Module-4/">
+      Module-4 Ceph Object Storage
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-5 Scaling up a Ceph cluster" href="../Module-5/">
+      Module-5 Scaling up a Ceph cluster
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-6 MySQL Database on Ceph" href="../Module-6/">
+      Module-6 MySQL Database on Ceph
     </a>
     
   </li>
@@ -217,93 +275,327 @@
       <article class="article">
         <div class="wrapper">
           
-          <h1 id="module-2-ceph-block-storage-interface">Module 2 - Ceph Block Storage interface<a class="headerlink" href="#module-2-ceph-block-storage-interface" title="Permanent link">#</a></h1>
-<p>In this module we will learn how to provision block storage using Ceph. We will create thin-provisioned, resizable RADOS Block Device (RBD) volume, which will be mapped to <code>client-node1</code> and will be taken into use.</p>
+          <h1 id="module-2-setting-up-a-ceph-cluster">Module - 2 : Setting up a Ceph cluster<a class="headerlink" href="#module-2-setting-up-a-ceph-cluster" title="Permanent link">#</a></h1>
+<p>RHCS 2.0 has introduced a new and more efficient way to deploy Ceph cluster. Instead of <code>ceph-deploy</code>  RHCS 2.0 ships with <code>ceph-ansible</code> tool which is based on configuration management tool <code>Ansible</code> .</p>
+<p>In this module we will deploy a Ceph cluster with 3 OSD nodes and 3 Monitor nodes. We will use <code>ceph-ansible</code> to deploy this cluster.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.</p>
+<p>You must run all the commands using <strong>ceph</strong> user and from <strong>management node</strong>, unless otherwise specified. </p>
 </div>
 <ul>
-<li>From <code>mgmt</code> node  configure <code>client-node1</code>  as Ceph client by installing <code>ceph-common</code> package and changing ownership of <code>/etc/ceph</code> directory. </li>
+<li>From your workstation login to the Ceph management node as <strong><code>ceph</code></strong> user</li>
 </ul>
-<pre class="code"><code>$ ssh client-node1 -t sudo yum install -y ceph-common
-$ ssh client-node1 -t sudo chown -R ceph:ceph /etc/ceph</code></pre>
+<pre class="code"><code>$ ssh ceph@&lt;IP address of Ceph Management node&gt;</code></pre>
+
+
+<h2 id="installing-and-setting-up-ceph-ansible">Installing and setting up ceph-ansible<a class="headerlink" href="#installing-and-setting-up-ceph-ansible" title="Permanent link">#</a></h2>
+<ul>
+<li>Install the ceph-ansible package</li>
+</ul>
+<pre class="code"><code>$ sudo yum install -y ceph-ansible</code></pre>
 
 
 <ul>
-<li>From <code>mgmt</code> node create a block device user named <code>client.rbd</code> with necessary permissions on Ceph Monitor and OSDs</li>
+<li>To keep ansible hosts file short, rename the default ansible host file</li>
 </ul>
-<pre class="code"><code>$ ceph auth get-or-create client.rbd mon 'allow r' osd 'allow rwx pool=rbd' -o /etc/ceph/ceph.client.rbd.keyring</code></pre>
+<pre class="code"><code>$ sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp</code></pre>
 
 
 <ul>
-<li>From <code>mgmt</code> node copy <code>ceph.conf</code> and <code>rbd.keyring</code> file to <code>client-node1</code> </li>
+<li>Create a new ansible hosts file, with the following edits </li>
 </ul>
-<pre class="code"><code>$ scp /etc/ceph/ceph.conf client-node1:/etc/ceph
-$ scp /etc/ceph/ceph.client.rbd.keyring client-node1:/etc/ceph</code></pre>
+<pre class="code"><code>$ sudo vi /etc/ansible/hosts</code></pre>
 
 
 <ul>
-<li>From <code>client-node1</code> verify Ceph cluster is accessible by <code>rbd</code> user</li>
+<li>In the <code>/etc/ansible/hosts</code> file add Ceph monitor host names under <code>[mons]</code>  section and Ceph OSDs host name under <code>[osds]</code>  section . This allows ansible to know which role is to be applied</li>
 </ul>
-<pre class="code"><code>$ ssh client-node1
-$ ceph -s --id rbd</code></pre>
+<pre class="code"><code>[mons]
+mon-node1
+mon-node2
+mon-node3
+[osds]
+osd-node1
+osd-node2
+osd-node3</code></pre>
 
 
 <ul>
-<li>From <code>client-node1</code> create RBD block device with name <code>block-disk1</code> of size <code>10G</code></li>
+<li>Create the <code>.ansible.cfg</code> file and add <code>host_key_checking = False</code> using the commands below </li>
 </ul>
-<pre class="code"><code>$ rbd create block-disk1 --size 10240 --image-feature layering --id rbd</code></pre>
+<pre class="code"><code>$ echo &quot;[defaults]&quot; &gt;&gt; /home/ceph/.ansible.cfg
+$ echo &quot;host_key_checking = False&quot; &gt;&gt; /home/ceph/.ansible.cfg</code></pre>
 
 
 <ul>
-<li>Verify block device that we have just created</li>
+<li>Ensure that Ansible can reach the Ceph hosts.</li>
 </ul>
-<pre class="code"><code>$ rbd ls --id rbd
-$ rbd info block-disk1 --id rbd</code></pre>
+<pre class="code"><code>$ ansible all -m ping</code></pre>
+
+
+<h2 id="configuring-ceph-global-settings">Configuring Ceph Global Settings<a class="headerlink" href="#configuring-ceph-global-settings" title="Permanent link">#</a></h2>
+<ul>
+<li>Create a directory under the home directory so Ansible can write the keys</li>
+</ul>
+<pre class="code"><code>$ cd ~
+$ mkdir ceph-ansible-keys</code></pre>
 
 
 <ul>
-<li>Load and verify RBD kernel module</li>
+<li>Navigate to the Ceph Ansible <code>`group_vars</code> directory</li>
 </ul>
-<pre class="code"><code>$ sudo modprobe rbd
-$ lsmod | grep -i rbd</code></pre>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
 
 
 <ul>
-<li>Map <code>block-disk1</code> on <code>client-node1</code> </li>
+<li>Create an <code>all</code> file from the <code>all.sample</code>  file and open it for editing</li>
 </ul>
-<pre class="code"><code>$ sudo rbd map block-disk1 --id rbd</code></pre>
+<pre class="code"><code>$ sudo cp all.sample all
+$ sudo vi all</code></pre>
 
 
 <ul>
-<li>Verify mapped RBD block device</li>
+<li>Uncomment <code>fetch_directory</code> setting under the <code>GENERAL</code> section and point it to directory we created previously for ceph-ansible-keys</li>
 </ul>
-<pre class="code"><code>$ rbd showmapped --id rbd</code></pre>
+<pre class="code"><code>fetch_directory: ~/ceph-ansible-keys</code></pre>
 
 
 <ul>
-<li>Make a note of mapped device name from the above command output , in most of the cases it is <code>/dev/rbd0</code>. Create <code>xfs</code> filesystem on this Ceph block device.</li>
+<li>Under <code>Stable Releases</code> section and <code>ENTERPRISE VERSION RED HAT STORAGE</code> subsection, uncomment <code>ceph_stable_rh_storage</code> setting and set it to <strong><code>true</code></strong></li>
 </ul>
-<pre class="code"><code>$ sudo mkfs.xfs /dev/rbd0
-$ sudo mount /dev/rbd0 /mnt
-$ df -h /mnt</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage: true</code></pre>
 
 
 <ul>
-<li>Lets run a quick <code>dd</code> write test on this block device to verify its accessiblity. </li>
+<li>Uncomment the <code>ceph_stable_rh_storage_iso_install</code> setting and set it to <strong><code>true</code></strong> </li>
 </ul>
-<pre class="code"><code>$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500 &amp;</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage_iso_install: true</code></pre>
 
 
 <ul>
-<li>Meanwhile the <code>dd</code> test is going on, you can watch cluster status using which should report IO operations on Ceph cluster.</li>
+<li>Uncomment the <code>ceph_stable_rh_storage_iso_path</code> setting and specify the path to RHCS 2.0 ISO image</li>
 </ul>
-<pre class="code"><code>$ watch ceph -s --id rbd</code></pre>
+<pre class="code"><code>ceph_stable_rh_storage_iso_path: /home/ceph/rhceph-2.0-rhel-7-x86_64.iso</code></pre>
+
+
+<ul>
+<li>Uncomment the <code>cephx</code> setting under <code>CEPH CONFIGURATION</code> section</li>
+</ul>
+<pre class="code"><code>cephx: true</code></pre>
+
+
+<ul>
+<li>Uncomment the <code>monitor_interface</code> setting under <code>Monitor options</code> section and specify monitor node interface name.</li>
+</ul>
+<pre class="code"><code>monitor_interface: eth0</code></pre>
+
+
+<ul>
+<li>Set the <code>journal_size</code>  setting</li>
+</ul>
+<pre class="code"><code>journal_size: 4096</code></pre>
+
+
+<ul>
+<li>Set the <code>public_network</code> and <code>cluster_network</code> settings</li>
+</ul>
+<pre class="code"><code>public_network: 10.100.2.0/24
+cluster_network: 10.100.1.0/24</code></pre>
+
+
+<ul>
+<li>Save the file and exit from the editor</li>
+</ul>
+<h2 id="configuring-ceph-osd-settings">Configuring Ceph OSD Settings<a class="headerlink" href="#configuring-ceph-osd-settings" title="Permanent link">#</a></h2>
+<ul>
+<li>To disk devices as Ceph OSD, verify disks logical names. In most cases disk name should be <code>xvdb</code> <code>xvdc</code> and <code>xvdd</code> </li>
+</ul>
+<pre class="code"><code>$ ssh osd-node1 lsblk</code></pre>
+
+
+<ul>
+<li>To define Ceph OSDs , navigate to the <code>/usr/share/ceph-ansible/group_vars/</code>  directory</li>
+</ul>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible/group_vars/</code></pre>
+
+
+<ul>
+<li>Create an <code>osds</code> file from <code>osds.sample</code> file and open it for editing</li>
+</ul>
+<pre class="code"><code>$ sudo cp osds.sample osds
+$ sudo vi osds</code></pre>
+
+
+<ul>
+<li>Uncomment the <code>crush_location</code> setting and the <code>osd_crush_location</code> setting</li>
+</ul>
+<pre class="code"><code>crush_location: false
+osd_crush_location: &quot;'root={{ ceph_crush_root }} rack={{ ceph_crush_rack }} host={{ ansible_hostname }}'&quot;</code></pre>
+
+
+<ul>
+<li>To add OSD devices, uncomment the <code>devices:</code> section and add the OSD devices logical name <code>/dev/xvdb</code> and <code>/dev/xvdc</code> and <code>/dev/xvdd</code> to the list of devices</li>
+</ul>
+<pre class="code"><code>devices:
+  - /dev/xvdb
+  - /dev/xvdc
+  - /dev/xvdd</code></pre>
+
+
+<ul>
+<li>Uncomment the <code>journal_collocation</code> setting and specify <strong><code>true</code></strong> so that OSDs can use co-located journals</li>
+</ul>
+<pre class="code"><code>journal_collocation: true</code></pre>
+
+
+<h2 id="deploying-the-ceph-cluster">Deploying the Ceph Cluster<a class="headerlink" href="#deploying-the-ceph-cluster" title="Permanent link">#</a></h2>
+<ul>
+<li>Navigate to the <code>ceph-ansible</code> configuration directory</li>
+</ul>
+<pre class="code"><code>$ cd /usr/share/ceph-ansible</code></pre>
+
+
+<ul>
+<li>Create a <code>site.yml</code> file from the <code>site.yml.sample</code> file </li>
+</ul>
+<pre class="code"><code>$ sudo cp site.yml.sample site.yml</code></pre>
+
+
+<ul>
+<li>Run the Ansible playbook</li>
+</ul>
+<pre class="code"><code>$ ansible-playbook site.yml -u ceph</code></pre>
+
+
+<ul>
+<li>Ansible will take a few minutes to complete Ceph deployment. Once its completed, Ansible play recap should look similar to this. Make sure Ansible Play Recap does not show any host run failed.</li>
+</ul>
+<pre class="code"><code>PLAY RECAP ********************************************************************
+mon-node1                  : ok=91   changed=19   unreachable=0    failed=0
+mon-node2                  : ok=91   changed=18   unreachable=0    failed=0
+mon-node3                  : ok=91   changed=18   unreachable=0    failed=0
+osd-node1                  : ok=164  changed=16   unreachable=0    failed=0
+osd-node2                  : ok=164  changed=16   unreachable=0    failed=0
+osd-node3                  : ok=164  changed=16   unreachable=0    failed=0</code></pre>
+
+
+<ul>
+<li>Finally check status of your cluster. You should have an installed and configured Ceph cluster at this point. </li>
+</ul>
+<pre class="code"><code>$ ssh mon-node1 ceph -s</code></pre>
+
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can ignore any cluster health warnings at this point, We will take care of them later in this module.</p>
+</div>
+<blockquote>
+<p><strong>Upto this point you should have a running Ceph cluster with 3 Ceph OSD nodes ( 9 OSDs total ) and 3 Ceph Monitor nodes.</strong> </p>
+</blockquote>
+<h2 id="configuring-a-ceph-client">Configuring a Ceph client<a class="headerlink" href="#configuring-a-ceph-client" title="Permanent link">#</a></h2>
+<p>By default Ceph monitor nodes are authorized to run Ceph administrative commands. For the sake of understanding how Ceph client is configured, In this section we will configure a <code>mgmt</code> node as our Ceph client node.</p>
+<ul>
+<li>On the <code>mgmt</code>node install <code>ceph-common</code> package which provides the <code>Ceph CLI</code> and other tools</li>
+</ul>
+<pre class="code"><code>$ sudo yum install -y ceph-common</code></pre>
+
+
+<ul>
+<li>Change ownership of the <code>/etc/ceph</code> directory</li>
+</ul>
+<pre class="code"><code>$ sudo chown -R ceph:ceph /etc/ceph</code></pre>
+
+
+<ul>
+<li>From <code>mon-node1</code> copy the Ceph configuration file (<code>ceph.conf</code>) and the Ceph administration keyring (<code>ceph.client.admin.keyring</code>) to the <code>mgmt</code> node</li>
+</ul>
+<pre class="code"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.conf | tee /etc/ceph/ceph.conf</code></pre>
+
+
+<pre class="code"><code>$ ssh mon-node1 -t cat /etc/ceph/ceph.client.admin.keyring | tee /etc/ceph/ceph.client.admin.keyring</code></pre>
+
+
+<pre class="code"><code>$ chmod 400 /etc/ceph/ceph.client.admin.keyring
+$ sudo chown -R ceph:ceph /etc/ceph</code></pre>
+
+
+<ul>
+<li>Verify <code>mgmt</code> node which is our Ceph client , can run Ceph commands</li>
+</ul>
+<pre class="code"><code>[ceph@mgmt ~]$ ceph -s
+    cluster 32ab020c-e510-4884-ab0a-63944c2c6b35
+     health HEALTH_WARN
+            too few PGs per OSD (21 &lt; min 30)
+     monmap e1: 3 mons at {mon-node1=10.100.2.11:6789/0,mon-node2=10.100.2.12:6789/0,mon-node3=10.100.2.13:6789/0}
+            election epoch 6, quorum 0,1,2 mon-node1,mon-node2,mon-node3
+     osdmap e20: 9 osds: 9 up, 9 in
+            flags sortbitwise
+      pgmap v33: 64 pgs, 1 pools, 0 bytes data, 0 objects
+            300 MB used, 863 GB / 863 GB avail
+                  64 active+clean
+[ceph@mgmt ~]$</code></pre>
+
+
+<h2 id="interacting-with-the-ceph-cluster">Interacting with the Ceph cluster<a class="headerlink" href="#interacting-with-the-ceph-cluster" title="Permanent link">#</a></h2>
+<p>In this section we will learn a few commands to interact with our Ceph cluster. These commands should be executed from <code>mon-node1</code> node.</p>
+<ul>
+<li>ssh to <code>mon-node1</code> </li>
+</ul>
+<pre class="code"><code>$ ssh mon-node1</code></pre>
+
+
+<ul>
+<li>Check cluster status</li>
+</ul>
+<pre class="code"><code>$ ceph -s</code></pre>
+
+
+<p>The Above cluster status command shows that the cluster health is not OK and the cluster is complaining about low PG numbers. 
+Let's now try to fix this warning.</p>
+<ul>
+<li>Verify <code>pg_num</code> for default pool <code>rbd</code> </li>
+</ul>
+<pre class="code"><code>$ ceph osd dump | grep -i pool</code></pre>
+
+
+<ul>
+<li>Increase <code>pg_num</code>  for <code>rbd</code> pool to 128 and check cluster status </li>
+</ul>
+<pre class="code"><code>$ ceph osd pool set rbd pg_num 128
+$ ceph -s</code></pre>
+
+
+<ul>
+<li>Once the cluster is not creating new PGs , increase <code>pgp_num</code> for <code>rbd</code> pool to 128 and check cluster status. Your cluster health should now report <code>HEALTH_OK</code></li>
+</ul>
+<pre class="code"><code>$ ceph osd pool set rbd pgp_num 128
+$ ceph -s</code></pre>
+
+
+<ul>
+<li>Check Ceph OSD stats and tree view of OSDs in cluster</li>
+</ul>
+<pre class="code"><code>$ ceph osd stat
+$ ceph osd tree</code></pre>
+
+
+<ul>
+<li>Check Ceph monitor status</li>
+</ul>
+<pre class="code"><code>$ ceph mon stat</code></pre>
+
+
+<ul>
+<li>List and check Ceph pool status</li>
+</ul>
+<pre class="code"><code>$ ceph osd lspools
+$ ceph df
+$ ceph osd dump | grep -i pool</code></pre>
 
 
 <blockquote>
-<p><strong>This is it, we have reached to end of Module-2. In this module you have learned how to provision and consume Ceph block device. Follow the next module to learn how to use Ceph as Object Storage</strong></p>
+<p><strong>We have reached the end of Module-2. At this point you have learned to deploy, configure and interact with your Ceph cluster.
+Follow the next module to learn how to access your Ceph cluster as a Block Storage.</strong></p>
 </blockquote>
           <aside class="copyright" role="note">
             
@@ -323,7 +615,7 @@ $ df -h /mnt</code></pre>
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../Module-1/" title="Module-1 Ceph Cluster Setup">
+        <a href="../Module-1/" title="Module-1 Introduction to Ceph">
           <span class="direction">
             Previous
           </span>
@@ -333,7 +625,7 @@ $ df -h /mnt</code></pre>
             </div>
             <div class="stretch">
               <div class="title">
-                Module-1 Ceph Cluster Setup
+                Module-1 Introduction to Ceph
               </div>
             </div>
           </div>
@@ -342,14 +634,14 @@ $ df -h /mnt</code></pre>
     </div>
     <div class="next">
       
-        <a href="../Module-3/" title="Module-3 Ceph Object Storage">
+        <a href="../Module-3/" title="Module-3 Ceph Block Storage">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Module-3 Ceph Object Storage
+                Module-3 Ceph Block Storage
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">

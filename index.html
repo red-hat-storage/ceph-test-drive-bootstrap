@@ -151,10 +151,26 @@
     </a>
     
       
-        
-      
       
         <ul>
+          
+            <li class="anchor">
+              <a title="Introduction" href="#introduction">
+                Introduction
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="What is Red Hat Ceph Storage" href="#what-is-red-hat-ceph-storage">
+                What is Red Hat Ceph Storage
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="About the Test Drive" href="#about-the-test-drive">
+                About the Test Drive
+              </a>
+            </li>
           
             <li class="anchor">
               <a title="Test Drive Prerequisites" href="#test-drive-prerequisites">
@@ -165,12 +181,6 @@
             <li class="anchor">
               <a title="Know your Lab Environment" href="#know-your-lab-environment">
                 Know your Lab Environment
-              </a>
-            </li>
-          
-            <li class="anchor">
-              <a title="Red Hat Ceph Storage" href="#red-hat-ceph-storage">
-                Red Hat Ceph Storage
               </a>
             </li>
           
@@ -193,8 +203,8 @@
       
         
   <li>
-    <a class="" title="Module-1 Ceph Cluster Setup" href="Module-1/">
-      Module-1 Ceph Cluster Setup
+    <a class="" title="Module-1 Introduction to Ceph" href="Module-1/">
+      Module-1 Introduction to Ceph
     </a>
     
   </li>
@@ -202,8 +212,8 @@
       
         
   <li>
-    <a class="" title="Module-2 Ceph Block Storage" href="Module-2/">
-      Module-2 Ceph Block Storage
+    <a class="" title="Module-2 Ceph Cluster Setup" href="Module-2/">
+      Module-2 Ceph Cluster Setup
     </a>
     
   </li>
@@ -211,8 +221,8 @@
       
         
   <li>
-    <a class="" title="Module-3 Ceph Object Storage" href="Module-3/">
-      Module-3 Ceph Object Storage
+    <a class="" title="Module-3 Ceph Block Storage" href="Module-3/">
+      Module-3 Ceph Block Storage
     </a>
     
   </li>
@@ -220,8 +230,26 @@
       
         
   <li>
-    <a class="" title="Module 4 - Scaling up a Ceph cluster" href="Module-4/">
-      Module 4 - Scaling up a Ceph cluster
+    <a class="" title="Module-4 Ceph Object Storage" href="Module-4/">
+      Module-4 Ceph Object Storage
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-5 Scaling up a Ceph cluster" href="Module-5/">
+      Module-5 Scaling up a Ceph cluster
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Module-6 MySQL Database on Ceph" href="Module-6/">
+      Module-6 MySQL Database on Ceph
     </a>
     
   </li>
@@ -241,31 +269,127 @@
       <article class="article">
         <div class="wrapper">
           
+            <h1>Red Hat Ceph Storage Test Drive</h1>
+          
           <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
 <li>This test drive is currently in its BETA version. Please send any bugs or documentation errors to <strong>karan@redhat.com</strong></li>
 </ul>
 </div>
-<h1 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h1>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">#</a></h2>
 <p>Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience awesome , the contents of this test drive have been divided into following modules.</p>
 <ul>
-<li><strong>Module 1 :</strong> Setting up a Ceph cluster</li>
-<li><strong>Module 2 :</strong> Accessing Ceph cluster via Block Storage interface</li>
-<li><strong>Module 3 :</strong> Accessing Ceph cluster via Object Storage interface</li>
-<li><strong>Module 4 :</strong> Scaling up a Ceph cluster</li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-1/"><strong>Module 1 :</strong> Introduction Ceph Storage</a></li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-2/"><strong>Module 2 :</strong> Setting up a Ceph cluster</a> (Compulsory Module)</li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-3/"><strong>Module 3 :</strong> Accessing Ceph cluster via Block Storage interface</a></li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4/"><strong>Module 4 :</strong> Accessing Ceph cluster via Object Storage interface</a></li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-5/"><strong>Module 5 :</strong> Scaling up a Ceph cluster</a></li>
+<li><a href="https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-6/"><strong>Module 6 :</strong> MySQL Database on Ceph</a> (Comming Soon)</li>
 </ul>
+<h2 id="what-is-red-hat-ceph-storage">What is Red Hat Ceph Storage<a class="headerlink" href="#what-is-red-hat-ceph-storage" title="Permanent link">#</a></h2>
+<p>Red Hat Ceph Storage ( RHCS ) is a scalable, open source, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. </p>
+<p>Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object storage. Red Hat Ceph Storage clusters consist of the following types of nodes:</p>
+<ul>
+<li>Red Hat Storage Management node</li>
+<li>Monitor nodes</li>
+<li>OSD nodes</li>
+<li>Object Gateway nodes</li>
+<li>MDS nodes</li>
+</ul>
+<h2 id="about-the-test-drive">About the Test Drive<a class="headerlink" href="#about-the-test-drive" title="Permanent link">#</a></h2>
+<p>The Red Hat Ceph Storage Hands-on Test Drive is designed in a progressive modular format. Newcomers to Ceph will generally have the best experience by following the modules and steps in order. The modules are designed to be independent and not reliant on the activities of any preceeding module except Module-2 (Setting up a Ceph cluster) which is compulsory and required for later modules.</p>
+<p>While the guided lab processes is designed to offer a progressive educational experience, you are also encouraged to use the lab in a free-form manner to explore Ceph and its features. For your convenience, a reference of the lab resources is provided below.</p>
+<h3 id="lab-resources">LAB Resources<a class="headerlink" href="#lab-resources" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th align="center">Lab Node</th>
+<th align="center">Internal IP Address</th>
+<th align="center">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">mgmt</td>
+<td align="center">10.100.0.72</td>
+<td align="center">Ceph Management Node</td>
+</tr>
+<tr>
+<td align="center">osd-node1</td>
+<td align="center">10.100.1.11</td>
+<td align="center">Ceph OSD Node-1</td>
+</tr>
+<tr>
+<td align="center">osd-node2</td>
+<td align="center">10.100.1.12</td>
+<td align="center">Ceph OSD Node-2</td>
+</tr>
+<tr>
+<td align="center">osd-node3</td>
+<td align="center">10.100.1.13</td>
+<td align="center">Ceph OSD Node-3</td>
+</tr>
+<tr>
+<td align="center">osd-node4</td>
+<td align="center">10.100.1.14</td>
+<td align="center">Ceph OSD Node-4</td>
+</tr>
+<tr>
+<td align="center">mon-node1</td>
+<td align="center">10.100.2.11</td>
+<td align="center">Ceph Monitor Node-1</td>
+</tr>
+<tr>
+<td align="center">mon-node2</td>
+<td align="center">10.100.2.12</td>
+<td align="center">Ceph Monitor Node-2</td>
+</tr>
+<tr>
+<td align="center">mon-node3</td>
+<td align="center">10.100.2.13</td>
+<td align="center">Ceph Monitor Node-3</td>
+</tr>
+<tr>
+<td align="center">client-node1</td>
+<td align="center">10.100.2.14</td>
+<td align="center">Ceph Client Node-1</td>
+</tr>
+<tr>
+<td align="center">RGW-node1</td>
+<td align="center">10.100.2.15</td>
+<td align="center">Ceph Rados Gateway Node-1</td>
+</tr>
+</tbody>
+</table>
 <h2 id="test-drive-prerequisites">Test Drive Prerequisites<a class="headerlink" href="#test-drive-prerequisites" title="Permanent link">#</a></h2>
+<h3 id="ssh-and-rdp">SSH and RDP<a class="headerlink" href="#ssh-and-rdp" title="Permanent link">#</a></h3>
 <ul>
 <li><strong>For Windows users :</strong> you will need a Secure Shell client like PuTTY to connect to your instance. If you do not have it already, you can download the PuTTY client <a href="http://the.earth.li/~sgtatham/putty/latest/x86/putty.exe">here</a></li>
 <li><strong>For Mac and Linux users:</strong>  you will need a Terminal application to SSH into LAB machine (this should already be installed on your host). </li>
 </ul>
 <h2 id="know-your-lab-environment">Know your Lab Environment<a class="headerlink" href="#know-your-lab-environment" title="Permanent link">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Module 1</strong> is not hands-on and does not require the lab to be started. Because the time limit will begin after clicking the <strong>Start Lab</strong> button, you may wish to wait until you are ready to begin a later module before you click the button. </p>
+</div>
 <h3 id="starting-the-lab">Starting the LAB<a class="headerlink" href="#starting-the-lab" title="Permanent link">#</a></h3>
 <ul>
-<li>To launch your LAB Environment, click <strong>Start Lab</strong> button from the Lab panel. Hang tight , it will take <strong>12-15 minutes</strong> to launch LAB resources.</li>
-<li>Once LAB is launched, grab the <strong>Management Node IP</strong> from <strong>Addl. Info</strong> tab on Right Side</li>
+<li>
+<p>On the <strong>Lab Details</strong> tab, notice the lab properties:</p>
+<ul>
+<li><strong>Setup Time -</strong> The estimated time for the lab to start your instance so you can access the lab environment.</li>
+<li><strong>Duration -</strong> The estimated time the lab should take to complete.</li>
+<li><strong>Access -</strong> The time lab will run before automatically shutting down.</li>
 </ul>
+</li>
+<li>
+<p>To launch your LAB Environment, click <strong>Start Lab</strong> button from the Lab panel. Hang tight , it will take <strong>12-15 minutes</strong> to launch LAB resources.</p>
+</li>
+<li>Once LAB is launched, grab the <strong>Management Node IP</strong>, <strong>Username</strong> and <strong>Password</strong> from <strong>Addl. Info</strong> tab on Right Side</li>
+</ul>
+<h3 id="accessing-the-lab">Accessing the LAB<a class="headerlink" href="#accessing-the-lab" title="Permanent link">#</a></h3>
+<p>All of the information you need to access your test drive lab instances is available via the <strong>Addl. Info</strong> tab to the right. There you will find relevant public IP addresse, username, and password for your personal lab environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <ul>
@@ -273,15 +397,6 @@
 <li>After clicking <strong>Start Lab</strong> , Lab creation will take some <strong>12-15 minutes</strong>. This is expected,  so Hang Tight.</li>
 </ul>
 </div>
-<ul>
-<li>On the <strong>Lab Details</strong> tab, notice the lab properties:<ul>
-<li><strong>Setup Time -</strong> The estimated time for the lab to start your instance so you can access the lab environment.</li>
-<li><strong>Duration -</strong> The estimated time the lab should take to complete.</li>
-<li><strong>Access -</strong> The time lab will run before automatically shutting down.</li>
-</ul>
-</li>
-</ul>
-<h3 id="accessing-the-lab">Accessing the LAB<a class="headerlink" href="#accessing-the-lab" title="Permanent link">#</a></h3>
 <ul>
 <li>Open SSH client software on your workstation.</li>
 <li>As <strong>ceph</strong> user, SSH into Ceph Management node by using the <strong>Management node IP address</strong> which you can get from the <strong>Addl. Info</strong> tab.</li>
@@ -316,35 +431,27 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
 <li>Close your remote session.</li>
 <li>In the <em>qwik</em>LABS page, click <strong>End Lab</strong>.</li>
 <li>In the confirmation message, click <strong>OK</strong>.</li>
-<li>Tell us about your lab experience on Ceph and suggestions to improve this environment</li>
-</ul>
-<h2 id="red-hat-ceph-storage">Red Hat Ceph Storage<a class="headerlink" href="#red-hat-ceph-storage" title="Permanent link">#</a></h2>
-<p>Red Hat Ceph Storage ( RHCS ) is a scalable, open, software-defined storage platform that combines the most stable version of the Ceph storage system with a Ceph management platform, deployment utilities, and support services. </p>
-<p>Red Hat Ceph Storage is designed for cloud infrastructure and web-scale object storage. Red Hat Ceph Storage clusters consist of the following types of nodes:</p>
-<ul>
-<li>Red Hat Storage Management node</li>
-<li>Monitor nodes</li>
-<li>OSD nodes</li>
-<li>Object Gateway nodes</li>
-<li>MDS nodes</li>
+<li>Tell us about your lab experiences and suggestions to improve this environment</li>
 </ul>
 <h2 id="rhcs-prerequisites">RHCS Prerequisites<a class="headerlink" href="#rhcs-prerequisites" title="Permanent link">#</a></h2>
 <p>Setting up a RHCS requires the following configuration on the cluster nodes.</p>
 <ul>
-<li><strong>Operating System :</strong>  Heterogeneous and supported version of OS.</li>
+<li><strong>Operating System :</strong>  Supported version of OS.</li>
 <li><strong>Registration to RHN :</strong> To get necessary packages required for installation either from RHN (Red Hat Network) or other trusted sources.</li>
 <li><strong>Enabling Ceph Repositories :</strong> To get Ceph packages from CDN or from Local repositories.</li>
 <li><strong>Separate networks :</strong> For Public and Cluster traffic.</li>
 <li><strong>Setting hostname resolutions :</strong> Either local or DNS name resolution </li>
 <li><strong>Configuring firewall :</strong>  Allow necessary port to be opened.</li>
 <li><strong>NTP configuration:</strong> For time synchronization across nodes.</li>
-<li><strong>Local user account:</strong> User with passwordless sudo ssh access to all nodes, for Ceph deployment using Ansible.</li>
+<li><strong>Local user account:</strong> User with passwordless sudo ssh access to all nodes, required for Ceph deployment using Ansible.</li>
 </ul>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The purpose of Red Hat Ceph Storage Test Drive is to provide you an environment where you can focus on learning this great technology, without spending any time in fulfilling prerequisites. All the prerequisites listed above have been taken care for rest of this course.</p>
 </div>
-<p>So without further delay, please go ahead and follow these modules to gain experience on Ceph.</p>
+<blockquote>
+<p>So without further delay, let's go ahead and follow the modules to gain experience on Ceph.</p>
+</blockquote>
           <aside class="copyright" role="note">
             
               Copyright ©2016 Red Hat, Inc. &ndash;
@@ -366,14 +473,14 @@ Last login: Fri Oct  7 05:47:16 2016 from a91-156-42-216.elisa-laajakaista.fi
     </div>
     <div class="next">
       
-        <a href="Module-1/" title="Module-1 Ceph Cluster Setup">
+        <a href="Module-1/" title="Module-1 Introduction to Ceph">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Module-1 Ceph Cluster Setup
+                Module-1 Introduction to Ceph
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">
