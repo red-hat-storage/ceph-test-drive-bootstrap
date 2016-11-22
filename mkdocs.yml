@@ -21,10 +21,12 @@ extra:
 pages:
 - Home: index.md
 - Modules:
-    - 'Module-1 Ceph Cluster Setup': Module-1.md
-    - 'Module-2 Ceph Block Storage': Module-2.md
-    - 'Module-3 Ceph Object Storage': Module-3.md
-    - 'Module 4 - Scaling up a Ceph cluster': Module-4.md
+    - 'Module-1 Introduction to Ceph': Module-1.md
+    - 'Module-2 Ceph Cluster Setup': Module-2.md
+    - 'Module-3 Ceph Block Storage': Module-3.md
+    - 'Module-4 Ceph Object Storage': Module-4.md
+    - 'Module-5 Scaling up a Ceph cluster': Module-5.md
+    - 'Module-6 MySQL Database on Ceph': Module-6.md
 
 
 markdown_extensions:

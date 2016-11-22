@@ -1,236 +1,65 @@
-# Module 3 - Ceph Object Storage interface
+# Module 3 - Ceph Block Storage interface
 
-The Ceph object gateway, also know as the RADOS gateway, is an object storage interface built on top of the librados API to provide applications with a RESTful gateway to Ceph storage clusters. 
-
-To access Ceph over object storage interfaces i.e. via ``swift`` or ``s3`` we need to configure Ceph Rados Gateway component. In this module we will configure ``rgw-node1`` as Ceph Rados Gateway and then test ``s3`` and ``swift`` from ``client-node1`` 
+In this module we will learn how to provision block storage using Ceph. We will create thin-provisioned, resizable RADOS Block Device (RBD) volume, which will be mapped to ``client-node1`` and will be taken into use.
 
 !!! note
-    Before proceeding with this module make sure you have completed Module-1 and have a running Ceph cluster.
+    Before proceeding with this module make sure you have completed Module-2 and have a running Ceph cluster.
 
 
-## Installing and configuring Ceph RGW
-
-- On the ``mgmt`` node as ``ceph`` user, navigate to the ``/usr/share/ceph-ansible/group_vars`` directory
+- From ``mgmt`` node  configure ``client-node1``  as Ceph client by installing ``ceph-common`` package and changing ownership of ``/etc/ceph`` directory. 
 ```
-$ cd /usr/share/ceph-ansible/group_vars
+$ ssh client-node1 -t sudo yum install -y ceph-common
+$ ssh client-node1 -t sudo chown -R ceph:ceph /etc/ceph
 ```
-- Edit ``all`` file 
+- From ``mgmt`` node create a block device user named ``client.rbd`` with necessary permissions on Ceph Monitor and OSDs
 ```
-$ sudo vi all
+$ ceph auth get-or-create client.rbd mon 'allow r' osd 'allow rwx pool=rbd' -o /etc/ceph/ceph.client.rbd.keyring
 ```
-- Uncomment the ``radosgw_dns_name``settting,  and set it to ``rgw-node1`` 
+- From ``mgmt`` node copy ``ceph.conf`` and ``rbd.keyring`` file to ``client-node1`` 
 ```
-radosgw_dns_name: rgw-node1
+$ scp /etc/ceph/ceph.conf client-node1:/etc/ceph
+$ scp /etc/ceph/ceph.client.rbd.keyring client-node1:/etc/ceph
 ```
-- Uncomment the ``radosgw_frontend`` setting, save and exit from the editor
+- From ``client-node1`` verify Ceph cluster is accessible by ``rbd`` user
 ```
-radosgw_frontend: civetweb
-```
-- Create an ``rgws`` file from ``rgws.sample`` file and open it for editing
-```
-$ sudo cp rgws.sample rgws
-$ sudo vi rgws
-```
-- Uncomment the ``copy_admin_key`` setting and set it to ``true`` 
-```
-copy_admin_key: true
-```
-- Add Ceph RGW host to Ansible inventory file. Edit the ``/etc/ansible/hosts`` file
-```
-$ sudo vi /etc/ansible/hosts
-```
-- Add the following section to ``/etc/ansible/hosts`` file, save and exit from file editor
-```
-[rgws]
-rgw-node1
-```
-- Your Ansible inventory file should look like this
+$ ssh client-node1
+$ ceph -s --id rbd
 ``` 
-[mons]
-mon-node1
-mon-node2
-mon-node3
-[osds]
-osd-node1
-osd-node2
-osd-node3
-[rgws]
-rgw-node1
+-  From ``client-node1`` create RBD block device with name ``block-disk1`` of size ``10G``
 ```
-- Navigate to the Ansible configuration directory ``/usr/share/ceph-ansible/``
+$ rbd create block-disk1 --size 10240 --image-feature layering --id rbd
 ```
-$ cd /usr/share/ceph-ansible/
+- Verify block device that we have just created
 ```
-- Run the Ansible playbook
+$ rbd ls --id rbd
+$ rbd info block-disk1 --id rbd
 ```
-$ ansible-playbook site.yml -u ceph
+- Load and verify RBD kernel module
 ```
-!!! note:
-    Ansible is idempotent in nature , so there is no harm in running it again. Configuration change will not take place after its initial application.
-
-- Once Ansible run is completed, make sure there is no failed item under ``PLAY RECAP`` 
-- Verify ``ceph-radosgw`` service is running on ``rgw-node1`` , also make a note of the port number its running on. It must be 8080
+$ sudo modprobe rbd
+$ lsmod | grep -i rbd
 ```
-$ ssh rgw-node1 systemctl status ceph-radosgw@rgw.rgw-node1.service
-$ ssh rgw-node1 -t sudo netstat -plunt | grep -i rados
+- Map ``block-disk1`` on ``client-node1`` 
 ```
-- Login to the ``rgw-node`` to create Radow Gateway user account which will be used by ``S3`` and ``swift`` API's to access the Ceph storage via object storage interface
+$ sudo rbd map block-disk1 --id rbd
 ```
-$ ssh rgw-node1
+- Verify mapped RBD block device
 ```
-- Create RGW user for ``S3`` access 
+$ rbd showmapped --id rbd
 ```
-$ radosgw-admin user create --uid='user1' --display-name='First User' --access-key='S3user1' --secret-key='S3user1key'
+- Make a note of mapped device name from the above command output , in most of the cases it is ``/dev/rbd0``. Create ``xfs`` filesystem on this Ceph block device.
 ```
-- Create RGW subuser for ``swift`` access
+$ sudo mkfs.xfs /dev/rbd0
+$ sudo mount /dev/rbd0 /mnt
+$ df -h /mnt
 ```
-$ radosgw-admin subuser create --uid='user1' --subuser='user1:swift' --secret-key='Swiftuser1key' --access=full
+- Lets run a quick ``dd`` write test on this block device to verify its accessiblity. 
 ```
-> At this point you have a running and configured Ceph RGW instance. In the next section we will learned about accessing the Ceph cluster via object storage interfaces.
-
-## Access the Ceph object storage using swift API
-
-- Login to ``client-node``
+$ sudo dd if=/dev/zero of=/mnt/file1 bs=4M oflag=direct count=500 &
 ```
-$ ssh client-node1
+- Meanwhile the ``dd`` test is going on, you can watch cluster status using which should report IO operations on Ceph cluster.
 ```
-- Install ``python-swiftclient`` 
-```
-$ sudo pip install python-swiftclient
-```
-- Using swift cli , lets try to list swift containers. Although it will not list anything as there are no containers.
-```
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list
-```
-- Create a swift container named ``container-1`` and then list it
-```
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' post container-1
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list
-```
-- Create a dummy file and then upload this file to ``container-1`` using swift
-```
-$ base64 /dev/urandom | head -c 10000000 > dummy_file1.txt
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' upload container-1 dummy_file1.txt
-```
-- List ``container-1`` to verify files are getting stored
-```
-$ swift -A http://rgw-node1:8080/auth/1.0  -U user1:swift -K 'Swiftuser1key' list container-1
+$ watch ceph -s --id rbd
 ```
 
-> Easy right !! So you have just learned how to use Ceph as Object Storage System using swift APIs. Follow the next section to learn how S3 can be used with Ceph.
-
-## Access the Ceph object storage using S3 API
-
-Ceph object storage cluster can be accessed by any client which talks ``S3`` API.  In this section we will use ``s3cmd`` which has already been installed on ``client-node1`` machine.
-
-- Login to the ``client-node1``
-```
-$ ssh client-node1
-```
-- To use Ceph with S3-style subdomains (e.g., bucket-name.domain-name.com), you need to add a wildcard to the DNS record of the DNS server you use with the ceph-radosgw daemon. We will install ``dnsmasq`` which is a lightweight DNS server.
-```
-$ sudo yum install -y dnsmasq
-```
-- Configure dnsmasq to resolve subdomains to Ceph RGW address and start dnsmasq service
-```
-$ echo "address=/.rgw-node1/10.100.2.15" | sudo tee -a /etc/dnsmasq.conf
-$ sudo systemctl start dnsmasq
-$ sudo systemctl enable dnsmasq
-```
-- Edit ``/etc/resolv.conf``  and add ``nameserver 127.0.0.1`` **just after** ``search ec2.internal`` line
-```
-# Generated by NetworkManager
-search ec2.internal
-nameserver 127.0.0.1
-nameserver 10.100.0.2
-```
-- Make sure for any RGW subdomain ``client-node1`` is resolving ``rgw-node1`` address
-```
-$ ping -c 1 anything.rgw-node1
-$ ping -c 1 mybucket.rgw-node1
-$ ping -c 1 mars.rgw-node1
-```
-- Next we will configure ``s3cmd`` 
-```
-$ s3cmd --configure
-```
-- ``s3cmd`` configuration will prompt to enter details, use the following  values for configuration.  Enter the default values for most of the prompts. At this point we **do not want** to use **HTTPS** and **test configuration** settings so do not set them **yes**. But **we do want** to save settings.
-```
-Access Key: S3user1
-Secret Key: S3user1key
-
-Default Region [US]: < Just hit Enter >
-Encryption password: < Just hit Enter >
-Path to GPG program [/usr/bin/gpg]: < Just hit Enter >
-
-Use HTTPS protocol [Yes]: No
-HTTP Proxy server name: < Just hit Enter >
-
-Test access with supplied credentials? [Y/n] n
-Save settings? [y/N] y
-```
-- Sample ``s3cmd --configuration`` wizard 
-```
-[ceph@client-node1 ~]$ s3cmd --configure
-
-Enter new values or accept defaults in brackets with Enter.
-Refer to user manual for detailed description of all options.
-
-Access key and Secret key are your identifiers for Amazon S3. Leave them empty for using the env variables.
-Access Key: S3user1
-Secret Key: S3user1key
-Default Region [US]:
-
-Encryption password is used to protect your files from reading
-by unauthorized persons while in transfer to S3
-Encryption password:
-Path to GPG program [/usr/bin/gpg]:
-
-When using secure HTTPS protocol all communication with Amazon S3
-servers is protected from 3rd party eavesdropping. This method is
-slower than plain HTTP, and can only be proxied with Python 2.7 or newer
-Use HTTPS protocol [Yes]: No
-
-On some networks all internet access must go through a HTTP proxy.
-Try setting it here if you can't connect to S3 directly
-HTTP Proxy server name:
-
-New settings:
-  Access Key: S3user1
-  Secret Key: S3user1key
-  Default Region: US
-  Encryption password:
-  Path to GPG program: /usr/bin/gpg
-  Use HTTPS protocol: No
-  HTTP Proxy server name:
-  HTTP Proxy server port: 0
-
-Test access with supplied credentials? [Y/n] n
-
-Save settings? [y/N] y
-Configuration saved to '/home/ceph/.s3cfg'
-[ceph@client-node1 ~]$
-```
-- Next edit ``/home/ceph/.s3cfg`` file, update ``host_base`` and ``host_bucket`` as shown below. Save and exit editor
-```
-host_base = rgw-node1:8080
-host_bucket = %(bucket)s.rgw-node1:8080
-```
-- Test Ceph object storage via S3 protocol by listing buckets using ``s3cmd``. It should list buckets that you have created using ``swift`` in the last section 
-```
-$ s3cmd ls
-```
-- Create a new bucket
-```
-$ s3cmd mb s3://s3-bucket
-$ s3cmd ls
-```
-- Create a dummy file and then upload this file to ``s3-bucket`` via S3 API
-```
-$ base64 /dev/urandom | head -c 10000000 > dummy_file2.txt
-$ s3cmd put dummy_file2.txt s3://s3-bucket
-$ s3cmd ls s3://s3-bucket
-```
-
-> **All done !! Great !!  
-We have reached the end of Module-3. In this module you have learned to use the Ceph cluster as object storage using S3 and Swift APIs. You application will use the same procedure to storage objects to Ceph cluster.**
+> **This is it, we have reached to end of Module-3. In this module you have learned how to provision and consume Ceph block device. Follow the next module to learn how to use Ceph as Object Storage**
