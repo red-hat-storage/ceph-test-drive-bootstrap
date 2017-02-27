@@ -130,6 +130,7 @@ devices:
 ```
 journal_collocation: true
 ```
+- Save the file and exit from editor.
 
 ## Deploying the Ceph Cluster
 
