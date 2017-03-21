@@ -1,5 +1,5 @@
 !!! note
-    - This test drive is currently in its BETA version. Please send any bugs or documentation errors to **karan@redhat.com**
+    - If you encounter any bugs or documentation errors, please send an email to  **karan@redhat.com**
 
 ## Introduction
 
