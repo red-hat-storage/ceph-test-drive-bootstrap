@@ -2511,7 +2511,7 @@
               "su --login admin -c \"chmod 700 /home/admin/.ssh\"\n",
               "su --login admin -c \"chmod 600 /home/admin/.ssh/authorized_keys\"\n",
               
-              "wget https://s3.amazonaws.com/karansingh/test-drive/rhceph-2.0-rhel-7-x86_64.iso -O /home/ceph/rhceph-2.0-rhel-7-x86_64.iso\n",
+              "wget https://s3.amazonaws.com/karansingh/test-drive/rhceph-2.2-rhel-7-x86_64.iso -O /home/ceph/rhceph-2.2-rhel-7-x86_64.iso\n",
               "wget https://s3.amazonaws.com/karansingh/test-drive/rhscon-2.0-rhel-7-x86_64.iso -O /home/ceph/rhscon-2.0-rhel-7-x86_64.iso \n",
 
               "wget https://gist.githubusercontent.com/ksingh7/34f31512edefdecd8136092fb402ac40/raw/2407deeffa3510f0123a3a36676fa46347c003e8/id.pub -O /home/ceph/.ssh/karans_key.pub\n",
@@ -2522,7 +2522,7 @@
               "cat /home/admin/.ssh/karans_key.pub >> /home/admin/.ssh/authorized_keys\n",
 
               "mkdir -p /mnt/rhcs2\n",
-              "mount /home/ceph/rhceph-2.0-rhel-7-x86_64.iso /mnt/rhcs2\n",
+              "mount /home/ceph/rhceph-2.2-rhel-7-x86_64.iso /mnt/rhcs2\n",
               "mkdir -p /mnt/rhscon2\n",
               "mount /home/ceph/rhscon-2.0-rhel-7-x86_64.iso /mnt/rhscon2\n",
               
