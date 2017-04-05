@@ -2649,6 +2649,15 @@
       }
     },
 
+    "RGWNodeIPAddress" : {
+      "Type" : "AWS::EC2::EIP",
+      "DependsOn" : ["mgmt","InternetGateway"],
+      "Properties" : {
+        "Domain" : "vpc",
+        "InstanceId" : { "Ref" : "rgwnode1" }
+      }
+    },
+
     "NATSG" : {
       "Type" : "AWS::EC2::SecurityGroup",
       "DependsOn" : "VPC",
@@ -2701,6 +2710,11 @@
       "Description" : "Ceph Management Node Public IP Address",
       "Value" :  { "Ref" : "ManagementNodeIPAddress" }
    },
+
+   "RGWNodePublicIP" : {
+      "Description" : "Ceph Object Storage Public IP Address",
+      "Value" :  { "Ref" : "RGWNodeIPAddress" }
+   },   
 
    "UserName" : {
       "Description" : "Ceph Management Node User Name",
