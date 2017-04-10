@@ -1,0 +1,10 @@
+[mons]
+mon-node1
+mon-node2
+mon-node3
+[osds]
+osd-node1
+osd-node2
+osd-node3
+[rgws]
+rgw-node1
