@@ -27,7 +27,7 @@ pages:
     - 'Module-4 Ceph Object Storage': Module-4.md
     - 'Module-5 Scaling up a Ceph cluster': Module-5.md
     - 'Module-6 MySQL Database on Ceph': Module-6.md
-
+    - '': Module-6-demo.md
 
 markdown_extensions:
   - codehilite(css_class=code)
