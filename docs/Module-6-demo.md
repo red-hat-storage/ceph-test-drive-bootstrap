@@ -117,7 +117,7 @@ $ sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --oltp-table-size=20
 $ mysql -u root -e 'SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.tables WHERE `table_schema` = "sysbench" ;'
 ```
 - You should see similar output, as shown below
-![](images/MySql-1.png)
+![](images/MySQL-1.png)
 
 - Open a new SSH session to ``mgmt`` node and run `` watch ceph -s `` command to view real time read and write operations to Ceph cluster.
 - From ``client-node1`` using Sysbench tool , perform read and write (mix) operation
