@@ -10,7 +10,7 @@ Welcome to Red Hat Ceph Storage Hands-on Lab. To make your Ceph experience aweso
 - [**Module 3 :** Accessing Ceph cluster via Block Storage interface](https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-3/)
 - [**Module 4 :** Accessing Ceph cluster via Object Storage interface](https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-4/)
 - [**Module 5 :** Scaling up a Ceph cluster](https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-5/)
-- [**Module 6 :** MySQL Database on Ceph](https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-6/) (Comming Soon)
+- [**Module 6 :** MySQL Database on Ceph](https://red-hat-storage.github.io/ceph-test-drive-bootstrap/Module-6/)
 
 ## What is Red Hat Ceph Storage
 
