@@ -221,15 +221,6 @@
   </li>
 
       
-        
-  <li>
-    <a class="" title="" href="../Module-6-demo/">
-      
-    </a>
-    
-  </li>
-
-      
     </ul>
   </li>
 
@@ -248,8 +239,172 @@
 <p>In this module we will learn how to use Ceph Block Device as a persistent storage for MySQL database.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Module comming soon</p>
+<p>Before proceeding with this module make sure you have completed Module-2 and Module-3, which means you should have a running Ceph cluster and <strong>client-node1</strong> is configured to be Ceph client.</p>
 </div>
+<p>During the course of this module, we would be using <code>client-node1</code> machine, installing MySQL database and using Ceph block storage for database storage.  </p>
+<ul>
+<li>From <code>mgmt</code> node , login to <code>client-node1</code> machine</li>
+</ul>
+<pre class="code"><code>$ ssh client-node1</code></pre>
+
+
+<ul>
+<li>Verify Ceph cluster is accessible by rbd user</li>
+</ul>
+<pre class="code"><code>$ ceph -s --id rbd</code></pre>
+
+
+<ul>
+<li>Create Ceph block device with name <code>mariadb-disk1</code> of size 10G</li>
+</ul>
+<pre class="code"><code>$ rbd create mariadb-disk1 --size 10240 --image-feature layering --id rbd</code></pre>
+
+
+<ul>
+<li>Verify block device that we have just created</li>
+</ul>
+<pre class="code"><code>$ rbd ls --id rbd
+$ rbd info mariadb-disk1 --id rbd</code></pre>
+
+
+<ul>
+<li>Map <code>mariadb-disk1</code> block device on <code>client-node1</code></li>
+</ul>
+<pre class="code"><code>$ sudo rbd map mariadb-disk1 --id rbd</code></pre>
+
+
+<ul>
+<li>Verify mapped block device</li>
+</ul>
+<pre class="code"><code>$ rbd showmapped --id rbd</code></pre>
+
+
+<p>From the above command output, make a note of mapped device name for  <code>mariadb-disk1</code> block device. In most of the cases it's  <code>/dev/rbd1</code>. </p>
+<ul>
+<li>On the mapped device, create xfs filesystem and mount it on <code>/var/lib/mysql</code> directory and verify</li>
+</ul>
+<pre class="code"><code>$ sudo mkfs.xfs /dev/rbd1
+$ sudo mkdir /var/lib/mysql
+$ sudo mount /dev/rbd1 /var/lib/mysql
+$ sudo ls -l /var/lib/mysql ; sudo df -h /var/lib/mysql</code></pre>
+
+
+<p>Next , we will install MariaDB which is a community-developed fork of the MySQL relational database management system.</p>
+<ul>
+<li>Add MariaDB configuration file</li>
+</ul>
+<pre class="code"><code>$ sudo wget https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/master/mysql-module/my.cnf -O /etc/my.cnf</code></pre>
+
+
+<ul>
+<li>Install MariaDB server</li>
+</ul>
+<pre class="code"><code>$ sudo yum install -y mariadb-server</code></pre>
+
+
+<ul>
+<li>Start and MariaDB service</li>
+</ul>
+<pre class="code"><code>$ sudo systemctl start mariadb ; sudo systemctl enable mariadb</code></pre>
+
+
+<ul>
+<li>Verify MariaDB service that it's running</li>
+</ul>
+<pre class="code"><code>$ sudo systemctl status mariadb</code></pre>
+
+
+<ul>
+<li>First interaction with database</li>
+</ul>
+<pre class="code"><code>$ mysqladmin -u root version
+$ mysql -u root -e 'SHOW DATABASES'</code></pre>
+
+
+<ul>
+<li>You should see output similar as shown below</li>
+</ul>
+<pre class="code"><code>[ceph@client-node1 ~]$ mysqladmin -u root version
+mysqladmin  Ver 9.0 Distrib 5.5.52-MariaDB, for Linux on x86_64
+Copyright (c) 2000, 2016, Oracle, MariaDB Corporation Ab and others.
+
+Server version      5.5.52-MariaDB
+Protocol version    10
+Connection      Localhost via UNIX socket
+UNIX socket     /var/lib/mysql/mysql.sock
+Uptime:         41 min 21 sec
+
+Threads: 1  Questions: 1000769  Slow queries: 0  Opens: 65  Flush tables: 2  Open tables: 90  Queries per second avg: 403.373
+[ceph@client-node1 ~]$
+[ceph@client-node1 ~]$
+[ceph@client-node1 ~]$ mysql -u root -e 'SHOW DATABASES'
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| test               |
++--------------------+
+[ceph@client-node1 ~]$</code></pre>
+
+
+<ul>
+<li>Verify MySQL is using Ceph block storage</li>
+</ul>
+<pre class="code"><code>$ sudo ls -l /var/lib/mysql ; sudo df -h /var/lib/mysql</code></pre>
+
+
+<blockquote>
+<p><strong>At this point we have a running MySQL database instance on top of Ceph Block Storage. Now let's do database reads/writes.</strong></p>
+</blockquote>
+<ul>
+<li>Install Sysbench (a popular MySQL benchmarking tool)</li>
+</ul>
+<pre class="code"><code>$ sudo yum install -y http://repo.percona.com/release/7/RPMS/x86_64/sysbench-0.5-6.el7.x86_64.rpm</code></pre>
+
+
+<ul>
+<li>For sysbench create a database, user and grant necessary access</li>
+</ul>
+<pre class="code"><code>$ mysql -u root -e &quot;CREATE DATABASE sysbench;&quot;
+$ mysql -u root -e &quot;CREATE USER 'sysbench'@'localhost' IDENTIFIED BY 'secret';&quot;
+$ mysql -u root -e &quot;GRANT ALL PRIVILEGES ON *.* TO 'sysbench'@'localhost' IDENTIFIED  BY 'secret';&quot;</code></pre>
+
+
+<ul>
+<li>Using Sysbench , prepare testing database</li>
+</ul>
+<pre class="code"><code>$ sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --oltp-table-size=2000000 --max-time=300 --max-requests=5000 --mysql-table-engine=innodb --mysql-db=sysbench --mysql-user=sysbench --mysql-password=secret --num-threads=64 prepare</code></pre>
+
+
+<ul>
+<li>Verify sysbench table rows created during prepare step</li>
+</ul>
+<pre class="code"><code>$ mysql -u root -e 'SELECT TABLE_NAME, TABLE_ROWS FROM information_schema.tables WHERE `table_schema` = &quot;sysbench&quot; ;'</code></pre>
+
+
+<ul>
+<li>
+<p>You should see similar output, as shown below
+<img alt="" src="../images/MySQL-1.png" /></p>
+</li>
+<li>
+<p>Open a new SSH session to <code>mgmt</code> node and run <code>watch ceph -s</code> command to view real time read and write operations to Ceph cluster.</p>
+</li>
+<li>From <code>client-node1</code> using Sysbench tool , perform read and write (mix) operation</li>
+</ul>
+<pre class="code"><code>$ sysbench --test=/usr/share/doc/sysbench/tests/db/oltp.lua --oltp-table-size=2000000 --max-time=300 --max-requests=50000 --mysql-table-engine=innodb --mysql-db=sysbench --mysql-user=sysbench --mysql-password=secret --num-threads=64 --oltp-test-mode=complex run</code></pre>
+
+
+<ul>
+<li>You should see almost similar output, as shown below
+<img alt="" src="../images/MySQL-2.png" /></li>
+</ul>
+<p>At this point we have successfully tested MySQL OLTP transactions which are stored in Ceph Block Storage Device.</p>
+<blockquote>
+<p><strong>This is it, we have reached to end of Module-6. In this module you have learned how MySQL database can be deployed on Ceph Block Storage </strong></p>
+</blockquote>
           <aside class="copyright" role="note">
             
               Copyright ©2016 Red Hat, Inc. &ndash;
@@ -286,22 +441,6 @@
       
     </div>
     <div class="next">
-      
-        <a href="../Module-6-demo/" title="">
-          <span class="direction">
-            Next
-          </span>
-          <div class="page">
-            <div class="stretch">
-              <div class="title">
-                
-              </div>
-            </div>
-            <div class="button button-next" role="button" aria-label="Next">
-              <i class="icon icon-forward"></i>
-            </div>
-          </div>
-        </a>
       
     </div>
   </nav>
