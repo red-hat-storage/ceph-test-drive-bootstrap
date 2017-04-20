@@ -1,7 +1,7 @@
 site_name: 'Red Hat Ceph Storage Test Drive'
 site_url: 'https://red-hat-storage.github.io/ceph-test-drive-bootstrap'
 site_favicon: 'images/favicon.ico'
-copyright: 'Copyright ©2016 Red Hat, Inc.'
+copyright: 'Copyright ©2017 Red Hat, Inc.'
 
 markdown_extensions:
     - smarty
