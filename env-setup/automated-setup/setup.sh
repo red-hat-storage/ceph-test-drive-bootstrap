@@ -7,7 +7,7 @@ wget $URL/automated-setup/module-4.sh
 
 sudo yum install -y ceph-ansible wget
 sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp
-wget -O /etc/ansible/hosts $URL/automated-setup/ansible-hosts
+sudo wget -O /etc/ansible/hosts $URL/automated-setup/ansible-hosts
 
 echo "[defaults]" >> /home/ceph/.ansible.cfg
 echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
