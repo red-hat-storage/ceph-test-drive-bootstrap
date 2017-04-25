@@ -22,6 +22,6 @@ ansible all -m ping
 
 read -p "Press enter to continue"
 
-echo "To Install RHCS Run ==> ansible-playbook /usr/share/ceph-ansible/site.yml -u ceph"
+echo "To Install RHCS Run ==> cd /usr/share/ceph-ansible; ansible-playbook site.yml -u ceph"
 echo "For Module-2 Run ==> sh module-2.sh"
 echo "For Module-4 Run ==> sh module-4.sh"
