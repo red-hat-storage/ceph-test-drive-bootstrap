@@ -8,9 +8,9 @@ wget $URL/automated-setup/module-4.sh
 sudo yum install -y ceph-ansible wget
 sudo mv /etc/ansible/hosts /etc/ansible/hosts-default.bkp
 sudo wget -O /etc/ansible/hosts $URL/automated-setup/ansible-hosts
-sudo wget $URL/rhcs2_2/all -O /usr/share/ceph-ansible/group_vars/all
-sudo wget $URL/rhcs2_2/osds -O /usr/share/ceph-ansible/group_vars/osds
-sudo wget $URL/rhcs2_2/rgws -O /usr/share/ceph-ansible/group_vars/rgws
+sudo wget $URL/rhcs2_0/all -O /usr/share/ceph-ansible/group_vars/all
+sudo wget $URL/rhcs2_0/osds -O /usr/share/ceph-ansible/group_vars/osds
+sudo wget $URL/rhcs2_0/rgws -O /usr/share/ceph-ansible/group_vars/rgws
 
 echo "[defaults]" >> /home/ceph/.ansible.cfg
 echo "host_key_checking = False" >> /home/ceph/.ansible.cfg
