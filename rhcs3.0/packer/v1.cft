@@ -345,6 +345,7 @@ Resources:
                   name: cloud-user
 
               runcmd:
+              - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode1\",\"Data\": \"Ceph-node1 launch successful\" }" '
 
   CephNode2:
@@ -417,6 +418,7 @@ Resources:
                   name: cloud-user
 
               runcmd:
+              - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode2\",\"Data\": \"Ceph-node2 launch successful\" }" '
 
   CephNode3:
@@ -489,6 +491,7 @@ Resources:
                   name: cloud-user
 
               runcmd:
+              - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode3\",\"Data\": \"Ceph-node3 launch successful\" }" '
 
   CephNode4:
@@ -561,6 +564,7 @@ Resources:
                   name: cloud-user
 
               runcmd:
+              - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode4\",\"Data\": \"Ceph-node4 launch successful\" }" '
 
   ClientNode1:
@@ -609,6 +613,7 @@ Resources:
                   name: cloud-user
 
               runcmd:
+              - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"ClientNode1\",\"Data\": \"client-node1 launch successful\" }" '
 
   AdminNodeEIP:

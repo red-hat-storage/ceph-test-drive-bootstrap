@@ -5,3 +5,13 @@ package_list:
   - wget
   - nc
   - ntp
+  - ceph-ansible
+  - cephmetrics-ansible
+  - ceph-common
+  - ceph-base
+  - ceph-selinux
+
+ceph-ansible_variable_files_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/automated-setup"
+ceph-ansible_variable_files_name:
+ - all.yml
+ - osds.yml

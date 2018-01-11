@@ -22,3 +22,23 @@
     regexp: '^StrictHostKeyChecking'
     insertafter: '^#   StrictHostKeyChecking ask'
     line: 'StrictHostKeyChecking no'
+
+- name: Download RHCS 3.0 from S3
+  get_url:
+    url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
+    dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
+
+- name: create directory for putting ceph-ansible sample variable files
+  file:
+    path: /usr/share/ceph-ansible/group_vars/sample
+    state: directory
+    mode: 0755
+
+- name: Move sample files to sample directory
+  command: mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample
+
+- name: wget ceph-ansible pre-populated variable files
+  get_url:
+    url: "{{ ceph-ansible_variable_files_url }}/{{ item }}"
+    dest: "/usr/share/ceph-ansible/group_vars/{{ item }}"
+  with_items: "{{ ceph-ansible_variable_files_name }}"

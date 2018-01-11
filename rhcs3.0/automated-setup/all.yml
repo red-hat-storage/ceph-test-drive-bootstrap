@@ -105,8 +105,9 @@ fetch_directory: ~/ceph-ansible-keys
 # INSTALL #
 ###########
 #ceph_rhcs_cdn_install: False # backward compatibility with stable-2.2, will disappear in stable 3.1
+#ceph_rhcs_iso_install: True # backward compatibility with stable-2.2, will disappear in stable 3.1
 #ceph_repository_type: "{{ 'cdn' if ceph_rhcs_cdn_install else 'iso' if ceph_rhcs_iso_install else 'dummy' }}" # backward compatibility with stable-2.2, will disappear in stable 3.1
-#ceph_rhcs_iso_install: False # backward compatibility with stable-2.2, will disappear in stable 3.1
+ceph_repository_type: iso
 #ceph_rhcs: False # backward compatibility with stable-2.2, will disappear in stable 3.1
 #ceph_stable: False # backward compatibility with stable-2.2, will disappear in stable 3.1
 #ceph_dev: False # backward compatibility with stable-2.2, will disappear in stable 3.1
@@ -176,11 +177,14 @@ ceph_repository: rhcs
 # on RHEL 7.
 #
 #
+#ceph_stable_rh_storage_version : 3
 #ceph_rhcs_version: "{{ ceph_stable_rh_storage_version | default(2) }}"
+ceph_rhcs_version: 3
 #valid_ceph_repository_type:
 #  - cdn
 #  - iso
-#ceph_rhcs_iso_path: "{{ ceph_stable_rh_storage_iso_path | default('') }}"
+#ceph_stable_rh_storage_iso_path: "/home/student/rhceph-3.0-rhel-7-x86_64.iso"
+ceph_rhcs_iso_path: "/home/student/rhceph-3.0-rhel-7-x86_64.iso"
 #ceph_rhcs_mount_path: "{{ ceph_stable_rh_storage_mount_path | default('/tmp/rh-storage-mount') }}"
 #ceph_rhcs_repository_path: "{{ ceph_stable_rh_storage_repository_path | default('/tmp/rh-storage-repo') }}" # where to copy iso's content
 
@@ -239,9 +243,9 @@ ceph_repository: rhcs
 # This script takes in rundep and installs the packages line by line onto the machine
 # If this is set to false then it is assumed that the machine ceph is being copied onto will already have
 # all runtime dependencies installed
-#use_installer: false
+#use_installer: True
 # Root directory for ceph-ansible
-#ansible_dir: "/path/to/ceph-ansible"
+#ansible_dir: "/usr/share/ceph-ansible"
 
 
 ######################
