@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "aws_region": "{{env `AWS_REGION`}}",
+    "aws_ami": "{{env `AWS_AMI`}}",
+    "instructor_pub_key_file": "{{ env `INSTRUCTOR_PUB_KEY_FILE` }}",
+    "org_id": "{{env `ORG_ID`}}",
+    "activation_key": "{{env `ACT_KEY`}}"
+  },
+  "builders": [{
+    "communicator": "ssh",
+    "ssh_timeout": "10m",
+    "ssh_username": "ec2-user",
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `aws_region`}}",
+    "source_ami": "{{user `aws_ami`}}",
+    "instance_type": "t2.micro",
+    "launch_block_device_mappings": [
+    {
+      "device_name": "/dev/xvdb",
+      "volume_size": 20,
+      "volume_type": "gp2",
+      "delete_on_termination": true
+    }],
+    "ami_name": "rhcs-3.0-test-drive-aio-{{timestamp}}",
+    "ami_description": "RHCS 3.0 Test Drive Base Image for use by Qwiklabs",
+    "tags": {
+      "Name": "rhcs-3.0-qwiklabs",
+      "Platform": "Red Hat Enterprise Linux",
+      "Release": "1.0",
+      "OS_Version": "Red Hat Enterprise Linux 7.4",
+      "RHCS_Version": "3.0"
+    }
+  }],
+  "provisioners": [{
+    "type": "ansible",
+    "user": "ec2-user",
+    "playbook_file": "site.yml",
+    "extra_arguments": [
+        "--become",
+        "--extra-vars", "rhsm_org_id={{user `org_id`}} rhsm_act_key={{user `activation_key`}} instructor_pub_key_file={{user `instructor_pub_key_file` }}"
+      ]
+  }]
+}

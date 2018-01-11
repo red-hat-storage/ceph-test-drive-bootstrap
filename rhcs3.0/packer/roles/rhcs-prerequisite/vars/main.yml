@@ -1,0 +1,7 @@
+---
+package_list:
+  - vim
+  - dstat
+  - wget
+  - nc
+  - ntp

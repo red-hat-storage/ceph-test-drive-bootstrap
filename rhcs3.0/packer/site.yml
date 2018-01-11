@@ -1,0 +1,27 @@
+---
+
+- hosts: default
+
+  roles:
+    - { role: cloud-user, tags: ['cloud-user']}
+    - { role: instructor-user, tags: ['instructor-user']}
+    - { role: student-user, tags: ['student-user']}
+    - { role: register-host, tags: ['register-host']}
+    - { role: rhcs-prerequisite, tags: ['rhcs-prerequisite']}
+#    - { role: aws-host, tags: ['aws-host']}
+#    - { role: ocp-installer, tags: ['ocp-installer']}
+#    - { role: docker-host, tags: ['docker-host']}
+#    - { role: registry-mirror, tags: ['registry-mirror']}
+#    - { role: ansible-host, tags: ['ansible-host']}
+#    - { role: master-cert, tags: ['master-cert']}
+#    - { role: inventory-fixup-script, tags: ['inventory-fixup-script']}
+#    - { role: idm-install, tags: ['idm-install']}
+#    - { role: cns-deploy, tags: ['cns-deploy']}
+#    - { role: workshopper, tags: ['workshopper']}
+
+#  tasks:
+
+ #   - name: unsubscribe system
+ #     redhat_subscription: state=absent
+
+...

@@ -1,0 +1,24 @@
+---
+- name: upgrade all packages
+  package:
+    name: '*'
+    state: latest
+
+- name: Copy hosts file
+  copy:
+    src: hosts
+    dest: /etc/hosts
+
+- name: Install initial  packages
+  package:
+    name: "{{ item }}"
+    state: present 
+  with_items: "{{ package_list }}"
+
+- name: Set StrictHostKeyChecking NO
+  lineinfile:
+    path: /etc/ssh/ssh_config 
+    state: present
+    regexp: '^StrictHostKeyChecking'
+    insertafter: '^#   StrictHostKeyChecking ask'
+    line: 'StrictHostKeyChecking no'
