@@ -9,10 +9,10 @@
     src: hosts
     dest: /etc/hosts
 
-- name: Install initial  packages
+- name: Install initial packages
   package:
     name: "{{ item }}"
-    state: present 
+    state: present
   with_items: "{{ package_list }}"
 
 - name: Set StrictHostKeyChecking NO
@@ -34,8 +34,8 @@
     state: directory
     mode: 0755
 
-- name: Move sample files to sample directory
-  command: mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample
+#- name: Move sample files to sample directory
+#  command: mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample
 
 - name: wget ceph-ansible pre-populated variable files
   get_url:
