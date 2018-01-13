@@ -10,9 +10,11 @@ package_list:
   - ceph-common
   - ceph-base
   - ceph-selinux
+  - hdparm
+  - ceph-fuse
 
-ceph-ansible_variable_files_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/automated-setup"
-ceph-ansible_variable_files_name:
+ceph_ansible_variable_file_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/automated-setup"
+ceph_ansible_variable_file_name:
   - all.yml
   - osds.yml
   - clients.yml

@@ -237,12 +237,6 @@ Resources:
             VolumeSize: '10'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
-        - DeviceName: /dev/xvdb
-          VirtualName: AdminNode-vol1
-          Ebs:
-            VolumeSize: '20'
-            VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -252,15 +246,10 @@ Resources:
           !Sub |
               #cloud-config
               cloud_config_modules:
-              - disk_setup
-              - mounts
               - runcmd
 
               hostname: ceph-admin.rhcs-test-drive.io
               fqdn: ceph-admin.rhcs-test-drive.io
-
-              mounts:
-              - [ xvdb, /ceph-metrics,"auto","defaults,nofail", "0", "0"]
 
               users:
               - default
@@ -270,9 +259,6 @@ Resources:
                   name: cloud-user
 
               runcmd:
-              - mkfs.xfs -f /dev/xvdb
-              - mkdir /ceph-metrics
-              - mount /ceph-metrics
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"AdminNode\",\"Data\": \"ceph-admin launch successful\"}"'
 
   CephNode1:

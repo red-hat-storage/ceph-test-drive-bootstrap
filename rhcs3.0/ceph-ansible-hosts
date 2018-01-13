@@ -1,0 +1,19 @@
+[mons]
+ceph-node[1:3]
+
+[osds]
+ceph-node[1:3]
+
+[rgws]
+ceph-service-node1
+
+[mgrs]
+ceph-service-node1
+
+[clients]
+ceph-admin
+ceph-service-node1
+client-node1
+
+[ceph-grafana]
+ceph-admin ansible_connection=local

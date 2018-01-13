@@ -1,0 +1,291 @@
+---
+
+AWSTemplateFormatVersion: 2010-09-09
+Description: Red Hat Ceph Storage 3 Test Drive
+
+Parameters:
+
+  StandardInstanceType:
+    Type: String
+    Default: t2.medium
+    AllowedValues:
+      - t2.medium
+      - t2.large
+
+  CephNodeInstanceType:
+    Type: String
+    Default: t2.medium
+    AllowedValues:
+      - t2.medium
+      - t2.large
+
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: generic-qwiklab
+    ConstraintDescription: Must be the name of an existing EC2 key pair.
+
+  QwiklabId:
+    Type: String
+    Default: master
+    ConstraintDescription: Must be the name of a branch in the GitHub repository we are using in various cloud-init modules.
+
+Mappings:
+  AWSRegion2AMI:
+    us-east-1:
+      ami: ami-4f643e35
+    us-east-2:
+      ami: NOT_SUPPORTED
+    us-west-1:
+      ami: NOT_SUPPORTED
+    us-west-2:
+      ami: NOT_SUPPORTED
+    eu-west-1:
+      ami: NOT_SUPPORTED
+    eu-central-1:
+      ami: NOT_SUPPORTED
+    ap-northeast-1:
+      ami: NOT_SUPPORTED
+    ap-northeast-2:
+      ami: NOT_SUPPORTED
+    ap-southeast-1:
+      ami: NOT_SUPPORTED
+    ap-southeast-2:
+      ami: NOT_SUPPORTED
+
+  SubnetCidr:
+    vpc:
+      cidr: 10.100.0.0/16
+    network1:
+      cidr: 10.100.0.0/16
+
+Resources:
+
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock:
+        Fn::FindInMap:
+        - SubnetCidr
+        - vpc
+        - cidr
+      EnableDnsSupport: 'true'
+      EnableDnsHostnames: 'true'
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+  
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+
+  InternetGatewayAttachement:
+    Type: AWS::EC2::VPCGatewayAttachment
+    DependsOn: InternetGateway
+    Properties:
+      VpcId:
+        Ref: VPC
+      InternetGatewayId:
+        Ref: InternetGateway
+
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    DependsOn: InternetGateway
+    Properties:
+      VpcId:
+        Ref: VPC
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+
+  PublicRouteTableDefaultRoute1:
+    Type: AWS::EC2::Route
+    DependsOn: InternetGatewayAttachement
+    Properties:
+      RouteTableId:
+        Ref: PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: InternetGateway
+  
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId:
+        Ref: VPC
+      CidrBlock:
+        Fn::FindInMap:
+        - SubnetCidr
+        - network1
+        - cidr
+      MapPublicIpOnLaunch: 'true'
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+
+  PublicSubnetRouteTableAssociation1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId:
+        Ref: PublicSubnet1
+      RouteTableId:
+        Ref: PublicRouteTable
+
+  AdminNodeSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    DependsOn: VPC
+    Properties:
+      VpcId:
+        Ref: VPC
+      GroupDescription: Firewall definition for Admin Node
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 22
+        ToPort: 22
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 80
+        ToPort: 80
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 443
+        ToPort: 443
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 8080
+        ToPort: 8080
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 2003
+        ToPort: 2004
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 3000
+        ToPort: 3000
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7002
+        ToPort: 7002
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 7000
+        ToPort: 7000
+        CidrIp: 0.0.0.0/0                                          
+      - IpProtocol: icmp
+        FromPort: -1
+        ToPort: -1
+        CidrIp: 0.0.0.0/0
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+
+  InternalSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    DependsOn: VPC
+    Properties:
+      VpcId:
+        Ref: VPC
+      GroupDescription: Firewall definition for Internal Nodes
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 10.100.0.0/16
+      - IpProtocol: icmp
+        FromPort: -1
+        ToPort: -1
+        CidrIp: 10.100.0.0/16
+      SecurityGroupEgress:
+      - IpProtocol: -1
+        FromPort: 0
+        ToPort: 65535
+        CidrIp: 0.0.0.0/0
+
+  AdminNode:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId:
+        Fn::FindInMap:
+        - AWSRegion2AMI
+        - Ref: AWS::Region
+        - ami
+      InstanceType:
+        Ref: StandardInstanceType
+      SubnetId:
+        Ref: PublicSubnet1
+      PrivateIpAddress : 10.100.0.10
+      KeyName:
+        Ref: KeyName
+      SecurityGroupIds:
+        - !GetAtt AdminNodeSecurityGroup.GroupId
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          VirtualName: AdminNode-bootdisk
+          Ebs:
+            VolumeSize: '10'
+            VolumeType: 'gp2'
+            DeleteOnTermination: 'true'
+        - DeviceName: /dev/xvdb
+          VirtualName: AdminNode-vol1
+          Ebs:
+            VolumeSize: '20'
+            VolumeType: 'gp2'
+            DeleteOnTermination: 'true'
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      UserData:
+        Fn::Base64:
+          !Sub |
+              #cloud-config
+              cloud_config_modules:
+              - disk_setup
+              - mounts
+              - runcmd
+
+              hostname: ceph-admin.rhcs-test-drive.io
+              fqdn: ceph-admin.rhcs-test-drive.io
+
+              mounts:
+              - [ xvdb, /ceph-metrics,"auto","defaults,nofail", "0", "0"]
+
+              users:
+              - default
+
+              system_info:
+                default_user:
+                  name: cloud-user
+
+              runcmd:
+              - mkfs.xfs -f /dev/xvdb
+              - mkdir /ceph-metrics
+              - mount /ceph-metrics
+              - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"AdminNode\",\"Data\": \"ceph-admin launch successful\"}"'
+
+  AdminNodeEIP:
+    Type: AWS::EC2::EIP
+    DependsOn: AdminNode
+    Properties:
+      Domain: VPC
+      InstanceId:
+        Ref: AdminNode
+   
+Outputs:
+   AdminNodePublicIP:
+     Description: "Ceph Admin Node Public IP Address"
+     Value:
+       Ref: AdminNodeEIP
+
