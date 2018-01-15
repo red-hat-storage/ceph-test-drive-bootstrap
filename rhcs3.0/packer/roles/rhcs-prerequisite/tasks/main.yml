@@ -15,6 +15,11 @@
     state: present
   with_items: "{{ package_list }}"
 
+- name: Install S3cmd
+  yum: 
+    name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/s/s3cmd-2.0.0-2.el7.noarch.rpm
+    state: present
+
 - name: Set StrictHostKeyChecking NO
   lineinfile:
     path: /etc/ssh/ssh_config 
