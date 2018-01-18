@@ -557,55 +557,6 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode4\",\"Data\": \"Ceph-node4 launch successful\" }" '
 
-  CephServiceNode1:
-    Type: AWS::EC2::Instance
-    Properties:
-      ImageId:
-        Fn::FindInMap:
-        - AWSRegion2AMI
-        - Ref: AWS::Region
-        - ami
-      InstanceType:
-        Ref: StandardInstanceType
-      SubnetId:
-        Ref: PublicSubnet1
-      PrivateIpAddress : 10.100.0.15
-      KeyName:
-        Ref: KeyName
-      SecurityGroupIds:
-        - !GetAtt AdminNodeSecurityGroup.GroupId
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          VirtualName: CephServiceNode1-bootdisk
-          Ebs:
-            VolumeSize: '10'
-            VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                              
-      Tags:
-      - Key: Application
-        Value:
-          Ref: AWS::StackId
-      UserData:
-        Fn::Base64:
-          !Sub |
-              #cloud-config
-              cloud_config_modules:
-              - runcmd
-
-              hostname: ceph-service-node1.rhcs-test-drive.io
-              fqdn: ceph-service-node1.rhcs-test-drive.io
-
-              users:
-              - default
-
-              system_info:
-                default_user:
-                  name: cloud-user
-
-              runcmd:
-              - yum remove -y ceph-ansible cephmetrics-ansible
-              - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephServiceNode1\",\"Data\": \"ceph-service-node1 launch successful\" }" '
-
   ClientNode1:
     Type: AWS::EC2::Instance
     Properties:
@@ -677,8 +628,3 @@ Outputs:
      Description: "Ceph Admin Node Public IP Address"
      Value:
        Ref: AdminNodeEIP
-
-   CephServiceNode1PublicIP:
-     Description: "Ceph Service Node Public IP Address"
-     Value:
-       Ref: CephServiceNode1EIP

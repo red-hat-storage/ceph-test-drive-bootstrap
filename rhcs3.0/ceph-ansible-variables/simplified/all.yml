@@ -10,7 +10,7 @@ ceph_rhcs_iso_path: "/home/student/rhceph-3.0-rhel-7-x86_64.iso"
 monitor_interface: eth0
 mon_use_fqdn: true
 public_network: 10.100.0.0/16
-osd_objectstore: bluestore
+osd_objectstore: filestore
 
 radosgw_civetweb_port: 80
 radosgw_civetweb_num_threads: 512
@@ -19,7 +19,6 @@ radosgw_interface: eth0
 
 ceph_conf_overrides:
   global:
-    osd crush update on start: false
     osd pool default pg num: 64
     osd pool default pgp num: 64
     mon allow pool delete: true

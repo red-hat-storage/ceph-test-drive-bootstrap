@@ -51,7 +51,15 @@
 - name: Remove default ansible host file
   file:
     path: /etc/ansible/hosts
-    state: abasent
+    state: absent
 
 - name: Rename ceph-ansible site.yml
   shell: "mv /usr/share/ceph-ansible/site.yml.sample /usr/share/ceph-ansible/site.yml"
+
+- name: Fix cepmetrics MON FQDN issue
+  lineinfile:
+    path: /usr/share/cephmetrics-ansible/roles/ceph-collectd/files/collectors/common.py
+    regexp: "^    return socket.gethostname()"
+    line: '    return socket.gethostname()'
+    insertbefore: "^    return socket.gethostname().split('.')[0]"
+    backrefs: yes
