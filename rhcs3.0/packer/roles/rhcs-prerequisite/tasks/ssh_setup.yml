@@ -1,0 +1,29 @@
+---
+
+- name: Set StrictHostKeyChecking NO for sshd
+  lineinfile:
+    path: /etc/ssh/ssh_config
+    state: present
+    regexp: '^StrictHostKeyChecking'
+    insertafter: '^#   StrictHostKeyChecking ask'
+    line: 'StrictHostKeyChecking no'
+
+- name: disable reverse DNS lookup for sshd
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^UseDNS "
+    line: "UseDNS no"
+
+- name: Enable password authentication
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication no"
+    line: "PasswordAuthentication yes"
+
+- name: disable GSSAPIAuthentication for sshd
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^GSSAPIAuthentication "
+    line: "GSSAPIAuthentication no"
+
+...

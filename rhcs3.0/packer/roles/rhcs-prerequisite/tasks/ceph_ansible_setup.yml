@@ -1,0 +1,39 @@
+---
+- name: create directory for putting ceph-ansible sample variable files
+  file:
+    path: /usr/share/ceph-ansible/group_vars/sample
+    state: directory
+    mode: 0755
+
+- name: Move sample files to sample directory
+  shell: "mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample"
+
+- name: wget ceph-ansible pre-populated variable files
+  get_url:
+    url: "{{ ceph_ansible_variable_file_url }}/{{ item }}"
+    dest: "/usr/share/ceph-ansible/group_vars/{{ item }}"
+  with_items: "{{ ceph_ansible_variable_file_name }}"
+
+- name: Remove default ansible host file
+  file:
+    path: /etc/ansible/hosts
+    state: absent
+
+- name: Rename ceph-ansible site.yml
+  shell: "mv /usr/share/ceph-ansible/site.yml.sample /usr/share/ceph-ansible/site.yml"
+
+- name: set ansible to be less chatty for ceph-ansible
+  lineinfile:
+    path: /usr/share/ceph-ansible/ansible.cfg
+    line: "stdout_callback = actionable"
+    insertafter: '^\[defaults\]$'
+    state: present
+
+- name: disable deprecation warnings for ceph-ansible
+  lineinfile:
+    path: /usr/share/ceph-ansible/ansible.cfg
+    line: "deprecation_warnings = False"
+    insertafter: '^\[defaults\]$'
+    state: present
+
+...

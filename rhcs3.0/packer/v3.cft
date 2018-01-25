@@ -7,17 +7,31 @@ Parameters:
 
   StandardInstanceType:
     Type: String
-    Default: t2.medium
+    Default: m5.xlarge
     AllowedValues:
-      - t2.medium
+      - t2.xlarge
       - t2.large
+      - m5.xlarge
+      - m5.large	
 
   CephNodeInstanceType:
     Type: String
-    Default: t2.medium
+    Default: m5.large
     AllowedValues:
       - t2.medium
       - t2.large
+      - m5.xlarge
+      - m5.large
+
+  ClientNodeInstanceType:
+    Type: String
+    Default: m5.large
+    AllowedValues:
+      - t2.small
+      - t2.medium
+      - m5.xlarge
+      - m5.large
+
 
   KeyName:
     Type: AWS::EC2::KeyPair::KeyName
@@ -32,7 +46,7 @@ Parameters:
 Mappings:
   AWSRegion2AMI:
     us-east-1:
-      ami: ami-da3c1ea0
+      ami: ami-adbd93d7
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
@@ -566,7 +580,7 @@ Resources:
         - Ref: AWS::Region
         - ami
       InstanceType:
-        Ref: StandardInstanceType
+        Ref: ClientNodeInstanceType
       SubnetId:
         Ref: PublicSubnet1
       PrivateIpAddress : 10.100.0.20
@@ -613,18 +627,13 @@ Resources:
       Domain: VPC
       InstanceId:
         Ref: AdminNode
+  
 
-
-  CephServiceNode1EIP:
-    Type: AWS::EC2::EIP
-    DependsOn: CephServiceNode1
-    Properties:
-      Domain: VPC
-      InstanceId:
-        Ref: CephServiceNode1
-   
 Outputs:
    AdminNodePublicIP:
-     Description: "Ceph Admin Node Public IP Address"
+     Description: "Ceph Admin Node IP Address"
      Value:
        Ref: AdminNodeEIP
+   PublicDnsName:
+     Description: "Ceph Admin Node DNS Name"
+     Value: !GetAtt AdminNode.PublicDnsName

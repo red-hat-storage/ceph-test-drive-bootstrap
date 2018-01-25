@@ -20,41 +20,10 @@
     name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/s/s3cmd-2.0.0-2.el7.noarch.rpm
     state: present
 
-- name: Set StrictHostKeyChecking NO
-  lineinfile:
-    path: /etc/ssh/ssh_config 
-    state: present
-    regexp: '^StrictHostKeyChecking'
-    insertafter: '^#   StrictHostKeyChecking ask'
-    line: 'StrictHostKeyChecking no'
-
 - name: Download RHCS 3.0 from S3
   get_url:
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
     dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
-
-- name: create directory for putting ceph-ansible sample variable files
-  file:
-    path: /usr/share/ceph-ansible/group_vars/sample
-    state: directory
-    mode: 0755
-
-- name: Move sample files to sample directory
-  shell: "mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample"
-
-- name: wget ceph-ansible pre-populated variable files
-  get_url:
-    url: "{{ ceph_ansible_variable_file_url }}/{{ item }}"
-    dest: "/usr/share/ceph-ansible/group_vars/{{ item }}"
-  with_items: "{{ ceph_ansible_variable_file_name }}"
-
-- name: Remove default ansible host file
-  file:
-    path: /etc/ansible/hosts
-    state: absent
-
-- name: Rename ceph-ansible site.yml
-  shell: "mv /usr/share/ceph-ansible/site.yml.sample /usr/share/ceph-ansible/site.yml"
 
 - name: Fix cepmetrics MON FQDN issue
   lineinfile:
@@ -63,3 +32,7 @@
     line: '    return socket.gethostname()'
     insertbefore: "^    return socket.gethostname().split('.')[0]"
     backrefs: yes
+
+- import_tasks: ssh_setup.yml
+
+- import_tasks: ceph_ansible_setup.yml
