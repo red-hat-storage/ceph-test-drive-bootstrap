@@ -7,28 +7,31 @@ Parameters:
 
   StandardInstanceType:
     Type: String
-    Default: m5.xlarge
+    Default: t2.xlarge
     AllowedValues:
-      - t2.xlarge
+      - t2.medium
       - t2.large
+      - t2.xlarge
       - m5.xlarge
       - m5.large	
 
   CephNodeInstanceType:
     Type: String
-    Default: m5.large
+    Default: t2.xlarge
     AllowedValues:
       - t2.medium
       - t2.large
+      - t2.xlarge
       - m5.xlarge
       - m5.large
 
   ClientNodeInstanceType:
     Type: String
-    Default: m5.large
+    Default: t2.xlarge
     AllowedValues:
       - t2.small
       - t2.medium
+      - t2.xlarge
       - m5.xlarge
       - m5.large
 
