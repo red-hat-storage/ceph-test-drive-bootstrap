@@ -15,10 +15,15 @@
     state: present
   with_items: "{{ package_list }}"
 
-- name: Install S3cmd
-  yum: 
-    name: http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/s/s3cmd-2.0.0-2.el7.noarch.rpm
-    state: present
+#- name : Get s3cmd package
+#  get_url:
+#    url: https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/packer/roles/rhcs-prerequisite/files/s3cmd-2.0.1-1.el7.noarch.rpm
+#    dest: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
+
+#- name: Install S3cmd
+#  yum: 
+#    name: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm 
+#    state: present
 
 - name: Download RHCS 3.0 from S3
   get_url:
