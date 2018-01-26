@@ -30,14 +30,8 @@
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
     dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
 
-- name: Fix cepmetrics MON FQDN issue
-  lineinfile:
-    path: /usr/share/cephmetrics-ansible/roles/ceph-collectd/files/collectors/common.py
-    regexp: "^    return socket.gethostname()"
-    line: '    return socket.gethostname()'
-    insertbefore: "^    return socket.gethostname().split('.')[0]"
-    backrefs: yes
-
 - import_tasks: ssh_setup.yml
 
-- import_tasks: ceph_ansible_setup.yml
+- import_tasks: ceph-ansible-prepare.yml
+
+- import_tasks: ceph-metrics-prepare.yml

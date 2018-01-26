@@ -1,0 +1,29 @@
+---
+- name: Fix cepmetrics MON FQDN issue
+  lineinfile:
+    path: /usr/share/cephmetrics-ansible/roles/ceph-collectd/files/collectors/common.py
+    regexp: "^    return socket.gethostname()"
+    line: '    return socket.gethostname()'
+    insertbefore: "^    return socket.gethostname().split('.')[0]"
+    backrefs: yes
+
+- name: set ansible to be less chatty for cephmetrics-ansible
+  lineinfile:
+    path: /usr/share/cephmetrics-ansible/ansible.cfg
+    line: "stdout_callback = actionable"
+    insertafter: '^\[defaults\]$'
+    state: present
+
+- name: disable deprecation warnings for cephmetrics-ansible
+  lineinfile:
+    path: /usr/share/cephmetrics-ansible/ansible.cfg
+    line: "deprecation_warnings = False"
+    insertafter: '^\[defaults\]$'
+    state: present
+
+- name: disable command warnings for cephmetrics-ansible
+  lineinfile:
+    path: /usr/share/cephmetrics-ansible/ansible.cfg
+    line: "command_warnings = False"
+    insertafter: '^\[defaults\]$'
+    state: present
