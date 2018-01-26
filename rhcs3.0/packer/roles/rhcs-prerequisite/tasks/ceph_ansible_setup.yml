@@ -36,4 +36,19 @@
     insertafter: '^\[defaults\]$'
     state: present
 
+- name: disable command warnings for ceph-ansible
+  lineinfile:
+    path: /usr/share/ceph-ansible/ansible.cfg
+    line: "command_warnings = False"
+    insertafter: '^\[defaults\]$'
+    state: present
+
+- name: Create ansible log fle
+  file:
+    path: /var/log/ansible.log
+    state: present
+    mode: 0644
+    owner: student
+    group: student 
+
 ...
