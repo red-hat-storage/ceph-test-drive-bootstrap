@@ -4,16 +4,16 @@
     name: '*'
     state: latest
 
-- name: Copy hosts file
-  copy:
-    src: hosts
-    dest: /etc/hosts
+- name: Setting up repos for sysbench
+  shell: "curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash"
+  ignore_errors: true
 
 - name: Install initial packages
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ package_list }}"
+  ignore_errors: true
 
 - name : Get s3cmd package
   get_url:
@@ -29,6 +29,20 @@
   get_url:
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
     dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
+
+- name: Copy hosts file
+  copy:
+    src: hosts
+    dest: /etc/hosts
+
+- name: Provide student user permission to /etc/ceph directory
+  file:
+    path: /etc/ceph
+    state: directory
+    mode: 0775
+    owner: ceph
+    group: student 
+    recurse: yes
 
 - import_tasks: ssh_setup.yml
 

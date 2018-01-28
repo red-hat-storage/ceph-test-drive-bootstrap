@@ -17,7 +17,7 @@ Parameters:
 
   CephNodeInstanceType:
     Type: String
-    Default: t2.xlarge
+    Default: t2.large
     AllowedValues:
       - t2.medium
       - t2.large
@@ -27,7 +27,7 @@ Parameters:
 
   ClientNodeInstanceType:
     Type: String
-    Default: t2.xlarge
+    Default: t2.medium
     AllowedValues:
       - t2.small
       - t2.medium
@@ -310,25 +310,25 @@ Resources:
           VirtualName: CephNode1-disk1
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode1-disk2
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode1-disk3
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode1-disk4
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
       - Key: Application
@@ -383,25 +383,25 @@ Resources:
           VirtualName: CephNode2-disk1
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode2-disk2
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode2-disk3
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode2-disk4
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
       - Key: Application
@@ -456,25 +456,25 @@ Resources:
           VirtualName: CephNode3-disk1
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode3-disk2
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode3-disk3
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode3-disk4
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
       - Key: Application
@@ -529,25 +529,25 @@ Resources:
           VirtualName: CephNode4-disk1
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode4-disk2
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode4-disk3
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode4-disk4
           Ebs:
             VolumeSize: '500'
-            VolumeType: 'st1'
+            VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
       - Key: Application

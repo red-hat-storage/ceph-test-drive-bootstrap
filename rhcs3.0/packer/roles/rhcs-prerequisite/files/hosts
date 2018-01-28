@@ -1,11 +1,11 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-10.100.0.10 ceph-admin.rhcs-test-drive.io ceph-admin
+10.100.0.10  ceph-admin
 
-10.100.0.11 ceph-node1.rhcs-test-drive.io ceph-node1
-10.100.0.12 ceph-node2.rhcs-test-drive.io ceph-node2
-10.100.0.13 ceph-node3.rhcs-test-drive.io ceph-node3
-10.100.0.14 ceph-node4.rhcs-test-drive.io ceph-node4
+10.100.0.11 ceph-node1
+10.100.0.12 ceph-node2
+10.100.0.13 ceph-node3
+10.100.0.14 ceph-node4
 
-10.100.0.20 client-node1.rhcs-test-drive.io client-node1
+10.100.0.20 client-node1

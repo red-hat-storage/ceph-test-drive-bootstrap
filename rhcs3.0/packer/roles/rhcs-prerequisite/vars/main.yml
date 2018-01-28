@@ -19,6 +19,8 @@ package_list:
   - ceph-iscsi-cli
   - ceph-iscsi-config
   - ceph-iscsi-tools
+  - iscsi-initiator-utils
+  - device-mapper-multipath
   - ceph-mds
   - ceph-medic
   - ceph-radosgw
@@ -30,6 +32,8 @@ package_list:
   - hdparm
   - python-setuptools
   - python-pycurl
+  - mariadb-server
+  - sysbench
 
 ceph_ansible_variable_file_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/ceph-ansible-variables/simplified"
 ceph_ansible_variable_file_name:

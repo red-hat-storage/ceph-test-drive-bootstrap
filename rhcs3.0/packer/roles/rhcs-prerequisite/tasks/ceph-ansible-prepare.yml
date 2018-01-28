@@ -43,6 +43,13 @@
     insertafter: '^\[defaults\]$'
     state: present
 
+- name: Enable SSH Pipelining
+  lineinfile:
+    path: /usr/share/ceph-ansible/ansible.cfg
+    line: "pipelining=True"
+    insertafter: '^\[ssh_connection\]$'
+    state: present
+
 - name: Create ansible log fle
   file:
     path: /var/log/ansible.log
