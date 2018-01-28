@@ -1,6 +1,7 @@
 ---
 
 - hosts: default
+  become: true
 
   roles:
     - { role: cloud-user, tags: ['cloud-user']}

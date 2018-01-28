@@ -25,6 +25,24 @@
     name: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm 
     state: present
 
+- name : Install epel
+  package:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    state: present 
+
+- name : Instal PIP
+  package:
+    name: python-pip
+    state: present
+
+- name : Install python-swiftclient
+  shell: "pip install --upgrade pip; pip install python-swiftclient"
+
+- name: Remove epel
+  package:
+    name: epel-release
+    state: absent  
+
 - name: Download RHCS 3.0 from S3
   get_url:
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
@@ -34,15 +52,6 @@
   copy:
     src: hosts
     dest: /etc/hosts
-
-- name: Provide student user permission to /etc/ceph directory
-  file:
-    path: /etc/ceph
-    state: directory
-    mode: 0775
-    owner: ceph
-    group: student 
-    recurse: yes
 
 - import_tasks: ssh_setup.yml
 
