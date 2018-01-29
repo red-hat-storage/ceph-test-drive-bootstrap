@@ -17,7 +17,7 @@
 
 - name : Get s3cmd package
   get_url:
-    url: https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/packer/roles/rhcs-prerequisite/files/s3cmd-2.0.1-1.el7.noarch.rpm
+    url: https://s3.amazonaws.com/karansingh/test-drive/s3cmd-2.0.1-1.el7.noarch.rpm
     dest: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
 
 - name: Install S3cmd
@@ -48,6 +48,15 @@
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
     dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
 
+- name: Downlaod Image and Video for object storage module
+  get_url:
+    url: "{{ item }}"
+    dest: /home/student/
+  with_items:
+    - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Tower.jpg
+    - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Ceph_Storage.mp4
+  ignore_errors: true
+
 - name: Copy hosts file
   copy:
     src: hosts
@@ -58,3 +67,6 @@
 - import_tasks: ceph-ansible-prepare.yml
 
 - import_tasks: ceph-metrics-prepare.yml
+
+- import_tasks: ceph-sree-prepare.yml 
+  tags: sree

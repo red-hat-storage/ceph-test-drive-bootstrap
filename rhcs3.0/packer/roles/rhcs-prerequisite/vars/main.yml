@@ -1,6 +1,7 @@
 ---
 package_list:
   - vim
+  - git
   - dstat
   - wget
   - nc
@@ -34,6 +35,7 @@ package_list:
   - python-pycurl
   - mariadb-server
   - sysbench
+  - dnsmasq
 
 ceph_ansible_variable_file_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/ceph-ansible-variables/simplified"
 ceph_ansible_variable_file_name:

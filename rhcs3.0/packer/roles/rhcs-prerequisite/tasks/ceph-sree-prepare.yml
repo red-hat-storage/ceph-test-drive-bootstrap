@@ -1,0 +1,22 @@
+---
+- name: Git clone Sree
+  git:
+    repo: https://github.com/ksingh7/Sree.git
+    dest: /usr/share/ceph-sree
+
+- name: Make /etc/rc.d/rc.local executable
+  file:
+    path: /etc/rc.d/rc.local
+    mode: 0755
+
+- name: Make ceph-sree executable at boot
+  lineinfile:
+    path: /etc/rc.d/rc.local
+    state: present
+    line: "cd /usr/share/ceph-sree" 
+
+- name: Make ceph-sree executable at boot
+  lineinfile:
+    path: /etc/rc.d/rc.local
+    state: present
+    line: "/bin/bash sree.sh"

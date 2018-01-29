@@ -8,6 +8,21 @@
     insertafter: '^#   StrictHostKeyChecking ask'
     line: 'StrictHostKeyChecking no'
 
+- name: Increase ClientAliveInterval
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: '#ClientAliveInterval'
+    insertafter: '#ClientAliveInterval'
+    line: 'ClientAliveInterval 600'
+
+- name: Increase ClientAliveCountMax
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: '#ClientAliveCountMax 3'
+    line: 'ClientAliveCountMax 3'
+
 - name: disable reverse DNS lookup for sshd
   lineinfile:
     path: /etc/ssh/sshd_config
