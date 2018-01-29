@@ -69,4 +69,3 @@
 - import_tasks: ceph-metrics-prepare.yml
 
 - import_tasks: ceph-sree-prepare.yml 
-  tags: sree

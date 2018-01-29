@@ -53,7 +53,7 @@
 - name: Create ansible log fle
   file:
     path: /var/log/ansible.log
-    state: present
+    state: file
     mode: 0644
     owner: student
     group: student 

@@ -9,14 +9,14 @@
     path: /etc/rc.d/rc.local
     mode: 0755
 
-- name: Make ceph-sree executable at boot
-  lineinfile:
-    path: /etc/rc.d/rc.local
-    state: present
-    line: "cd /usr/share/ceph-sree" 
+#- name: Make ceph-sree executable at boot
+#  lineinfile:
+#    path: /etc/rc.d/rc.local
+#    state: present
+#    line: "cd /usr/share/ceph-sree" 
 
-- name: Make ceph-sree executable at boot
-  lineinfile:
-    path: /etc/rc.d/rc.local
-    state: present
-    line: "/bin/bash sree.sh"
+#- name: Make ceph-sree executable at boot
+#  lineinfile:
+#    path: /etc/rc.d/rc.local
+#    state: present
+#    line: "/bin/bash sree.sh"

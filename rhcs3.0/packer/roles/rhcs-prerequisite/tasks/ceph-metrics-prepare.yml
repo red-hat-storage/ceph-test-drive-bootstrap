@@ -1,11 +1,15 @@
 ---
-- name: Fix cepmetrics MON FQDN issue
-  lineinfile:
-    path: /usr/share/cephmetrics-ansible/roles/ceph-collectd/files/collectors/common.py
-    regexp: "^    return socket.gethostname()"
-    line: '    return socket.gethostname()'
-    insertbefore: "^    return socket.gethostname().split('.')[0]"
-    backrefs: yes
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+#- name: Fix cepmetrics MON FQDN issue
+#  lineinfile:
+#    path: /usr/share/cephmetrics-ansible/roles/ceph-collectd/files/collectors/common.py
+#    regexp: "^    return socket.gethostname()"
+#    line: '    return socket.gethostname()'
+#    insertbefore: "^    return socket.gethostname().split('.')[0]"
+#    backrefs: yes
 
 - name: set ansible to be less chatty for cephmetrics-ansible
   lineinfile:
