@@ -35,10 +35,9 @@ Parameters:
       - m5.xlarge
       - m5.large
 
-
   KeyName:
-    Type: AWS::EC2::KeyPair::KeyName
-    Default: generic-qwiklab
+    Type: String
+    Default: RHSSHKey
     ConstraintDescription: Must be the name of an existing EC2 key pair.
 
   QwiklabId:
