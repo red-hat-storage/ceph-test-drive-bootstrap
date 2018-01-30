@@ -50,12 +50,13 @@
     insertafter: '^\[ssh_connection\]$'
     state: present
 
-- name: Create ansible log fle
-  file:
-    path: /var/log/ansible.log
-    state: file
-    mode: 0644
+- name: Ensure ansible log file exists
+  copy:
+    content: ""
+    dest: /var/log/ansible.log
+    force: no
+    group: student
     owner: student
-    group: student 
+    mode: 0644
 
 ...

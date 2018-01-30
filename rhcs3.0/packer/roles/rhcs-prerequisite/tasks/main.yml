@@ -6,14 +6,14 @@
 
 - name: Setting up repos for sysbench
   shell: "curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash"
-  ignore_errors: true
+#  ignore_errors: true
 
 - name: Install initial packages
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ package_list }}"
-  ignore_errors: true
+#  ignore_errors: true
 
 - name : Get s3cmd package
   get_url:
@@ -55,7 +55,7 @@
   with_items:
     - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Tower.jpg
     - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Ceph_Storage.mp4
-  ignore_errors: true
+ # ignore_errors: true
 
 - name: Copy hosts file
   copy:

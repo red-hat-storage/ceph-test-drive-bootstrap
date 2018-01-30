@@ -36,8 +36,8 @@ Parameters:
       - m5.large
 
   KeyName:
-    Type: String
-    Default: RHSSHKey
+    Type: AWS::EC2::KeyPair::KeyName
+    Default: generic-qwiklab
     ConstraintDescription: Must be the name of an existing EC2 key pair.
 
   QwiklabId:
@@ -48,7 +48,7 @@ Parameters:
 Mappings:
   AWSRegion2AMI:
     us-east-1:
-      ami: ami-2bd2ef51
+      ami: ami-aa2c17d0
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
@@ -278,6 +278,9 @@ Resources:
               runcmd:
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"AdminNode\",\"Data\": \"ceph-admin launch successful\"}"'
               - hostnamectl set-hostname ceph-admin
+              - echo "cd /usr/share/ceph-sree" >> /etc/rc.d/rc.local
+              - echo "/bin/bash sree.sh" >> /etc/rc.d/rc.local
+              - sh /etc/rc.d/rc.local
 
   CephNode1:
     Type: AWS::EC2::Instance
