@@ -32,9 +32,9 @@ s3cmd put --acl-public /home/student/Red_Hat_Ceph_Storage.mp4 s3://public_bucket
 echo "****************************************************************************************"
 echo "****************************************************************************************"
 
-echo "Public URL for the shared image: http://ceph-admin-EIP/public_bucket/Red_Hat_Tower.jpg"
-echo "Public URL for the shared image: http://ceph-admin-EIP/public_bucket/Red_Hat_Ceph_Storage.mp4"
-echo "For ceph-sree object storage GUI : http://ceph-admin-EIP:5000"
+echo "Public URL for the shared image: http://ceph-admin-public-IP-Address/public_bucket/Red_Hat_Tower.jpg"
+echo "Public URL for the shared image: http://ceph-admin-public-IP-Address/public_bucket/Red_Hat_Ceph_Storage.mp4"
+echo "For ceph-sree object storage GUI : http://ceph-admin-public-IP-Address:5000"
 
 echo "****************************************************************************************"
 echo "****************************************************************************************"
