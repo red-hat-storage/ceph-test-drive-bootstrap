@@ -12,6 +12,10 @@ sudo sed -i '$a\[osds]' /etc/ansible/hosts
 sudo sed -i '$a\ceph-node[1:4]' /etc/ansible/hosts
 sudo sed -i '$a\    ' /etc/ansible/hosts
 
+sudo sed -i '$a\[mgrs]' /etc/ansible/hosts
+sudo sed -i '$a\ceph-admin' /etc/ansible/hosts
+sudo sed -i '$a\    ' /etc/ansible/hosts
+
 sudo sed -i '$a\[clients]' /etc/ansible/hosts
 sudo sed -i '$a\ceph-admin' /etc/ansible/hosts
 sudo sed -i '$a\    ' /etc/ansible/hosts
@@ -19,3 +23,4 @@ sudo sed -i '$a\    ' /etc/ansible/hosts
 cd /usr/share/ceph-ansible
 time ansible-playbook site.yml
 
+sudo chown -R student:student /etc/ceph

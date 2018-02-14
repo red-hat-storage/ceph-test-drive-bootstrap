@@ -285,6 +285,9 @@ Resources:
               - echo "cd /usr/share/ceph-sree" >> /etc/rc.d/rc.local
               - echo "/bin/bash sree.sh" >> /etc/rc.d/rc.local
               - sh /etc/rc.d/rc.local
+              - echo "address=/.ceph-admin/10.100.0.10" | sudo tee -a /etc/dnsmasq.conf ; 
+              - sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq
+              - sudo sed -i '/search/anameserver 127.0.0.1' /etc/resolv.conf
 
   CephNode1:
     Type: AWS::EC2::Instance
@@ -313,25 +316,25 @@ Resources:
         - DeviceName: /dev/xvdb
           VirtualName: CephNode1-disk1
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode1-disk2
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode1-disk3
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode1-disk4
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
@@ -384,25 +387,25 @@ Resources:
         - DeviceName: /dev/xvdb
           VirtualName: CephNode2-disk1
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode2-disk2
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode2-disk3
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode2-disk4
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
@@ -456,25 +459,25 @@ Resources:
         - DeviceName: /dev/xvdb
           VirtualName: CephNode3-disk1
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode3-disk2
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode3-disk3
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode3-disk4
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
@@ -528,25 +531,25 @@ Resources:
         - DeviceName: /dev/xvdb
           VirtualName: CephNode4-disk1
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdc
           VirtualName: CephNode4-disk2
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvdd
           VirtualName: CephNode4-disk3
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'  
         - DeviceName: /dev/xvde
           VirtualName: CephNode4-disk4
           Ebs:
-            VolumeSize: '500'
+            VolumeSize: '100'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'                                
       Tags:
