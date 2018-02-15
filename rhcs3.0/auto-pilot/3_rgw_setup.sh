@@ -6,6 +6,8 @@ sudo sed -i '$a\    ' /etc/ansible/hosts
 
 cd /usr/share/ceph-ansible
 ansible-playbook site.yml --limit  rgws
+ 
+sudo chown -R student:student /etc/ceph
 
 sudo systemctl status ceph-radosgw@rgw.ceph-admin.service
 sudo netstat -plunt | grep -i rados
