@@ -9,7 +9,6 @@
     - { role: student-user, tags: ['student-user']}
     - { role: register-host, tags: ['register-host']}
     - { role: rhcs-prerequisite, tags: ['rhcs-prerequisite']}
-    - { role: ansible-role-chrony, tags: ['rhcs-prerequisite']}
 #    - { role: aws-host, tags: ['aws-host']}
 #    - { role: ocp-installer, tags: ['ocp-installer']}
 #    - { role: docker-host, tags: ['docker-host']}
