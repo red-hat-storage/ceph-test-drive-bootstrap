@@ -642,9 +642,15 @@ Resources:
 
 Outputs:
    AdminNodePublicIP:
-     Description: "Ceph Admin Node IP Address"
+     Description: "ceph-admin node public IP address"
      Value:
        Ref: AdminNodeEIP
+   UserName:
+     Description: "SSH User Name"
+     Value: "student"
+   Password:
+     Description: "SSH Password"
+     Value: "Redhat18"
    PublicDnsName:
-     Description: "Ceph Admin Node DNS Name"
+     Description: "ceph-admin node DNS address"
      Value: !GetAtt AdminNode.PublicDnsName
