@@ -627,7 +627,8 @@ Resources:
               runcmd:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"ClientNode1\",\"Data\": \"client-node1 launch successful\" }" '
-              - hostnamectl set-hostname client-node1              
+              - hostnamectl set-hostname client-node1
+              - sudo modprobe rbd             
 
 
   AdminNodeEIP:

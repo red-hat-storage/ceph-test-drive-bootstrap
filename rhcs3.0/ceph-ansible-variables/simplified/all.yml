@@ -23,3 +23,5 @@ ceph_conf_overrides:
     osd pool default pg num: 64
     osd pool default pgp num: 64
     mon allow pool delete: true
+    mon clock drift allowed: 5
+    rgw dns name: "ceph-admin"
