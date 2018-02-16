@@ -48,7 +48,7 @@ Parameters:
 Mappings:
   AWSRegion2AMI:
     us-east-1:
-      ami: ami-d2eed4a8
+      ami: ami-c5322bbf
     us-east-2:
       ami: NOT_SUPPORTED
     us-west-1:
