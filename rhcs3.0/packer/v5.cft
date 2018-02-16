@@ -258,7 +258,7 @@ Resources:
         - DeviceName: /dev/sda1
           VirtualName: AdminNode-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: '20'
             VolumeType: 'gp2'
             DeleteOnTermination: 'true'
       Tags:
@@ -292,6 +292,8 @@ Resources:
               - sudo wget -O /home/student/auto-pilot/1_cluster_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/1_cluster_setup.sh
               - sudo wget -O /home/student/auto-pilot/2_ceph-metrics_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/2_ceph-metrics_setup.sh
               - sudo wget -O /home/student/auto-pilot/3_rgw_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/3_rgw_setup.sh
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd
 
   CephNode1:
     Type: AWS::EC2::Instance
@@ -363,6 +365,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode1\",\"Data\": \"Ceph-node1 launch successful\" }" '
               - hostnamectl set-hostname ceph-node1
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd              
 
   CephNode2:
     Type: AWS::EC2::Instance
@@ -434,7 +438,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode2\",\"Data\": \"Ceph-node2 launch successful\" }" '
               - hostnamectl set-hostname ceph-node2
-
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd
 
   CephNode3:
     Type: AWS::EC2::Instance
@@ -506,7 +511,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode3\",\"Data\": \"Ceph-node3 launch successful\" }" '
               - hostnamectl set-hostname ceph-node3
-
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd
 
   CephNode4:
     Type: AWS::EC2::Instance
@@ -578,6 +584,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode4\",\"Data\": \"Ceph-node4 launch successful\" }" '
               - hostnamectl set-hostname ceph-node4
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd
 
   ClientNode1:
     Type: AWS::EC2::Instance
@@ -625,6 +633,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"ClientNode1\",\"Data\": \"client-node1 launch successful\" }" '
               - hostnamectl set-hostname client-node1              
+              - sudo systemctl start chronyd
+              - sudo systemctl enable chronyd
 
   AdminNodeEIP:
     Type: AWS::EC2::EIP
