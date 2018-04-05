@@ -289,9 +289,8 @@ Resources:
               - sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq
               - sudo sed -i '/search/anameserver 127.0.0.1' /etc/resolv.conf
               - sudo mkdir /home/student/auto-pilot
-              - sudo wget -O /home/student/auto-pilot/1_cluster_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/1_cluster_setup.sh
-              - sudo wget -O /home/student/auto-pilot/2_ceph-metrics_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/2_ceph-metrics_setup.sh
-              - sudo wget -O /home/student/auto-pilot/3_rgw_setup.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/3_rgw_setup.sh
+              - sudo wget -O /home/student/auto-pilot/setup_module_2.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_module_2.sh
+              - sudo wget -O /home/student/auto-pilot/setup_module_4.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_module_4.sh
 
 
   CephNode1:
