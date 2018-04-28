@@ -3,5 +3,6 @@ rhcs3.0/packer/site.retry
 rhcs3.0/packer/fetch/
 rhcs3.0/packer/temp.inv
 rhcs3.0/packer/test.yml
+rhcs3.0/packer/fetch/*.pub
 *.csv
 
