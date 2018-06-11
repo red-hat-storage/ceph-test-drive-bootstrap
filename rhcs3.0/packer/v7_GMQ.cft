@@ -630,7 +630,7 @@ Resources:
               - sudo wget -O /home/student/auto-pilot/setup_all_in_one.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_all_in_one.sh
               - sudo sleep 60
               - sudo chmod +x /home/student/auto-pilot/setup_all_in_one.sh
-              - sudo -u cloud-user "sh /home/student/auto-pilot/setup_all_in_one.sh"
+              - sudo -u student /home/student/auto-pilot/setup_all_in_one.sh
               ### Identify how to run a command as cloud-user from root user
 
   AdminNodeEIP:
@@ -643,7 +643,7 @@ Resources:
   
 
 Outputs:
-   PublicDnsName:
+   CephS3Endpoint:
      Description: "Ceph S3 Endpoint"
      Value: !GetAtt AdminNode.PublicDnsName
    S3AccessKey:
@@ -652,14 +652,14 @@ Outputs:
    S3SecretKey:
      Description: "S3 Secret Key"
      Value: "S3user1key" 
-   AdminNodePublicIP:
+   SSHIPAddress:
      Description: "ceph-admin node SSH IP address"
      Value:
        Ref: AdminNodeEIP
-   UserName:
+   SSHUserName:
      Description: "SSH User Name"
      Value: "student"
-   Password:
+   SSHPassword:
      Description: "SSH Password"
      Value: "Redhat18"
   
