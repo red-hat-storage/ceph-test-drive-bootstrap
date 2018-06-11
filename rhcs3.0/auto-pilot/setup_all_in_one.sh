@@ -9,7 +9,7 @@ sudo sed -i '$a\ceph-node[1:3]' /etc/ansible/hosts
 sudo sed -i '$a\    ' /etc/ansible/hosts
 
 sudo sed -i '$a\[osds]' /etc/ansible/hosts
-sudo sed -i '$a\ceph-node[1:3]' /etc/ansible/hosts
+sudo sed -i '$a\ceph-node[1:4]' /etc/ansible/hosts
 sudo sed -i '$a\    ' /etc/ansible/hosts
 
 sudo sed -i '$a\[mgrs]' /etc/ansible/hosts
