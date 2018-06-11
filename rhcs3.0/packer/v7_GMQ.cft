@@ -642,8 +642,17 @@ Resources:
   
 
 Outputs:
+   PublicDnsName:
+     Description: "Ceph S3 Endpoint"
+     Value: !GetAtt AdminNode.PublicDnsName
+   S3AccessKey:
+     Description: "S3 Access Key"
+     Value: "S3user1"
+   S3SecretKey:
+     Description: "S3 Secret Key"
+     Value: "S3user1key" 
    AdminNodePublicIP:
-     Description: "ceph-admin node public IP address"
+     Description: "ceph-admin node SSH IP address"
      Value:
        Ref: AdminNodeEIP
    UserName:
@@ -652,6 +661,4 @@ Outputs:
    Password:
      Description: "SSH Password"
      Value: "Redhat18"
-   PublicDnsName:
-     Description: "ceph-admin node DNS address"
-     Value: !GetAtt AdminNode.PublicDnsName
+  
