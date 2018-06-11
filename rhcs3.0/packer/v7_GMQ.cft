@@ -645,7 +645,8 @@ Resources:
 Outputs:
    CephS3Endpoint:
      Description: "Ceph S3 Endpoint"
-     Value: !GetAtt AdminNode.PublicDnsName
+     Value:
+       Ref: AdminNodeEIP
    S3AccessKey:
      Description: "S3 Access Key"
      Value: "S3user1"
