@@ -628,9 +628,9 @@ Resources:
               - sudo sed -i '/search/anameserver 127.0.0.1' /etc/resolv.conf
               - sudo mkdir /home/student/auto-pilot
               - sudo wget -O /home/student/auto-pilot/setup_all_in_one.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_all_in_one.sh
-              - sudo sleep 60
               - sudo chmod +x /home/student/auto-pilot/setup_all_in_one.sh
               - sudo -u student /home/student/auto-pilot/setup_all_in_one.sh
+              - sudo sleep 300
               ### Identify how to run a command as cloud-user from root user
 
   AdminNodeEIP:
