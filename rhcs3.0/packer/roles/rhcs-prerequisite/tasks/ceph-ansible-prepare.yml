@@ -65,7 +65,7 @@
     owner: student
     mode: 0644
 
-- name: enable and start chronyd  service
+- name: enable and start chronyd service
   systemd:
     name: chronyd
     enabled: yes
