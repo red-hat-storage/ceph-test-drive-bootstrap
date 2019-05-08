@@ -10,7 +10,9 @@ ceph_rhcs_iso_path: "/home/student/rhceph-3.0-rhel-7-x86_64.iso"
 monitor_interface: eth0
 mon_use_fqdn: true
 public_network: 10.100.0.0/16
-osd_objectstore: filestore
+ceph_docker_image: rhceph/rhceph-3-rhel7
+containerized_deployment: yes
+ceph_docker_registry: registry.access.redhat.com
 
 radosgw_civetweb_port: 80
 radosgw_civetweb_num_threads: 512
