@@ -3,23 +3,7 @@
   user:
     name: cloud-user
     password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'
-
-- name: create ssh directory
-  file:
-    path: /home/cloud-user/.ssh
-    state: directory
-    mode: 0700
-
-- name: create ssh key pair for internal use
-  shell:
-    cmd: ssh-keygen -b 2048 -t rsa -f /home/cloud-user/.ssh/id_rsa -q -N ""
-    creates: /home/cloud-user/.ssh/id_rsa
-
-- name: change permissions on key pair
-  file: path=/home/cloud-user/.ssh/{{ item }} owner=cloud-user group=cloud-user mode=0400
-  with_items:
-    - id_rsa
-    - id_rsa.pub
+    generate_ssh_key: yes
 
 - name: fetch ssh pub key
   fetch:

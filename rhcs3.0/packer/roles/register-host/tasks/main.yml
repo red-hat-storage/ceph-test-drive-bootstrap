@@ -15,6 +15,7 @@
       cmd: yum clean all
       warn: false
     ignore_errors: true
+    tags: skip_ansible_lint
 
   - name: enable Red Hat product id support in yum
     copy: src=product-id.conf dest=/etc/yum/pluginconf.d/
@@ -25,13 +26,13 @@
   fail:
     msg: "You must supply an RHSM organization ID"
   when:
-    - (rhsm_org_id is not defined or rhsm_org_id == "")
+    - (rhsm_org_id is not defined or rhsm_org_id)
 
 - name: ensure activation key is supplied
   fail:
     msg: "You must supply an RHSM activation key"
   when:
-    - (rhsm_act_key is not defined or rhsm_act_key == "" )
+    - (rhsm_act_key is not defined or rhsm_act_key)
 
 - name: ensure repositories are supplied
   fail:
@@ -40,6 +41,7 @@
     - (rhsm_repos is not defined or rhsm_repos|length == 0)
 
 - name: registering system with CDN
+  register: rhn_registration
   redhat_subscription:
     org_id: "{{ rhsm_org_id }}"
     activationkey: "{{ rhsm_act_key }}"
@@ -47,11 +49,11 @@
     autosubscribe: true
     force_register: true
     pool_ids: 8a85f98260c27fc50160c328c08a5045
+  notify:
+    - disable all default repositories
+    - enable all required repositories
 
-- name: disable all default repositories
-  shell: subscription-manager repos --disable="*"
-
-- name: enable all required repositories
-  shell: subscription-manager repos --enable {{ rhsm_repos | join(" --enable ") }}
+- name: Ensure handlers are run
+  meta: flush_handlers
 
 ...

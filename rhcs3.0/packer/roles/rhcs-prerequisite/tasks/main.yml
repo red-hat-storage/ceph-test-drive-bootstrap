@@ -3,9 +3,13 @@
   package:
     name: '*'
     state: latest
+  tags: skip_ansible_lint
 
 - name: Setting up repos for sysbench
-  shell: "curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash"
+  shell: |
+    set -o pipefail
+    curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash
+  tags: skip_ansible_lint
 #  ignore_errors: true
 
 - name: Install initial packages
@@ -21,14 +25,14 @@
     dest: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
 
 - name: Install S3cmd
-  yum: 
-    name: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm 
+  yum:
+    name: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
     state: present
 
 - name : Install epel
   package:
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    state: present 
+    state: present
 
 - name : Instal PIP
   package:
@@ -36,12 +40,17 @@
     state: present
 
 - name : Install python-swiftclient
-  shell: "pip install --upgrade pip; pip install python-swiftclient"
+  pip:
+    name:
+      - pip
+      - python-swiftclient
+    state: latest
+  tags: skip_ansible_lint
 
 - name: Remove epel
   package:
     name: epel-release
-    state: absent  
+    state: absent
 
 - name: Download RHCS 3.0 from S3
   get_url:
@@ -68,4 +77,4 @@
 
 - import_tasks: ceph-metrics-prepare.yml
 
-- import_tasks: ceph-sree-prepare.yml 
+- import_tasks: ceph-sree-prepare.yml

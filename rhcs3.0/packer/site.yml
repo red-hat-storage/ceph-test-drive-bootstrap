@@ -5,7 +5,8 @@
 
   roles:
     - { role: cloud-user, tags: ['cloud-user']}
-    - { role: instructor-user, tags: ['instructor-user']}
+    - { role: create-user, tags: ['instructor-user'], username: 'instructor'}
+    - { role: create-user, tags: ['instructor-user'], username: 'student'}
     - { role: student-user, tags: ['student-user']}
     - { role: register-host, tags: ['register-host']}
     - { role: rhcs-prerequisite, tags: ['rhcs-prerequisite']}

@@ -3,6 +3,7 @@
   git:
     repo: https://github.com/ksingh7/Sree.git
     dest: /usr/share/ceph-sree
+    version: master
 
 - name: Make /etc/rc.d/rc.local executable
   file:
@@ -13,7 +14,7 @@
 #  lineinfile:
 #    path: /etc/rc.d/rc.local
 #    state: present
-#    line: "cd /usr/share/ceph-sree" 
+#    line: "cd /usr/share/ceph-sree"
 
 #- name: Make ceph-sree executable at boot
 #  lineinfile:

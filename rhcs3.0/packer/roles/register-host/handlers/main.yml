@@ -1,0 +1,15 @@
+---
+
+- name: disable all default repositories
+  when: rhn_registration.changed
+  rhsm_repository:
+    name: '*'
+    state: disabled
+
+- name: enable all required repositories
+  when: rhn_registration.changed
+  rhsm_repository:
+    name: "{{ item }}"
+  with_items: "{{ rhsm_repos }}"
+
+...

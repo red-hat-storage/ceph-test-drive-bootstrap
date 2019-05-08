@@ -1,21 +1,24 @@
 ---
 
-- fail:
+- name: Check if mandatory variables are defined
+  fail:
     msg: "variable instructor_pub_key_file not defined"
   when: instructor_pub_key_file is not defined
 
-- stat: path={{ instructor_pub_key_file }}
+- name: Stat given public key
+  stat: path={{ instructor_pub_key_file }}
   register: pub_key_file
   delegate_to: localhost
   become: false
 
-- fail:
+- name: Fail if given public key does not exist
+  fail:
     msg: "{{ instructor_pub_key_file }} is not a valid file"
   when: not pub_key_file.stat.exists
 
 - name: create instructor account
   user:
-    name: instructor
+    name: "{{ username }}"
     password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'
     groups: wheel
     append: yes
@@ -23,25 +26,25 @@
 
 - name: set password-less sudo for instructor
   lineinfile:
-    line: "instructor            ALL=(ALL) NOPASSWD: ALL"
+    line: "{{ username }}            ALL=(ALL) NOPASSWD: ALL"
     path: /etc/sudoers
     state: present
 
 - name: add supplied pub key to instructor's authorized keys
   authorized_key:
-    user: instructor
+    user: "{{ username }}"
     state: present
     key: "{{ lookup('file', instructor_pub_key_file) }}"
 
 - name: fetch instructor's own pub key
   fetch:
-    src: /home/instructor/.ssh/id_rsa.pub
-    dest: fetch/instructor_key.pub
+    src: /home/{{ username }}/.ssh/id_rsa.pub
+    dest: fetch/{{ username }}_key.pub
     flat: yes
 
 - name: add instructor's own key to authorized keys for effortless cross system login
   authorized_key:
-    user: instructor
+    user: "{{ username }}"
     state: present
     key: "{{ lookup('file', 'fetch/instructor_key.pub') }}"
 
