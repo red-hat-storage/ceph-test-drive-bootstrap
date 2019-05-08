@@ -19,14 +19,9 @@
   with_items: "{{ package_list }}"
 #  ignore_errors: true
 
-- name : Get s3cmd package
-  get_url:
-    url: https://s3.amazonaws.com/karansingh/test-drive/s3cmd-2.0.1-1.el7.noarch.rpm
-    dest: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
-
 - name: Install S3cmd
   yum:
-    name: /tmp/s3cmd-2.0.1-1.el7.noarch.rpm
+    name: https://s3.amazonaws.com/karansingh/test-drive/s3cmd-2.0.1-1.el7.noarch.rpm
     state: present
 
 - name : Install epel
@@ -57,7 +52,7 @@
     url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
     dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
 
-- name: Downlaod Image and Video for object storage module
+- name: Download Image and Video for object storage module
   get_url:
     url: "{{ item }}"
     dest: /home/student/
