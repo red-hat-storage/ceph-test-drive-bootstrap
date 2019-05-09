@@ -13,7 +13,7 @@ Parameters:
       - t2.large
       - t2.xlarge
       - m5.xlarge
-      - m5.large	
+      - m5.large
 
   CephNodeInstanceType:
     Type: String
@@ -90,7 +90,7 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
-  
+
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
@@ -128,7 +128,7 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId:
         Ref: InternetGateway
-  
+
   PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
@@ -193,7 +193,7 @@ Resources:
         FromPort: 3000
         ToPort: 3000
         CidrIp: 0.0.0.0/0
-      - IpProtocol: tcp        
+      - IpProtocol: tcp
         FromPort: 5000
         ToPort: 5000
         CidrIp: 0.0.0.0/0
@@ -204,7 +204,7 @@ Resources:
       - IpProtocol: tcp
         FromPort: 7000
         ToPort: 7000
-        CidrIp: 0.0.0.0/0                                          
+        CidrIp: 0.0.0.0/0
       - IpProtocol: icmp
         FromPort: -1
         ToPort: -1
@@ -236,6 +236,66 @@ Resources:
         FromPort: 0
         ToPort: 65535
         CidrIp: 0.0.0.0/0
+
+  AdminNode:
+    Type: AWS::EC2::Instance
+    # DependsOn: CephNode4
+    Properties:
+      ImageId:
+        Fn::FindInMap:
+        - AWSRegion2AMI
+        - Ref: AWS::Region
+        - ami
+      InstanceType:
+        Ref: StandardInstanceType
+      SubnetId:
+        Ref: PublicSubnet1
+      PrivateIpAddress : 10.100.0.10
+      KeyName:
+        Ref: KeyName
+      SecurityGroupIds:
+        - !GetAtt AdminNodeSecurityGroup.GroupId
+      BlockDeviceMappings:
+        - DeviceName: /dev/sda1
+          VirtualName: AdminNode-bootdisk
+          Ebs:
+            VolumeSize: '20'
+            VolumeType: 'gp2'
+            DeleteOnTermination: 'true'
+      Tags:
+      - Key: Application
+        Value:
+          Ref: AWS::StackId
+      UserData:
+        Fn::Base64:
+          !Sub |
+              #cloud-config
+              cloud_config_modules:
+              - runcmd
+
+              users:
+              - default
+
+              system_info:
+                default_user:
+                  name: cloud-user
+
+              runcmd:
+              - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"AdminNode\",\"Data\": \"ceph-admin launch successful\"}"'
+              - hostnamectl set-hostname ceph-admin
+              - echo "cd /usr/share/ceph-sree" >> /etc/rc.d/rc.local
+              - echo "/bin/bash sree.sh" >> /etc/rc.d/rc.local
+              - sh /etc/rc.d/rc.local
+              - echo "address=/.ceph-admin/10.100.0.10" | sudo tee -a /etc/dnsmasq.conf ;
+              - sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq
+              - sudo sed -i '/search/anameserver 127.0.0.1' /etc/resolv.conf
+              - sudo mkdir /home/student/auto-pilot
+              - sudo wget -O /home/student/auto-pilot/setup_all_in_one.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_all_in_one.sh
+              - sudo chmod +x /home/student/auto-pilot/setup_all_in_one.sh
+              - sudo -u student /home/student/auto-pilot/setup_all_in_one.sh
+              - sudo sleep 300
+              ### Identify how to run a command as cloud-user from root user
+
 
   CephNode1:
     Type: AWS::EC2::Instance
@@ -272,19 +332,19 @@ Resources:
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdd
           VirtualName: CephNode1-disk3
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvde
           VirtualName: CephNode1-disk4
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                                
+            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -307,7 +367,7 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"CephNode1\",\"Data\": \"Ceph-node1 launch successful\" }" '
               - hostnamectl set-hostname ceph-node1
-             
+
 
   CephNode2:
     Type: AWS::EC2::Instance
@@ -344,19 +404,19 @@ Resources:
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdd
           VirtualName: CephNode2-disk3
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvde
           VirtualName: CephNode2-disk4
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                                
+            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -416,19 +476,19 @@ Resources:
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdd
           VirtualName: CephNode3-disk3
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvde
           VirtualName: CephNode3-disk4
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                                
+            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -488,19 +548,19 @@ Resources:
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvdd
           VirtualName: CephNode4-disk3
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'  
+            DeleteOnTermination: 'true'
         - DeviceName: /dev/xvde
           VirtualName: CephNode4-disk4
           Ebs:
             VolumeSize: '100'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                                
+            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -548,7 +608,7 @@ Resources:
           Ebs:
             VolumeSize: '10'
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'                              
+            DeleteOnTermination: 'true'
       Tags:
       - Key: Application
         Value:
@@ -571,67 +631,8 @@ Resources:
               - yum remove -y ceph-ansible cephmetrics-ansible
               - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"ClientNode1\",\"Data\": \"client-node1 launch successful\" }" '
               - hostnamectl set-hostname client-node1
-              - sudo modprobe rbd             
+              - sudo modprobe rbd
 
-
-  AdminNode:
-    Type: AWS::EC2::Instance
-    DependsOn: CephNode4
-    Properties:
-      ImageId:
-        Fn::FindInMap:
-        - AWSRegion2AMI
-        - Ref: AWS::Region
-        - ami
-      InstanceType:
-        Ref: StandardInstanceType
-      SubnetId:
-        Ref: PublicSubnet1
-      PrivateIpAddress : 10.100.0.10
-      KeyName:
-        Ref: KeyName
-      SecurityGroupIds:
-        - !GetAtt AdminNodeSecurityGroup.GroupId
-      BlockDeviceMappings:
-        - DeviceName: /dev/sda1
-          VirtualName: AdminNode-bootdisk
-          Ebs:
-            VolumeSize: '20'
-            VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
-      Tags:
-      - Key: Application
-        Value:
-          Ref: AWS::StackId
-      UserData:
-        Fn::Base64:
-          !Sub |
-              #cloud-config
-              cloud_config_modules:
-              - runcmd
-
-              users:
-              - default
-
-              system_info:
-                default_user:
-                  name: cloud-user
-
-              runcmd:
-              - 'curl -X PUT -H "Content-Type:" --data-binary "{ \"Status\" : \"SUCCESS\", \"Reason\": \"Configuration Complete\", \"UniqueId\": \"AdminNode\",\"Data\": \"ceph-admin launch successful\"}"'
-              - hostnamectl set-hostname ceph-admin
-              - echo "cd /usr/share/ceph-sree" >> /etc/rc.d/rc.local
-              - echo "/bin/bash sree.sh" >> /etc/rc.d/rc.local
-              - sh /etc/rc.d/rc.local
-              - echo "address=/.ceph-admin/10.100.0.10" | sudo tee -a /etc/dnsmasq.conf ; 
-              - sudo systemctl start dnsmasq ; sudo systemctl enable dnsmasq
-              - sudo sed -i '/search/anameserver 127.0.0.1' /etc/resolv.conf
-              - sudo mkdir /home/student/auto-pilot
-              - sudo wget -O /home/student/auto-pilot/setup_all_in_one.sh https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/auto-pilot/setup_all_in_one.sh
-              - sudo chmod +x /home/student/auto-pilot/setup_all_in_one.sh
-              - sudo -u student /home/student/auto-pilot/setup_all_in_one.sh
-              - sudo sleep 300
-              ### Identify how to run a command as cloud-user from root user
 
   AdminNodeEIP:
     Type: AWS::EC2::EIP
@@ -640,7 +641,7 @@ Resources:
       Domain: VPC
       InstanceId:
         Ref: AdminNode
-  
+
 
 Outputs:
    CephS3Endpoint:
@@ -652,7 +653,7 @@ Outputs:
      Value: "S3user1"
    S3SecretKey:
      Description: "S3 Secret Key"
-     Value: "S3user1key" 
+     Value: "S3user1key"
    SSHIPAddress:
      Description: "ceph-admin node SSH IP address"
      Value:
@@ -663,4 +664,4 @@ Outputs:
    SSHPassword:
      Description: "SSH Password"
      Value: "Redhat18"
-  
+
