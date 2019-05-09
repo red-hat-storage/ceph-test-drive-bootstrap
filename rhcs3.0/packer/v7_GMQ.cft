@@ -40,10 +40,10 @@ Parameters:
     Default: generic-qwiklab
     ConstraintDescription: Must be the name of an existing EC2 key pair.
 
-  QwiklabId:
-    Type: String
-    Default: master
-    ConstraintDescription: Must be the name of a branch in the GitHub repository we are using in various cloud-init modules.
+  # QwiklabId:
+  #   Type: String
+  #   Default: master
+  #   ConstraintDescription: Must be the name of a branch in the GitHub repository we are using in various cloud-init modules.
 
 Mappings:
   AWSRegion2AMI:
@@ -84,8 +84,8 @@ Resources:
         - SubnetCidr
         - vpc
         - cidr
-      EnableDnsSupport: 'true'
-      EnableDnsHostnames: 'true'
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
       Tags:
       - Key: Application
         Value:
@@ -101,7 +101,7 @@ Resources:
 
   InternetGatewayAttachement:
     Type: AWS::EC2::VPCGatewayAttachment
-    DependsOn: InternetGateway
+    # DependsOn: InternetGateway
     Properties:
       VpcId:
         Ref: VPC
@@ -139,7 +139,7 @@ Resources:
         - SubnetCidr
         - network1
         - cidr
-      MapPublicIpOnLaunch: 'true'
+      MapPublicIpOnLaunch: true
       AvailabilityZone:
         Fn::Select:
           - 0
@@ -159,13 +159,13 @@ Resources:
 
   AdminNodeSecurityGroup:
     Type: AWS::EC2::SecurityGroup
-    DependsOn: VPC
+    # DependsOn: VPC
     Properties:
       VpcId:
         Ref: VPC
       GroupDescription: Firewall definition for Admin Node
       SecurityGroupIngress:
-      - IpProtocol: -1
+      - IpProtocol: "-1"
         FromPort: 0
         ToPort: 65535
         CidrIp: 10.100.0.0/16
@@ -210,20 +210,20 @@ Resources:
         ToPort: -1
         CidrIp: 0.0.0.0/0
       SecurityGroupEgress:
-      - IpProtocol: -1
+      - IpProtocol: "-1"
         FromPort: 0
         ToPort: 65535
         CidrIp: 0.0.0.0/0
 
   InternalSecurityGroup:
     Type: AWS::EC2::SecurityGroup
-    DependsOn: VPC
+    # DependsOn: VPC
     Properties:
       VpcId:
         Ref: VPC
       GroupDescription: Firewall definition for Internal Nodes
       SecurityGroupIngress:
-      - IpProtocol: -1
+      - IpProtocol: "-1"
         FromPort: 0
         ToPort: 65535
         CidrIp: 10.100.0.0/16
@@ -232,7 +232,7 @@ Resources:
         ToPort: -1
         CidrIp: 10.100.0.0/16
       SecurityGroupEgress:
-      - IpProtocol: -1
+      - IpProtocol: "-1"
         FromPort: 0
         ToPort: 65535
         CidrIp: 0.0.0.0/0
@@ -257,18 +257,17 @@ Resources:
         - !GetAtt AdminNodeSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: AdminNode-bootdisk
+          # VirtualName: AdminNode-bootdisk
           Ebs:
-            VolumeSize: '20'
+            VolumeSize: 20
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -316,42 +315,41 @@ Resources:
         - !GetAtt InternalSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: CephNode1-bootdisk
+          # VirtualName: CephNode1-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: 10
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdb
-          VirtualName: CephNode1-disk1
+          # VirtualName: CephNode1-disk1
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdc
-          VirtualName: CephNode1-disk2
+          # VirtualName: CephNode1-disk2
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdd
-          VirtualName: CephNode1-disk3
+          # VirtualName: CephNode1-disk3
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvde
-          VirtualName: CephNode1-disk4
+          # VirtualName: CephNode1-disk4
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -388,42 +386,41 @@ Resources:
         - !GetAtt InternalSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: CephNode2-bootdisk
+          # VirtualName: CephNode2-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: 10
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdb
-          VirtualName: CephNode2-disk1
+          # VirtualName: CephNode2-disk1
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdc
-          VirtualName: CephNode2-disk2
+          # VirtualName: CephNode2-disk2
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdd
-          VirtualName: CephNode2-disk3
+          # VirtualName: CephNode2-disk3
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvde
-          VirtualName: CephNode2-disk4
+          # VirtualName: CephNode2-disk4
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -460,42 +457,41 @@ Resources:
         - !GetAtt InternalSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: CephNode3-bootdisk
+          # VirtualName: CephNode3-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: 10
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdb
-          VirtualName: CephNode3-disk1
+          # VirtualName: CephNode3-disk1
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdc
-          VirtualName: CephNode3-disk2
+          # VirtualName: CephNode3-disk2
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdd
-          VirtualName: CephNode3-disk3
+          # VirtualName: CephNode3-disk3
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvde
-          VirtualName: CephNode3-disk4
+          # VirtualName: CephNode3-disk4
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -532,42 +528,41 @@ Resources:
         - !GetAtt InternalSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: CephNode4-bootdisk
+          # VirtualName: CephNode4-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: 10
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdb
-          VirtualName: CephNode4-disk1
+          # VirtualName: CephNode4-disk1
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdc
-          VirtualName: CephNode4-disk2
+          # VirtualName: CephNode4-disk2
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvdd
-          VirtualName: CephNode4-disk3
+          # VirtualName: CephNode4-disk3
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
         - DeviceName: /dev/xvde
-          VirtualName: CephNode4-disk4
+          # VirtualName: CephNode4-disk4
           Ebs:
-            VolumeSize: '100'
+            VolumeSize: 100
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -604,18 +599,17 @@ Resources:
         - !GetAtt InternalSecurityGroup.GroupId
       BlockDeviceMappings:
         - DeviceName: /dev/sda1
-          VirtualName: ClientNode1-bootdisk
+          # VirtualName: ClientNode1-bootdisk
           Ebs:
-            VolumeSize: '10'
+            VolumeSize: 10
             VolumeType: 'gp2'
-            DeleteOnTermination: 'true'
+            DeleteOnTermination: true
       Tags:
       - Key: Application
         Value:
           Ref: AWS::StackId
       UserData:
-        Fn::Base64:
-          !Sub |
+        Fn::Base64: |
               #cloud-config
               cloud_config_modules:
               - runcmd
@@ -636,7 +630,7 @@ Resources:
 
   AdminNodeEIP:
     Type: AWS::EC2::EIP
-    DependsOn: AdminNode
+    # DependsOn: AdminNode
     Properties:
       Domain: VPC
       InstanceId:
