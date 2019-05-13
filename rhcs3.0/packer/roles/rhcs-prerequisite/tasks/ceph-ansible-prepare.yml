@@ -11,11 +11,14 @@
     creates: /usr/share/ceph-ansible/group_vars/sample/all.yml
   tags: skip_ansible_lint
 
-- name: wget ceph-ansible pre-populated variable files
-  get_url:
-    url: "{{ ceph_ansible_variable_file_url }}/{{ item }}"
+- name: Place prepared ceph-ansible group_vars
+  copy:
+    src: "{{ item }}"
     dest: "/usr/share/ceph-ansible/group_vars/{{ item }}"
-  with_items: "{{ ceph_ansible_variable_file_name }}"
+  with_items: 
+    - all.yml
+    - osds.yml
+    - clients.yml
 
 - name: Remove default ansible host file
   file:

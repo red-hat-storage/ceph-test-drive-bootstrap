@@ -1,0 +1,5 @@
+---
+dummy:
+copy_admin_key: true
+osd_auto_discovery: true
+osd_scenario: collocated
