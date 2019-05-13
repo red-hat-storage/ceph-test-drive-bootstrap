@@ -73,3 +73,5 @@
 # - import_tasks: ceph-metrics-prepare.yml
 
 - import_tasks: ceph-sree-prepare.yml
+
+- import_tasks: docker-prepare.yml

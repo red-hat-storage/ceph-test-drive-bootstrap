@@ -1,0 +1,14 @@
+---
+
+- name: Enable and start the docker service
+  service:
+    naem: docker
+    enabled: yes
+    state: started
+
+- name: Pre-pull Ceph docker image
+  docker_image:
+    name: registry.access.redhat.com/rhceph/rhceph-3-rhel7:3
+
+
+...
