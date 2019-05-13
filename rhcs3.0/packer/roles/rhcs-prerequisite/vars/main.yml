@@ -30,6 +30,8 @@ package_list:
   # - nfs-ganesha-rgw
   # - tcmu-runner
   - docker
+  - python-docker-py
+  - python-six
   - ntp
   - hdparm
   - python-setuptools
