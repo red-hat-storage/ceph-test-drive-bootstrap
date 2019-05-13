@@ -37,9 +37,16 @@
     # - role: workshopper
     #   tags: workshopper
 
-#  tasks:
-
- #   - name: unsubscribe system
- #     redhat_subscription: state=absent
+  tasks:
+  - name: unsubscribe system
+    redhat_subscription:
+    state: absent
+  - name: Clear all subscription information
+    command: subscription-manager clean
+    when: yes # Make the linter happy
+  - name: Clear the secure log file
+    copy:
+      dest: /var/log/secure
+      content: ""
 
 ...
