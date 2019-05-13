@@ -29,7 +29,7 @@
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state: present
 
-- name : Instal PIP
+- name : Install PIP
   package:
     name: python-pip
     state: present
@@ -70,6 +70,6 @@
 
 - import_tasks: ceph-ansible-prepare.yml
 
-- import_tasks: ceph-metrics-prepare.yml
+# - import_tasks: ceph-metrics-prepare.yml
 
 - import_tasks: ceph-sree-prepare.yml

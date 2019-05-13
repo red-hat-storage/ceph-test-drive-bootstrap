@@ -7,28 +7,29 @@ package_list:
   - nc
   - ntp
   - ceph-ansible
-  - cephmetrics-ansible
-  - ceph-common
-  - ceph-base
-  - ceph-selinux
-  - hdparm
-  - ceph-fuse
-  - ceph-osd
-  - ceph-mon
-  - ceph-mgr
-  - cephmetrics-collectors
-  - ceph-iscsi-cli
-  - ceph-iscsi-config
-  - ceph-iscsi-tools
-  - iscsi-initiator-utils
-  - device-mapper-multipath
-  - ceph-mds
-  - ceph-medic
-  - ceph-radosgw
-  - nfs-ganesha
-  - nfs-ganesha-ceph
-  - nfs-ganesha-rgw
-  - tcmu-runner
+  # - cephmetrics-ansible
+  # - ceph-common
+  # - ceph-base
+  # - ceph-selinux
+  # - hdparm
+  # - ceph-fuse
+  # - ceph-osd
+  # - ceph-mon
+  # - ceph-mgr
+  # - cephmetrics-collectors
+  # - ceph-iscsi-cli
+  # - ceph-iscsi-config
+  # - ceph-iscsi-tools
+  # - iscsi-initiator-utils
+  # - device-mapper-multipath
+  # - ceph-mds
+  # - ceph-medic
+  # - ceph-radosgw
+  # - nfs-ganesha
+  # - nfs-ganesha-ceph
+  # - nfs-ganesha-rgw
+  # - tcmu-runner
+  - docker
   - ntp
   - hdparm
   - python-setuptools

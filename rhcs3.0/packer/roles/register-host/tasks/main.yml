@@ -22,33 +22,36 @@
 
   when: disable_rhui
 
-- name: ensure organization id is supplied
-  fail:
-    msg: "You must supply an RHSM organization ID"
-  when:
-    - (rhsm_org_id is not defined or rhsm_org_id)
+# - name: ensure organization id is supplied
+#   fail:
+#     msg: "You must supply an RHSM organization ID"
+#   when:
+#     - (rhsm_org_id is not defined or rhsm_org_id)
 
-- name: ensure activation key is supplied
-  fail:
-    msg: "You must supply an RHSM activation key"
-  when:
-    - (rhsm_act_key is not defined or rhsm_act_key)
+# - name: ensure activation key is supplied
+#   fail:
+#     msg: "You must supply an RHSM activation key"
+#   when:
+#     - (rhsm_act_key is not defined or rhsm_act_key)
 
-- name: ensure repositories are supplied
-  fail:
-    msg: "You must supply at least one RHSM repository"
-  when:
-    - (rhsm_repos is not defined or rhsm_repos|length == 0)
+# - name: ensure repositories are supplied
+#   fail:
+#     msg: "You must supply at least one RHSM repository"
+#   when:
+    # - (rhsm_repos is not defined or rhsm_repos|length == 0)
 
 - name: registering system with CDN
   register: rhn_registration
   redhat_subscription:
-    org_id: "{{ rhsm_org_id }}"
-    activationkey: "{{ rhsm_act_key }}"
-    state: present
-    autosubscribe: true
+    autosubscribe: false
+    username: "{{ rhn_username }}"
+    password: "{{ rhn_password }}"
+    pool: "Employee SKU"
+    # org_id: "{{ rhsm_org_id }}"
+    # activationkey: "{{ rhsm_act_key }}"
+    # state: present
     force_register: true
-    pool_ids: 8a85f98260c27fc50160c328c08a5045
+    # pool_ids: 8a85f98260c27fc50160c328c08a5045
   notify:
     - disable all default repositories
     - enable all required repositories

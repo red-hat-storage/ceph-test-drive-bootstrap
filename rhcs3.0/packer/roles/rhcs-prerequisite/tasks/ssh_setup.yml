@@ -1,11 +1,11 @@
 ---
 
-- name: Set StrictHostKeyChecking NO for sshd
+- name: "Set {{ item.key }} {{ item.value }} for sshd"
   lineinfile:
     path: /etc/ssh/ssh_config
     state: present
-    regexp: "{{ appendToRegex | default('') }}{{ key }}"
-    line: "{{ key }} {{ value }}"
+    regexp: "{{ appendToRegex | default('') }}{{ item.key }}"
+    line: "{{ item.key }} {{ item.value }}"
   with_items:
     - key: StrictHostKeyChecking
       value: no

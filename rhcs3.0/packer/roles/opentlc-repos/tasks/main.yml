@@ -1,0 +1,10 @@
+---
+
+- name: "Enable repo for {{ item.name }}"
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    baseurl: "http://admin.na.shared.opentlc.com/repos/ocp/common/{{ item.name }}"
+  with_items: "{{ rhsm_repos }}"
+
+...

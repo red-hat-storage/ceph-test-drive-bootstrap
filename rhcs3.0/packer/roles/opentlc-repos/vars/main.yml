@@ -1,0 +1,13 @@
+---
+
+rhsm_repos:
+  - name: rhel-7-server-rpms
+    description: Red Hat Enterprise Linux 7 Server (RPMs)
+  - name: rhel-7-server-extras-rpms
+    description: Red Hat Enterprise Linux 7 Server - Extras (RPMs)
+  - name: rhel-7-server-rhceph-3-tools-rpms
+    description: Red Hat Ceph Storage Tools 3 for Red Hat Enterprise Linux 7 Server (RPMs)
+  - name: rhel-7-server-ansible-2.6-rpms
+    description: Red Hat Ansible Engine 2.6 RPMs for Red Hat Enterprise Linux 7 Server
+
+...
