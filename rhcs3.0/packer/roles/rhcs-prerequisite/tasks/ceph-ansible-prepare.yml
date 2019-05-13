@@ -15,7 +15,7 @@
   copy:
     src: "{{ item }}"
     dest: "/usr/share/ceph-ansible/group_vars/{{ item }}"
-  with_items: 
+  with_items:
     - all.yml
     - osds.yml
     - clients.yml
