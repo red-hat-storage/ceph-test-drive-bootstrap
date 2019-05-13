@@ -46,6 +46,6 @@
   authorized_key:
     user: "{{ username }}"
     state: present
-    key: "{{ lookup('file', 'fetch/instructor_key.pub') }}"
+    key: "{{ lookup('file', 'fetch/'+ username +'_key.pub') }}"
 
 ...
