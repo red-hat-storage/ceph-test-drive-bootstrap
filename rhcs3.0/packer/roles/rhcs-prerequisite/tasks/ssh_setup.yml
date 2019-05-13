@@ -2,26 +2,29 @@
 
 - name: "Set {{ item.key }} {{ item.value }} for sshd"
   lineinfile:
-    path: /etc/ssh/ssh_config
+    path: /etc/ssh/sshd_config
     state: present
-    regexp: "{{ appendToRegex | default('') }}{{ item.key }}"
+    regexp: "{{ prependToRegex | default('') }}{{ item.key }}"
     line: "{{ item.key }} {{ item.value }}"
   with_items:
-    - key: StrictHostKeyChecking
-      value: no
-      appendToRegex: ^
     - key: ClientAliveInterval
       value: 600
-      appendToRegex: "#"
+      prependToRegex: "#"
     - key: ClientAliveCountMax
       value: 3
-      appendToRegex: "#"
+      prependToRegex: "#"
     - key: UseDNS
       value: no
-      appendToRegex: ^
+      prependToRegex: ^
     - key: PasswordAuthentication
       value: yes
-      appendToRegex: ^
+      prependToRegex: ^
     - key: GSSAPIAuthentication
       value: no
-      appendToRegex: ^
+      prependToRegex: ^
+
+- name: Disable strict Hostkey checking
+  lineinfile:
+    path: /etc/ssh/ssh_config
+    regexp: "^StrictHostKeyChecking"
+    line: StrictHostKeyChecking no
