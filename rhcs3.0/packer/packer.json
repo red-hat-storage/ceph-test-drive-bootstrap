@@ -1,13 +1,13 @@
 {
   "variables": {
-    "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
-    "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "aws_region": "{{env `AWS_REGION`}}",
     "aws_ami": "{{env `AWS_AMI`}}",
     "instructor_pub_key_file": "{{ env `INSTRUCTOR_PUB_KEY_FILE` }}",
-    "org_id": "{{env `ORG_ID`}}",
-    "activation_key": "{{env `ACT_KEY`}}"
+    "rhn_user": "{{env `ORG_ID`}}",
+    "rhn_pass": "{{env `ACT_KEY`}}",
+    "aws_access_key": "",
+    "aws_secret_key": ""
   },
+  "sensitive-variables": ["rhn_user", "rhn_pass", "aws_access_key", "aws_secret_key"],
   "builders": [{
     "communicator": "ssh",
     "ssh_timeout": "10m",
@@ -41,7 +41,10 @@
     "playbook_file": "site.yml",
     "extra_arguments": [
         "--become",
-        "--extra-vars", "rhsm_org_id={{user `org_id`}} rhsm_act_key={{user `activation_key`}} instructor_pub_key_file={{user `instructor_pub_key_file` }}"
+        "--extra-vars", "rhn_username='{{user `rhn_user`}}'",
+        "--extra-vars", "rhn_password='{{user `rhn_pass`}}'",
+        "--extra-vars", "instructor_pub_key_file='{{user `instructor_pub_key_file` }}'",
+        "-vv"
       ]
   }]
 }

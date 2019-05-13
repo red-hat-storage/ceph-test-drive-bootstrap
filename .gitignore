@@ -6,3 +6,8 @@ rhcs3.0/packer/test.yml
 rhcs3.0/packer/fetch/*.pub
 *.csv
 
+rhcs3.0/packer/fetch/student_key.pub
+rhcs3.0/packer/packer_var_file.json
+rhcs3.0/packer/fetch/id_rsa
+rhcs3.0/packer/fetch/id_rsa.pub
+rhcs3.0/packer/fetch/instructor_key.pub
