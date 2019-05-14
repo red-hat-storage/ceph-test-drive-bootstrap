@@ -5,36 +5,36 @@
     state: latest
   tags: skip_ansible_lint
 
+# yamllint disable rule:line-length
 - name: Setting up repos for sysbench
   shell: |
     set -o pipefail
     curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | sudo bash
   tags: skip_ansible_lint
-#  ignore_errors: true
+# yamllint enable
 
 - name: Install initial packages
   package:
     name: "{{ item }}"
     state: present
   with_items: "{{ package_list }}"
-#  ignore_errors: true
 
 - name: Install S3cmd
   yum:
     name: https://s3.amazonaws.com/karansingh/test-drive/s3cmd-2.0.1-1.el7.noarch.rpm
     state: present
 
-- name : Install epel
+- name: Install epel
   package:
     name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     state: present
 
-- name : Install PIP
+- name: Install PIP
   package:
     name: python-pip
     state: present
 
-- name : Install python-swiftclient
+- name: Install python-swiftclient
   pip:
     name:
       - pip
@@ -59,7 +59,6 @@
   with_items:
     - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Tower.jpg
     - https://s3.amazonaws.com/karansingh/test-drive/Red_Hat_Ceph_Storage.mp4
- # ignore_errors: true
 
 - name: Copy hosts file
   copy:
@@ -69,8 +68,6 @@
 - import_tasks: ssh_setup.yml
 
 - import_tasks: ceph-ansible-prepare.yml
-
-# - import_tasks: ceph-metrics-prepare.yml
 
 - import_tasks: ceph-sree-prepare.yml
 

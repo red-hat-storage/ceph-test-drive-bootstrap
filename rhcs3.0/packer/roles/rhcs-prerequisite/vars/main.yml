@@ -40,8 +40,4 @@ package_list:
   - sysbench
   - dnsmasq
 
-ceph_ansible_variable_file_url: "https://raw.githubusercontent.com/red-hat-storage/ceph-test-drive-bootstrap/ceph-test-drive-packer/rhcs3.0/ceph-ansible-variables/simplified"
-ceph_ansible_variable_file_name:
-  - all.yml
-  - osds.yml
-  - clients.yml
+...

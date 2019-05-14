@@ -28,3 +28,5 @@
     path: /etc/ssh/ssh_config
     regexp: "^StrictHostKeyChecking"
     line: StrictHostKeyChecking no
+
+...

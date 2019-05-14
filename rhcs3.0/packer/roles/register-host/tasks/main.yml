@@ -2,11 +2,6 @@
 
 - block:
 
-#  - name: Update using RHUI while its still attached
-#    yum:
-#      name: '*'
-#      state: latest
-
   - name: remove rhui-client packages
     yum: name=rh-amazon-rhui-client* state=absent
 
@@ -38,7 +33,7 @@
 #   fail:
 #     msg: "You must supply at least one RHSM repository"
 #   when:
-    # - (rhsm_repos is not defined or rhsm_repos|length == 0)
+#     - (rhsm_repos is not defined or rhsm_repos|length == 0)
 
 - name: registering system with CDN
   register: rhn_registration

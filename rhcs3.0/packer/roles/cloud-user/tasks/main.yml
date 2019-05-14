@@ -2,7 +2,7 @@
 - name: create cloud-user account
   user:
     name: cloud-user
-    password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'
+    password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'  # yamllint disable-line
     generate_ssh_key: yes
 
 - name: fetch ssh pub key

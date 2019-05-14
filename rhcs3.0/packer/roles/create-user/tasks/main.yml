@@ -19,7 +19,7 @@
 - name: create instructor account
   user:
     name: "{{ username }}"
-    password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'
+    password: '$6$0QTKiAxX5.ONsPxA$keFvFhrX6cRqYiN4OLSezEopULJFO4da7K7hl2sromKY69CvumfAgotEB9K1gmcjakjrdEkbA2Ku6m2Rsry9D0'  # yamllint disable-line
     groups: wheel
     append: yes
     generate_ssh_key: true
