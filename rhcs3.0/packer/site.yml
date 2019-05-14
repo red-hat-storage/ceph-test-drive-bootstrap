@@ -20,7 +20,7 @@
   tasks:
   - name: unsubscribe system
     redhat_subscription:
-    state: absent
+      state: absent
   - name: Clear all subscription information
     command: subscription-manager clean
     when: yes # Make the linter happy
