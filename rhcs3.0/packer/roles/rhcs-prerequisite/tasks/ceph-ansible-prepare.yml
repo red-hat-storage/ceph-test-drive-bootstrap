@@ -6,7 +6,7 @@
     mode: 0755
 
 - name: Move sample files to sample directory
-  command: "mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample"
+  shell: "mv /usr/share/ceph-ansible/group_vars/*.sample /usr/share/ceph-ansible/group_vars/sample"
   args:
     creates: /usr/share/ceph-ansible/group_vars/sample/all.yml
   tags: skip_ansible_lint
