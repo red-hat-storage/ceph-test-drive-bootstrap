@@ -6,6 +6,7 @@
     state: present
     regexp: "{{ prependToRegex | default('') }}{{ item.key }}"
     line: "{{ item.key }} {{ item.value }}"
+    validate: "sshd -T -f %s"
   with_items:
     - key: ClientAliveInterval
       value: 600
@@ -14,13 +15,13 @@
       value: 3
       prependToRegex: "#"
     - key: UseDNS
-      value: no
+      value: "no"
       prependToRegex: ^
     - key: PasswordAuthentication
-      value: yes
+      value: "yes"
       prependToRegex: ^
     - key: GSSAPIAuthentication
-      value: no
+      value: "no"
       prependToRegex: ^
 
 - name: Disable strict Hostkey checking
