@@ -7,8 +7,9 @@ package_list:
   - nc
   - ntp
   - ceph-ansible
-  # - cephmetrics-ansible
-  # - ceph-common
+  - cephmetrics-ansible
+  - cephmetrics-collectors
+  - ceph-common
   # - ceph-base
   # - ceph-selinux
   # - hdparm
@@ -16,7 +17,6 @@ package_list:
   # - ceph-osd
   # - ceph-mon
   # - ceph-mgr
-  # - cephmetrics-collectors
   # - ceph-iscsi-cli
   # - ceph-iscsi-config
   # - ceph-iscsi-tools
