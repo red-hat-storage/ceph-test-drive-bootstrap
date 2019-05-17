@@ -12,12 +12,14 @@
     "communicator": "ssh",
     "ssh_timeout": "10m",
     "ssh_username": "ec2-user",
+    "ssh_keypair_name": "generic-qwiklab",
+    "ssh_agent_auth": true,
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "{{user `aws_region`}}",
     "source_ami": "{{user `aws_ami`}}",
-    "instance_type": "t2.micro",
+    "instance_type": "t2.large",
     "launch_block_device_mappings": [
     {
       "device_name": "/dev/xvdb",
@@ -28,11 +30,11 @@
     "ami_name": "rhcs-3.0-test-drive-aio-{{timestamp}}",
     "ami_description": "RHCS 3.0 Test Drive Base Image for use by Qwiklabs",
     "tags": {
-      "Name": "rhcs-3.0-qwiklabs",
+      "Name": "rhcs-3.2-qwiklabs",
       "Platform": "Red Hat Enterprise Linux",
       "Release": "1.0",
-      "OS_Version": "Red Hat Enterprise Linux 7.4",
-      "RHCS_Version": "3.0"
+      "OS_Version": "Red Hat Enterprise Linux 7.6",
+      "RHCS_Version": "3.2"
     }
   }],
   "provisioners": [{
