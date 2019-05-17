@@ -266,6 +266,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: AdminNode
       UserData:
         Fn::Base64: |
               #cloud-config
@@ -348,6 +350,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: ceph-node1
       UserData:
         Fn::Base64: |
               #cloud-config
@@ -419,6 +423,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: ceph-node2
       UserData:
         Fn::Base64: |
               #cloud-config
@@ -490,6 +496,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: ceph-node3
       UserData:
         Fn::Base64: |
               #cloud-config
@@ -561,6 +569,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: ceph-node4
       UserData:
         Fn::Base64: |
               #cloud-config
@@ -608,6 +618,8 @@ Resources:
       - Key: Application
         Value:
           Ref: AWS::StackId
+      - Key: Name
+        Value: client-node1
       UserData:
         Fn::Base64: |
               #cloud-config
