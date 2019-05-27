@@ -9,6 +9,7 @@ package_list:
   - ceph-ansible
   - cephmetrics-ansible
   - cephmetrics-collectors
+  - prometheus-node_exporter
   - ceph-common
   # - ceph-base
   # - ceph-selinux
