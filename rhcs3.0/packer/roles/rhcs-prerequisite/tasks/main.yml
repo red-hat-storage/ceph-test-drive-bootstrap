@@ -48,11 +48,6 @@
     name: epel-release
     state: absent
 
-- name: Download RHCS 3.0 from S3
-  get_url:
-    url: https://s3.amazonaws.com/karansingh/test-drive/rhceph-3.0-rhel-7-x86_64.iso
-    dest: /home/student/rhceph-3.0-rhel-7-x86_64.iso
-
 - name: Download Image and Video for object storage module
   get_url:
     url: "{{ item }}"
