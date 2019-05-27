@@ -10,15 +10,4 @@
   docker_image:
     name: registry.access.redhat.com/rhceph/rhceph-3-rhel7:3
 
-
-- name: Add user to docker
-  user:
-    name: "{{ item }}"
-    groups:
-      - wheel
-      - docker
-  with_items:
-    - student
-    - instructor
-
 ...
