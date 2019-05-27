@@ -39,6 +39,7 @@
     name:
       - pip
       - python-swiftclient
+      - flask
     state: latest
   tags: skip_ansible_lint
 
